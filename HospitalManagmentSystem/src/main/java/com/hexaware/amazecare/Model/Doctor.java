@@ -8,6 +8,10 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Doctor {
@@ -30,18 +34,24 @@ public class Doctor {
     private String specialty;
 
     @Column
+    @NotNull
     private int experience;
 
     @Column(length = 100)
+    @NotNull
     private String qualification;
 
     @Column(length = 100)
+    @NotNull
     private String designation;
 
-    @Column(length = 15)
+    @Column(nullable=false)
+    @Pattern(regexp = "^[0-9]{10}$",message="Enter correct phone number")
+    @Size(min=10,max=10)
     private String contactNumber;
 
     @Column(length = 100, unique = true, nullable = false)
+    @Email
     private String email;
 
     @Enumerated(EnumType.STRING)

@@ -3,6 +3,11 @@ package com.hexaware.amazecare.Model;
 import java.util.Date;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Patient {
@@ -18,6 +23,7 @@ public class Patient {
     private String lastName;
 
     @Column
+    @Past(message="Enter correct date of birth")
     private Date dateOfBirth;
 
     @Enumerated(EnumType.STRING)
@@ -25,22 +31,34 @@ public class Patient {
     private Gender gender;
 
     @Column(nullable = false)
+    @Pattern(regexp = "^[0-9]{10}$",message="Enter correct phone number")
+    @Size(min=10,max=10)
     private String contactNumber;
 
     @Column(length = 100, unique = true, nullable = false)
+    @Email(message="Enter correct emailid in the format @gmail.com")
     private String email;
 
     @Column(length = 255)
     private String address;
 
     @Column
+    @Pattern(regexp = "^[0-9]{10}$",message="Enter correct phone number")
+    @Size(min=10,max=10)
     private String emergencyContact;
 
     @Column(columnDefinition = "TEXT")
     private String allergies;
 
     @Column(length = 12, nullable = false)
+    @Pattern(regexp="^[0-9]{12}",message="Enter correct aadhar number")
+    @Size(min=12,max=12)
     private String aadharCard;
+    
+    @Lob
+    @Column(columnDefinition="LONGBLOG")
+    @NotNull(message="Please insert your aadhar photo")
+    private byte[] aadharPhoto;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

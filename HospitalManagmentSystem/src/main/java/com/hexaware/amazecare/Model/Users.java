@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Pattern;
 
 
 @Entity
@@ -19,9 +20,11 @@ public class Users {
     private String username;
 
     @Column(length = 255, nullable = false)
+    @Pattern(regexp="^(?=.*[A-Z])(?=.*[!@#$%^&*()<>,.?\":{}|]).{7,}$",
+    message="Password must be at least 7 characters long, contain at least one uppercase letter, and one special character.")
     private String password;
 
-    @Column(name = "role", length = 100, nullable = false)
+    @Column(name = "role", length = 7, nullable = false)
     private String role;
 
 	public Users() {

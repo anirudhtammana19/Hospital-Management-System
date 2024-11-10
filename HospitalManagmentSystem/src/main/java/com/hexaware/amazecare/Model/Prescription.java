@@ -37,7 +37,7 @@ public class Prescription {
 
     public enum Frequency {
         AF, // After Food
-        BF  // Before Food
+        BF // Before Food
     }
 
 	public Prescription() {
