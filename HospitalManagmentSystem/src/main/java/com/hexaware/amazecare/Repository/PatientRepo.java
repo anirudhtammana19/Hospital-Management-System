@@ -1,4 +1,4 @@
-package com.HMS.project.Repository;
+package com.hexaware.amazecare.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
