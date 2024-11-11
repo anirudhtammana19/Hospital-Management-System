@@ -1,10 +1,10 @@
 package com.hexaware.amazecare.Model;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -13,8 +13,8 @@ import jakarta.validation.constraints.Size;
 public class Patient {
 
     @Id
-    @Column(length = 15, nullable = false)
-    private String patientId;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int patientId;
 
     @Column(length = 50, nullable = false)
     private String firstName;
@@ -39,7 +39,7 @@ public class Patient {
     @Email(message="Enter correct emailid in the format @gmail.com")
     private String email;
 
-    @Column(length = 255)
+    @Column(columnDefinition = "TEXT",nullable = false)
     private String address;
 
     @Column
@@ -54,15 +54,13 @@ public class Patient {
     @Pattern(regexp="^[0-9]{12}",message="Enter correct aadhar number")
     @Size(min=12,max=12)
     private String aadharCard;
-    
-    @Lob
-    @Column(columnDefinition="LONGBLOG")
-    @NotNull(message="Please insert your aadhar photo")
-    private byte[] aadharPhoto;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BloodGroup bloodGroup;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Appointment> appointments;
 
     public enum Gender {
         MALE, FEMALE, OTHER
@@ -77,7 +75,7 @@ public class Patient {
 
 	}
 
-	public Patient(String patientId, String firstName, String lastName, Date dateOfBirth, Gender gender,
+	public Patient(int patientId, String firstName, String lastName, Date dateOfBirth, Gender gender,
 			String contactNumber, String email, String address, String emergencyContact, String allergies,
 			String aadharCard, BloodGroup bloodGroup) {
 		super();
@@ -95,11 +93,11 @@ public class Patient {
 		this.bloodGroup = bloodGroup;
 	}
 
-	public String getPatientId() {
+	public int getPatientId() {
 		return patientId;
 	}
 
-	public void setPatientId(String patientId) {
+	public void setPatientId(int patientId) {
 		this.patientId = patientId;
 	}
 

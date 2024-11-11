@@ -1,5 +1,6 @@
 package com.hexaware.amazecare.Model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -19,17 +22,19 @@ import java.time.LocalTime;
 public class Appointment {
 
     @Id
-    @Column( length = 15)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private String appointmentId;
+    private int appointmentId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Patient patient;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Doctor doctor;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    private MedicalRecord medicalRecord;
 
     @Column(nullable = false)
     private LocalDate appointmentDate;
@@ -49,19 +54,19 @@ public class Appointment {
     @NotNull(message="Enter consultation type")
     private String visitType;
 
-    @Column(length = 50)
+    @Column(length = 50)//Enum !!
     @NotNull(message="Enter consultation type")
     private String consultationType;
   
     public enum Status {
-        REQUESTED, SCHEDULED, COMPLETED, CANCELLED
+        REQUESTED, RESCHEDULED, SCHEDULED, COMPLETED, CANCELLED
     }
 
 	public Appointment() {
 		
 	}
 
-	public Appointment(String appointmentId, Patient patient, Doctor doctor, LocalDate appointmentDate,
+	public Appointment(int appointmentId, Patient patient, Doctor doctor, LocalDate appointmentDate,
 			LocalTime appointmentTime, Status status, String reason, String visitType, String consultationType) {
 		super();
 		this.appointmentId = appointmentId;
@@ -75,11 +80,11 @@ public class Appointment {
 		this.consultationType = consultationType;
 	}
 
-	public String getAppointmentId() {
+	public int getAppointmentId() {
 		return appointmentId;
 	}
 
-	public void setAppointmentId(String appointmentId) {
+	public void setAppointmentId(int appointmentId) {
 		this.appointmentId = appointmentId;
 	}
 

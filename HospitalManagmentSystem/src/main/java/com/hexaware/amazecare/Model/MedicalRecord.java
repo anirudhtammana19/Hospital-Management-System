@@ -1,30 +1,39 @@
 package com.hexaware.amazecare.Model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class MedicalRecord {
 
     @Id
-    @Column( length = 15)
-    private String recordId;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int recordId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Patient patient;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Doctor doctor;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Appointment appointment;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Prescription> prescriptions;
 
     @Column(columnDefinition = "TEXT")
     private String symptoms;
@@ -46,7 +55,7 @@ public class MedicalRecord {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MedicalRecord(String recordId, Patient patient, Doctor doctor, Appointment appointment, String symptoms,
+	public MedicalRecord(int recordId, Patient patient, Doctor doctor, Appointment appointment, String symptoms,
 			String physicalExamination, String treatmentPlan, String testsRecommended, String notes) {
 		super();
 		this.recordId = recordId;
@@ -60,11 +69,11 @@ public class MedicalRecord {
 		this.notes = notes;
 	}
 
-	public String getRecordId() {
+	public int getRecordId() {
 		return recordId;
 	}
 
-	public void setRecordId(String recordId) {
+	public void setRecordId(int recordId) {
 		this.recordId = recordId;
 	}
 

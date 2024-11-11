@@ -1,13 +1,18 @@
 package com.hexaware.amazecare.Model;
 
 import java.util.Arrays;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -17,8 +22,8 @@ import jakarta.validation.constraints.Size;
 public class Doctor {
 
     @Id
-    @Column(length = 15, nullable = false)
-    private String doctorId;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int doctorId;
 
     @Column(length = 50, nullable = false)
     private String firstName;
@@ -26,9 +31,9 @@ public class Doctor {
     @Column(length = 50, nullable = false)
     private String lastName;
 
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] profile;
+    
+    @Column(nullable = false)
+    private String profile_image;
 
     @Column(length = 50, nullable = false)
     private String specialty;
@@ -51,7 +56,7 @@ public class Doctor {
     private String contactNumber;
 
     @Column(length = 100, unique = true, nullable = false)
-    @Email
+    @Email(message = "Enter a valid Email ID")
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -62,6 +67,9 @@ public class Doctor {
     @Column(nullable = false)
     private Gender gender;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Appointment> appointments;
+    
     public enum Gender {
         MALE, FEMALE, OTHER
     }
@@ -74,14 +82,14 @@ public class Doctor {
 
 	}
 
-	public Doctor(String doctorId, String firstName, String lastName, byte[] profile, String specialty, int experience,
+	public Doctor(int doctorId, String firstName, String lastName, String profile, String specialty, int experience,
 			String qualification, String designation, String contactNumber, String email, BloodGroup bloodGroup,
 			Gender gender) {
 		super();
 		this.doctorId = doctorId;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.profile = profile;
+		this.profile_image = profile;
 		this.specialty = specialty;
 		this.experience = experience;
 		this.qualification = qualification;
@@ -92,11 +100,11 @@ public class Doctor {
 		this.gender = gender;
 	}
 
-	public String getDoctorId() {
+	public int getDoctorId() {
 		return doctorId;
 	}
 
-	public void setDoctorId(String doctorId) {
+	public void setDoctorId(int doctorId) {
 		this.doctorId = doctorId;
 	}
 
@@ -116,12 +124,12 @@ public class Doctor {
 		this.lastName = lastName;
 	}
 
-	public byte[] getProfile() {
-		return profile;
+	public String getProfile() {
+		return profile_image;
 	}
 
-	public void setProfile(byte[] profile) {
-		this.profile = profile;
+	public void setProfile(String profile) {
+		this.profile_image = profile;
 	}
 
 	public String getSpecialty() {
@@ -190,8 +198,7 @@ public class Doctor {
 
 	@Override
 	public String toString() {
-		return "Doctor [doctorId=" + doctorId + ", firstName=" + firstName + ", lastName=" + lastName + ", profile="
-				+ Arrays.toString(profile) + ", specialty=" + specialty + ", experience=" + experience
+		return "Doctor [doctorId=" + doctorId + ", firstName=" + firstName + ", lastName=" + lastName  + ", specialty=" + specialty + ", experience=" + experience
 				+ ", qualification=" + qualification + ", designation=" + designation + ", contactNumber="
 				+ contactNumber + ", email=" + email + ", bloodGroup=" + bloodGroup + ", gender=" + gender + "]";
 	} 

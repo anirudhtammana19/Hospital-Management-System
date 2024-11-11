@@ -1,9 +1,12 @@
 package com.hexaware.amazecare.Model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -12,10 +15,10 @@ import jakarta.persistence.ManyToOne;
 public class Prescription {
 
     @Id
-    @Column(length = 15, nullable = false)
-    private String prescriptionId;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int prescriptionId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private MedicalRecord medicalRecord;
 
@@ -44,7 +47,7 @@ public class Prescription {
 		super();
 	}
 
-	public Prescription(String prescriptionId, MedicalRecord medicalRecord, String medicationName, String dosage,
+	public Prescription(int prescriptionId, MedicalRecord medicalRecord, String medicationName, String dosage,
 			Frequency frequency, int duration, String notes) {
 		super();
 		this.prescriptionId = prescriptionId;
@@ -56,11 +59,11 @@ public class Prescription {
 		this.notes = notes;
 	}
 
-	public String getPrescriptionId() {
+	public int getPrescriptionId() {
 		return prescriptionId;
 	}
 
-	public void setPrescriptionId(String prescriptionId) {
+	public void setPrescriptionId(int prescriptionId) {
 		this.prescriptionId = prescriptionId;
 	}
 
