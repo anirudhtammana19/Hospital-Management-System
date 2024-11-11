@@ -1,5 +1,6 @@
 package com.hexaware.amazecare.Model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class Patient {
 
     @Column
     @Past(message="Enter correct date of birth")
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
@@ -75,7 +76,7 @@ public class Patient {
 
 	}
 
-	public Patient(int patientId, String firstName, String lastName, Date dateOfBirth, Gender gender,
+	public Patient(int patientId, String firstName, String lastName, LocalDate dateOfBirth, Gender gender,
 			String contactNumber, String email, String address, String emergencyContact, String allergies,
 			String aadharCard, BloodGroup bloodGroup) {
 		super();
@@ -117,11 +118,11 @@ public class Patient {
 		this.lastName = lastName;
 	}
 
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 

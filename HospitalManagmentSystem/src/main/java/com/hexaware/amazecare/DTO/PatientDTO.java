@@ -2,14 +2,15 @@ package com.hexaware.amazecare.DTO;
 
 
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class PatientDTO {
 
     private int patientId;
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String gender;
     private String contactNumber;
     private String email;
@@ -23,7 +24,7 @@ public class PatientDTO {
     	super();
     }
     // Constructor
-    public PatientDTO(int patientId, String firstName, String lastName, Date dateOfBirth, String gender,
+    public PatientDTO(int patientId, String firstName, String lastName, LocalDate dateOfBirth, String gender,
                       String contactNumber, String email, String address, String emergencyContact, 
                       String allergies, String aadharCard, String bloodGroup) {
         this.patientId = patientId;
@@ -65,11 +66,11 @@ public class PatientDTO {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
