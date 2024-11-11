@@ -1,6 +1,6 @@
 package com.hexaware.amazecare.Model;
 
-import java.util.Arrays;
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -11,7 +11,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -79,6 +78,7 @@ public class Doctor {
     }
 
 	public Doctor() {
+		super();
 
 	}
 

@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -63,7 +62,7 @@ public class Appointment {
     }
 
 	public Appointment() {
-		
+		super();
 	}
 
 	public Appointment(int appointmentId, Patient patient, Doctor doctor, LocalDate appointmentDate,
