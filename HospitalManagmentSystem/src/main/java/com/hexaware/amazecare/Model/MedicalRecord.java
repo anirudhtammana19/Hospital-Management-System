@@ -20,19 +20,19 @@ public class MedicalRecord {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int recordId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "patientId",nullable = false)
     private Patient patient;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
+    @ManyToOne
+    @JoinColumn(name="doctorId",nullable = false)
     private Doctor doctor;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "appointmentId",nullable = false)
     private Appointment appointment;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "medicalRecord",cascade = CascadeType.ALL)
     private List<Prescription> prescriptions;
 
     @Column(columnDefinition = "TEXT")
@@ -55,19 +55,23 @@ public class MedicalRecord {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MedicalRecord(int recordId, Patient patient, Doctor doctor, Appointment appointment, String symptoms,
-			String physicalExamination, String treatmentPlan, String testsRecommended, String notes) {
+	public MedicalRecord(int recordId, Patient patient, Doctor doctor, Appointment appointment,
+			List<Prescription> prescriptions, String symptoms, String physicalExamination, String treatmentPlan,
+			String testsRecommended, String notes) {
 		super();
 		this.recordId = recordId;
 		this.patient = patient;
 		this.doctor = doctor;
 		this.appointment = appointment;
+		this.prescriptions = prescriptions;
 		this.symptoms = symptoms;
 		this.physicalExamination = physicalExamination;
 		this.treatmentPlan = treatmentPlan;
 		this.testsRecommended = testsRecommended;
 		this.notes = notes;
 	}
+
+
 
 	public int getRecordId() {
 		return recordId;
@@ -140,11 +144,19 @@ public class MedicalRecord {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
+	
+	public List<Prescription> getPrescriptions() {
+		return prescriptions;
+	}
+
+	public void setPrescriptions(List<Prescription> prescriptions) {
+		this.prescriptions = prescriptions;
+	}
 
 	@Override
 	public String toString() {
 		return "MedicalRecord [recordId=" + recordId + ", patient=" + patient + ", doctor=" + doctor + ", appointment="
-				+ appointment + ", symptoms=" + symptoms + ", physicalExamination=" + physicalExamination
+				+ appointment.getAppointmentId() + ", symptoms=" + symptoms + ", physicalExamination=" + physicalExamination
 				+ ", treatmentPlan=" + treatmentPlan + ", testsRecommended=" + testsRecommended + ", notes=" + notes
 				+ "]";
 	}

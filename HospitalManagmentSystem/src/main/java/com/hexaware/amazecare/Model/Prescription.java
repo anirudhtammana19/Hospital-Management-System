@@ -18,8 +18,8 @@ public class Prescription {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int prescriptionId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "recordId",nullable = false)
     private MedicalRecord medicalRecord;
 
     @Column(length = 100, nullable = false)

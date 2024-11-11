@@ -66,8 +66,12 @@ public class Doctor {
     @Column(nullable = false)
     private Gender gender;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments;
+    
+
+    @OneToMany(mappedBy = "doctor")
+    private List<MedicalRecord> medicalRecords;
     
     public enum Gender {
         MALE, FEMALE, OTHER
@@ -124,14 +128,6 @@ public class Doctor {
 		this.lastName = lastName;
 	}
 
-	public String getProfile() {
-		return profile_image;
-	}
-
-	public void setProfile(String profile) {
-		this.profile_image = profile;
-	}
-
 	public String getSpecialty() {
 		return specialty;
 	}
@@ -142,6 +138,30 @@ public class Doctor {
 
 	public int getExperience() {
 		return experience;
+	}
+
+	public String getProfile_image() {
+		return profile_image;
+	}
+
+	public void setProfile_image(String profile_image) {
+		this.profile_image = profile_image;
+	}
+
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
+	public List<MedicalRecord> getMedicalRecords() {
+		return medicalRecords;
+	}
+
+	public void setMedicalRecords(List<MedicalRecord> medicalRecords) {
+		this.medicalRecords = medicalRecords;
 	}
 
 	public void setExperience(int experience) {

@@ -5,9 +5,9 @@ import java.util.List;
 public class MedicalRecordDTO {
 
     private int recordId;
-    private PatientDTO patient;
-    private DoctorDTO doctor;
-    private AppointmentDTO appointment;
+    private int patient;
+    private int doctor;
+    private int appointment;
     private List<PrescriptionDTO> prescriptions;
     private String symptoms;
     private String physicalExamination;
@@ -19,7 +19,7 @@ public class MedicalRecordDTO {
     	super();
     }
     // Constructor
-    public MedicalRecordDTO(int recordId, PatientDTO patient, DoctorDTO doctor, AppointmentDTO appointment,
+    public MedicalRecordDTO(int recordId, int patient, int doctor, int appointment,
                             List<PrescriptionDTO> prescriptions, String symptoms, String physicalExamination,
                             String treatmentPlan, String testsRecommended, String notes) {
         this.recordId = recordId;
@@ -43,27 +43,27 @@ public class MedicalRecordDTO {
         this.recordId = recordId;
     }
 
-    public PatientDTO getPatient() {
+    public int getPatient() {
         return patient;
     }
 
-    public void setPatient(PatientDTO patient) {
+    public void setPatient(int patient) {
         this.patient = patient;
     }
 
-    public DoctorDTO getDoctor() {
+    public int getDoctor() {
         return doctor;
     }
 
-    public void setDoctor(DoctorDTO doctor) {
+    public void setDoctor(int doctor) {
         this.doctor = doctor;
     }
 
-    public AppointmentDTO getAppointment() {
+    public int getAppointment() {
         return appointment;
     }
 
-    public void setAppointment(AppointmentDTO appointment) {
+    public void setAppointment(int appointment) {
         this.appointment = appointment;
     }
 

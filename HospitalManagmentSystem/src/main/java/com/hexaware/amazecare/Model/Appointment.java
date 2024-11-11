@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
@@ -24,15 +25,15 @@ public class Appointment {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int appointmentId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "patientId",nullable = false)
     private Patient patient;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "doctorId",nullable = false)
     private Doctor doctor;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "appointment")
     private MedicalRecord medicalRecord;
 
     @Column(nullable = false)
@@ -53,10 +54,16 @@ public class Appointment {
     @NotNull(message="Enter consultation type")
     private String visitType;
 
-    @Column(length = 50)//Enum !!
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
     @NotNull(message="Enter consultation type")
-    private String consultationType;
+    private ConsultationType consultationType;
   
+    public enum ConsultationType {
+        PHYSICAL, VIRTUAL, HOME_VISIT
+    }
+
+    
     public enum Status {
         REQUESTED, RESCHEDULED, SCHEDULED, COMPLETED, CANCELLED
     }
@@ -66,7 +73,7 @@ public class Appointment {
 	}
 
 	public Appointment(int appointmentId, Patient patient, Doctor doctor, LocalDate appointmentDate,
-			LocalTime appointmentTime, Status status, String reason, String visitType, String consultationType) {
+			LocalTime appointmentTime, Status status, String reason, String visitType, ConsultationType consultationType) {
 		super();
 		this.appointmentId = appointmentId;
 		this.patient = patient;
@@ -77,6 +84,14 @@ public class Appointment {
 		this.reason = reason;
 		this.visitType = visitType;
 		this.consultationType = consultationType;
+	}
+
+	public MedicalRecord getMedicalRecord() {
+		return medicalRecord;
+	}
+
+	public void setMedicalRecord(MedicalRecord medicalRecord) {
+		this.medicalRecord = medicalRecord;
 	}
 
 	public int getAppointmentId() {
@@ -143,11 +158,11 @@ public class Appointment {
 		this.visitType = visitType;
 	}
 
-	public String getConsultationType() {
+	public ConsultationType getConsultationType() {
 		return consultationType;
 	}
 
-	public void setConsultationType(String consultationType) {
+	public void setConsultationType(ConsultationType consultationType) {
 		this.consultationType = consultationType;
 	}
 
