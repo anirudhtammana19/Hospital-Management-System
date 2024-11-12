@@ -58,13 +58,10 @@ public class DoctorDTO {
     	super();
     }
 
-	public DoctorDTO(@NotNull String firstName, @NotNull String lastName, String profile_image,
-			@NotNull String specialty, @NotNull int experience, @NotNull String qualification,
-			@NotNull String designation,
-			@Pattern(regexp = "^[0-9]{10}$", message = "Enter correct phone number") @Size(min = 10, max = 10) String contactNumber,
-			@Email(message = "Enter a valid Email ID") @NotNull String email, @NotNull BloodGroup bloodGroup,
-			@NotNull Gender gender,
-			@Pattern(regexp = "^(?=.*[A-Z])(?=.*[!@#$%^&*()<>,.?\":{}|]).{7,}$", message = "Password must be at least 7 characters long, contain at least one uppercase letter, and one special character.") String password) {
+	public DoctorDTO(String firstName, String lastName, String profile_image,
+			String specialty, int experience, String qualification,
+			String designation,String contactNumber, String email, BloodGroup bloodGroup,
+			Gender gender, String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;

@@ -3,22 +3,34 @@ package com.hexaware.amazecare.DTO;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 
 public class PatientDTO {
 
     private String firstName;
     private String lastName;
+    
+    @Past(message="Enter correct date of birth")
     private LocalDate dateOfBirth;
     private String gender;
+    @Pattern(regexp = "^[0-9]{10}$",message="Enter correct phone number")
+    @Size(min=10,max=10)
     private String contactNumber;
     @Email
     private String email;
     private String address;
+    @Pattern(regexp = "^[0-9]{10}$",message="Enter correct phone number")
+    @Size(min=10,max=10)
     private String emergencyContact;
     private String allergies;
+    
+    @Pattern(regexp="^[0-9]{12}",message="Enter correct aadhar number")
+    @Size(min=12,max=12)
     private String aadharCard;
+    
     private String bloodGroup;
     @Pattern(regexp="^(?=.*[A-Z])(?=.*[!@#$%^&*()<>,.?\":{}|]).{7,}$",
     	    message="Password must be at least 7 characters long, contain at least one uppercase letter, and one special character.")
