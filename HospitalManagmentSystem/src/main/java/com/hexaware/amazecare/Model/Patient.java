@@ -16,6 +16,10 @@ public class Patient {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int patientId;
+    
+    @OneToOne(targetEntity = Users.class,fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users user;
 
     @Column(length = 50, nullable = false)
     private String firstName;
