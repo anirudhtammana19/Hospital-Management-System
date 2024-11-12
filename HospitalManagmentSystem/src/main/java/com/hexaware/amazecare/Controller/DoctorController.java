@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hexaware.amazecare.DTO.DoctorDTO;
+import com.hexaware.amazecare.Exception.DoctorNotFoundException;
 import com.hexaware.amazecare.Model.Doctor;
 import com.hexaware.amazecare.Service.DoctorService;
 
@@ -33,10 +34,13 @@ public class DoctorController {
 	@Autowired
 	DoctorService service;
 	
-	@PutMapping("/editProfile/{id}")
-	public ResponseEntity<DoctorDTO> editDoctor(@PathVariable int doctorid,@RequestBody DoctorDTO doc){
+	@PutMapping("/editProfile/{doctorid}")
+	public ResponseEntity<DoctorDTO> editDoctor(@PathVariable int doctorid,@RequestBody DoctorDTO doc) throws DoctorNotFoundException{
 		
 		DoctorDTO updated=service.editDoctorProfile(doctorid,doc);
+		if(updated==null) {
+			throw new DoctorNotFoundException("Doctor does not exist!!");
+		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
