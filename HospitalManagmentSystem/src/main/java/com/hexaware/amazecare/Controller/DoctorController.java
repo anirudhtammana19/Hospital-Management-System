@@ -1,9 +1,11 @@
 package com.hexaware.amazecare.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,9 +34,10 @@ public class DoctorController {
 	DoctorService service;
 	
 	@PutMapping("/editProfile/{id}")
-	public ResponseEntity<DoctorDTO> editDoctor(@PathVariable int doctorid){
+	public ResponseEntity<DoctorDTO> editDoctor(@PathVariable int doctorid,@RequestBody DoctorDTO doc){
 		
-		return new ResponseEntity<>;
+		DoctorDTO updated=service.editDoctorProfile(doctorid,doc);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	
