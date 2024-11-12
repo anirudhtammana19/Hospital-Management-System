@@ -18,11 +18,15 @@ public class GlobalExceptionController {
 		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<errorDetails> AllException(Exception e) {
-		
-		errorDetails error= new errorDetails(LocalDateTime.now(),e.getClass().getSimpleName() + ": " + e.getMessage(),"UnExpected Error",HttpStatus.INTERNAL_SERVER_ERROR.toString());
-	
-		return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+	/*
+	 * @ExceptionHandler(Exception.class) public ResponseEntity<errorDetails>
+	 * AllException(Exception e) {
+	 * 
+	 * errorDetails error= new
+	 * errorDetails(LocalDateTime.now(),e.getClass().getSimpleName() + ": " +
+	 * e.getMessage(),"UnExpected Error",HttpStatus.INTERNAL_SERVER_ERROR.toString()
+	 * );
+	 * 
+	 * return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR); }
+	 */
 }

@@ -95,7 +95,7 @@ public class Doctor {
 
 	public Doctor(int doctorId, String firstName, String lastName, String profile, String specialty, int experience,
 			String qualification, String designation, String contactNumber, String email, BloodGroup bloodGroup,
-			Gender gender) {
+			Gender gender,Users user) {
 		super();
 		this.doctorId = doctorId;
 		this.firstName = firstName;
@@ -109,6 +109,7 @@ public class Doctor {
 		this.email = email;
 		this.bloodGroup = bloodGroup;
 		this.gender = gender;
+		this.user=user;
 	}
 
 	public int getDoctorId() {
@@ -221,6 +222,14 @@ public class Doctor {
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
 	}
 
 	@Override

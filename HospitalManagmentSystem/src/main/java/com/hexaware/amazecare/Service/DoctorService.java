@@ -22,10 +22,18 @@ public class DoctorService {
 	
 	public DoctorDTO editDoctorProfile(int doctorid, DoctorDTO doc) {
 		
-		Users u= userRepo.findByUsername(doc.getEmail());
+		
+		Doctor doctor=doctorRepo.findById(doctorid).orElse(null);
+		Users u= userRepo.findByUsername(doctor.getEmail());
+		if(u==null) {
+			return null;
+		}
+		u.setUsername(doc.getEmail());
 		u.setPassword(doc.getPassword());
 		userRepo.save(u);
-		Doctor doctor=model.map(doc, Doctor.class);
+		doctor=model.map(doc, Doctor.class);
+		doctor.setDoctorId(doctorid);
+		doctor.setUser(u);
 		Doctor updatedDoctor=doctorRepo.save(doctor);
 		return model.map(updatedDoctor, DoctorDTO.class);
 	}
