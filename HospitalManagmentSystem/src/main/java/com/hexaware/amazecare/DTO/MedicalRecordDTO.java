@@ -4,10 +4,6 @@ import java.util.List;
 
 public class MedicalRecordDTO {
 
-    private int recordId;
-    private int patient;
-    private int doctor;
-    private int appointment;
     private List<PrescriptionDTO> prescriptions;
     private String symptoms;
     private String physicalExamination;
@@ -22,10 +18,7 @@ public class MedicalRecordDTO {
     public MedicalRecordDTO(int recordId, int patient, int doctor, int appointment,
                             List<PrescriptionDTO> prescriptions, String symptoms, String physicalExamination,
                             String treatmentPlan, String testsRecommended, String notes) {
-        this.recordId = recordId;
-        this.patient = patient;
-        this.doctor = doctor;
-        this.appointment = appointment;
+        
         this.prescriptions = prescriptions;
         this.symptoms = symptoms;
         this.physicalExamination = physicalExamination;
@@ -34,38 +27,7 @@ public class MedicalRecordDTO {
         this.notes = notes;
     }
 
-    // Getters and Setters
-    public int getRecordId() {
-        return recordId;
-    }
 
-    public void setRecordId(int recordId) {
-        this.recordId = recordId;
-    }
-
-    public int getPatient() {
-        return patient;
-    }
-
-    public void setPatient(int patient) {
-        this.patient = patient;
-    }
-
-    public int getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(int doctor) {
-        this.doctor = doctor;
-    }
-
-    public int getAppointment() {
-        return appointment;
-    }
-
-    public void setAppointment(int appointment) {
-        this.appointment = appointment;
-    }
 
     public List<PrescriptionDTO> getPrescriptions() {
         return prescriptions;
@@ -118,8 +80,7 @@ public class MedicalRecordDTO {
     // toString method
     @Override
     public String toString() {
-        return "MedicalRecordDTO [recordId=" + recordId + ", patient=" + patient + ", doctor=" + doctor + 
-               ", appointment=" + appointment + ", prescriptions=" + prescriptions + ", symptoms=" + symptoms + 
+        return "MedicalRecordDTO [prescriptions=" + prescriptions + ", symptoms=" + symptoms + 
                ", physicalExamination=" + physicalExamination + ", treatmentPlan=" + treatmentPlan + 
                ", testsRecommended=" + testsRecommended + ", notes=" + notes + "]";
     }

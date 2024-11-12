@@ -5,7 +5,6 @@ import java.time.LocalDate;
 
 public class PatientDTO {
 
-    private int patientId;
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
@@ -22,10 +21,10 @@ public class PatientDTO {
     	super();
     }
     // Constructor
-    public PatientDTO(int patientId, String firstName, String lastName, LocalDate dateOfBirth, String gender,
+    public PatientDTO( String firstName, String lastName, LocalDate dateOfBirth, String gender,
                       String contactNumber, String email, String address, String emergencyContact, 
                       String allergies, String aadharCard, String bloodGroup) {
-        this.patientId = patientId;
+        
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -40,13 +39,6 @@ public class PatientDTO {
     }
 
     // Getters and Setters
-    public int getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -139,7 +131,7 @@ public class PatientDTO {
     // toString method
     @Override
     public String toString() {
-        return "PatientDTO [patientId=" + patientId + ", firstName=" + firstName + ", lastName=" + lastName
+        return "PatientDTO [ firstName=" + firstName + ", lastName=" + lastName
                 + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", contactNumber=" + contactNumber
                 + ", email=" + email + ", address=" + address + ", emergencyContact=" + emergencyContact
                 + ", allergies=" + allergies + ", aadharCard=" + aadharCard + ", bloodGroup=" + bloodGroup + "]";

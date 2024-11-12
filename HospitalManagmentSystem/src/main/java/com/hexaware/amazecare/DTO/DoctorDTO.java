@@ -6,8 +6,6 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class DoctorDTO {
-
-    private int doctorId;
     
     @NotNull
     private String firstName;
@@ -48,10 +46,9 @@ public class DoctorDTO {
     	super();
     }
 
-    public DoctorDTO(int doctorId, String firstName, String lastName, String profile_image, String specialty, 
+    public DoctorDTO( String firstName, String lastName, String profile_image, String specialty, 
                     int experience, String qualification, String designation, String contactNumber, String email, 
                     BloodGroup bloodGroup, Gender gender) {
-        this.doctorId = doctorId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profile_image = profile_image;
@@ -63,14 +60,6 @@ public class DoctorDTO {
         this.email = email;
         this.bloodGroup = bloodGroup;
         this.gender = gender;
-    }
-
-    public int getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
     }
 
     public String getFirstName() {
@@ -163,7 +152,7 @@ public class DoctorDTO {
 
     @Override
     public String toString() {
-        return "DoctorDTO [doctorId=" + doctorId + ", firstName=" + firstName + ", lastName=" + lastName + 
+        return "DoctorDTO [ firstName=" + firstName + ", lastName=" + lastName + 
                ", profile_image=" + profile_image + ", specialty=" + specialty + ", experience=" + experience + 
                ", qualification=" + qualification + ", designation=" + designation + ", contactNumber=" + contactNumber + 
                ", email=" + email + ", bloodGroup=" + bloodGroup + ", gender=" + gender + "]";
