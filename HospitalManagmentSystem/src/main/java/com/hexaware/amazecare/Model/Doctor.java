@@ -77,7 +77,7 @@ public class Doctor {
     private List<Appointment> appointments;
     
 
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
     private List<MedicalRecord> medicalRecords;
     
     public enum Gender {

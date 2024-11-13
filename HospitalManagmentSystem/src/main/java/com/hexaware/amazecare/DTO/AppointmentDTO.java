@@ -8,8 +8,11 @@ import com.hexaware.amazecare.Model.Appointment.Status;
 
 public class AppointmentDTO {
 
+	int appointmentId;
+	int patientId;
 	String patientFirstName;
-	String DoctorFirstName;
+	int doctorId;
+	String doctorFirstName;
     private LocalDate appointmentDate;
     private LocalTime appointmentTime;
     private Status status;
@@ -21,17 +24,45 @@ public class AppointmentDTO {
     	super();
     }
 
-    public AppointmentDTO(String patientName, String doctorName, LocalDate appointmentDate, LocalTime appointmentTime,
-    		Status status, String reason, String visitType, ConsultationType consultationType) {
+	public AppointmentDTO(int appointmentId, int patientId, String patientFirstName, int doctorId,
+			String doctorFirstName, LocalDate appointmentDate, LocalTime appointmentTime, Status status, String reason,
+			String visitType, ConsultationType consultationType) {
 		super();
-		this.patientFirstName = patientName;
-		this.DoctorFirstName = doctorName;
+		this.appointmentId = appointmentId;
+		this.patientId = patientId;
+		this.patientFirstName = patientFirstName;
+		this.doctorId = doctorId;
+		this.doctorFirstName = doctorFirstName;
 		this.appointmentDate = appointmentDate;
 		this.appointmentTime = appointmentTime;
 		this.status = status;
 		this.reason = reason;
 		this.visitType = visitType;
 		this.consultationType = consultationType;
+	}
+
+	public int getAppointmentId() {
+		return appointmentId;
+	}
+
+	public void setAppointmentId(int appointmentId) {
+		this.appointmentId = appointmentId;
+	}
+
+	public int getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+
+	public int getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
 	}
 
 	public String getPatientFirstName() {
@@ -43,11 +74,11 @@ public class AppointmentDTO {
 	}
 
 	public String getDoctorFirstName() {
-		return DoctorFirstName;
+		return doctorFirstName;
 	}
 
 	public void setDoctorFirstName(String doctorFirstName) {
-		DoctorFirstName = doctorFirstName;
+		this.doctorFirstName = doctorFirstName;
 	}
 
 	public LocalDate getAppointmentDate() {

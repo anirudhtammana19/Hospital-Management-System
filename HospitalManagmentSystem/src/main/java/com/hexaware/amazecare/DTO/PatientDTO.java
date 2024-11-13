@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Size;
 
 public class PatientDTO {
 
+	private int patientId;
     private String firstName;
     private String lastName;
     
@@ -31,7 +32,7 @@ public class PatientDTO {
     private String aadharCard;
     
     private String bloodGroup;
-    @JsonProperty("password")
+    
     private String password;
     
 	public PatientDTO() {
@@ -39,10 +40,11 @@ public class PatientDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PatientDTO(String firstName, String lastName, LocalDate dateOfBirth, String gender, String contactNumber,
-			String email, String address, String emergencyContact, String allergies, String aadharCard,
-			String bloodGroup, String password) {
+	public PatientDTO(int patientId, String firstName, String lastName, LocalDate dateOfBirth, String gender,
+			String contactNumber, String email, String address, String emergencyContact, String allergies,
+			String aadharCard, String bloodGroup, String password) {
 		super();
+		this.patientId = patientId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dateOfBirth = dateOfBirth;
@@ -55,6 +57,14 @@ public class PatientDTO {
 		this.aadharCard = aadharCard;
 		this.bloodGroup = bloodGroup;
 		this.password = password;
+	}
+
+	public int getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
 	}
 
 	public String getFirstName() {

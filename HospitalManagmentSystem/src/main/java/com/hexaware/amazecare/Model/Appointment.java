@@ -33,7 +33,7 @@ public class Appointment {
     @JoinColumn(name = "doctorId",nullable = false)
     private Doctor doctor;
     
-    @OneToOne(mappedBy = "appointment")
+    @OneToOne(mappedBy = "appointment",cascade = CascadeType.ALL)
     private MedicalRecord medicalRecord;
 
     @Column(nullable = false)

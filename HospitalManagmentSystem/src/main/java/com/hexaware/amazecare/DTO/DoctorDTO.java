@@ -1,5 +1,8 @@
 package com.hexaware.amazecare.DTO;
 
+import com.hexaware.amazecare.Model.Doctor.BloodGroup;
+import com.hexaware.amazecare.Model.Doctor.Gender;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -7,62 +10,40 @@ import jakarta.validation.constraints.Size;
 
 public class DoctorDTO {
     
-    @NotNull
+	int doctorId;
     private String firstName;
-
-    @NotNull
     private String lastName;
 
     private String profile_image;
 
-    @NotNull
     private String specialty;
 
-    @NotNull
     private int experience;
 
-    @NotNull
     private String qualification;
 
-    @NotNull
     private String designation;
 
-    @Pattern(regexp = "^[0-9]{10}$", message = "Enter correct phone number")
-    @Size(min = 10, max = 10)
     private String contactNumber;
-
-    @Email(message = "Enter a valid Email ID")
-    @NotNull
     private String email;
 
-    @NotNull
     private BloodGroup bloodGroup;
 
-    @NotNull
     private Gender gender;
     
-    @Pattern(regexp="^(?=.*[A-Z])(?=.*[!@#$%^&*()<>,.?\":{}|]).{7,}$",
-    	    message="Password must be at least 7 characters long, contain at least one uppercase letter, and one special character.")
     private String password;
 
-    public enum Gender {
-        MALE, FEMALE, OTHER
-    }
-
-    public enum BloodGroup {
-        A_POSITIVE, A_NEGATIVE, B_POSITIVE, B_NEGATIVE, AB_POSITIVE, AB_NEGATIVE, O_POSITIVE, O_NEGATIVE
-    }
 
     public DoctorDTO() {
         // Default constructor
     	super();
-    }
-
-	public DoctorDTO(String firstName, String lastName, String profile_image,
-			String specialty, int experience, String qualification,
-			String designation,String contactNumber, String email, BloodGroup bloodGroup,
-			Gender gender, String password) {
+    }    
+    
+    public DoctorDTO(int doctorId, String firstName, String lastName, String profile_image, String specialty,
+			int experience, String qualification, String designation, String contactNumber, String email,
+			BloodGroup bloodGroup, Gender gender, String password) {
 		super();
+		this.doctorId = doctorId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.profile_image = profile_image;
@@ -75,6 +56,14 @@ public class DoctorDTO {
 		this.bloodGroup = bloodGroup;
 		this.gender = gender;
 		this.password = password;
+	}
+
+	public int getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
 	}
 
 	public String getFirstName() {

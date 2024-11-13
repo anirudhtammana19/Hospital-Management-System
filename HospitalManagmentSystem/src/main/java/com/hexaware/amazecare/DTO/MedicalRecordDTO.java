@@ -4,7 +4,10 @@ import java.util.List;
 
 public class MedicalRecordDTO {
 
+	int recordId;
+	int patientId;
 	String patientFirstName;
+	int doctorId;
 	String doctorFirstName;
     private List<PrescriptionDTO> prescriptions;
     private String symptoms;
@@ -16,12 +19,16 @@ public class MedicalRecordDTO {
     public MedicalRecordDTO() {
     	super();
     }
-
-    public MedicalRecordDTO(String patientName, String doctorName, List<PrescriptionDTO> prescriptions, String symptoms,
-			String physicalExamination, String treatmentPlan, String testsRecommended, String notes) {
+    
+	public MedicalRecordDTO(int recordId, int patientId, String patientFirstName, int doctorId, String doctorFirstName,
+			List<PrescriptionDTO> prescriptions, String symptoms, String physicalExamination, String treatmentPlan,
+			String testsRecommended, String notes) {
 		super();
-		this.patientFirstName = patientName;
-		this.doctorFirstName = doctorName;
+		this.recordId = recordId;
+		this.patientId = patientId;
+		this.patientFirstName = patientFirstName;
+		this.doctorId = doctorId;
+		this.doctorFirstName = doctorFirstName;
 		this.prescriptions = prescriptions;
 		this.symptoms = symptoms;
 		this.physicalExamination = physicalExamination;
@@ -30,7 +37,30 @@ public class MedicalRecordDTO {
 		this.notes = notes;
 	}
 
-    
+	public int getRecordId() {
+		return recordId;
+	}
+
+	public void setRecordId(int recordId) {
+		this.recordId = recordId;
+	}
+
+	public int getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+
+	public int getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
+	}
+
 	public String getPatientFirstName() {
 		return patientFirstName;
 	}

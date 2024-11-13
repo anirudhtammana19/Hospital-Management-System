@@ -18,7 +18,7 @@ public class Patient {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int patientId;
     
-    @OneToOne(targetEntity = Users.class,fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Users.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
@@ -78,7 +78,7 @@ public class Patient {
     private List<Appointment> appointments;
 
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient",cascade = CascadeType.ALL)
     private List<MedicalRecord> medicalRecords;
     
     public enum Gender {
