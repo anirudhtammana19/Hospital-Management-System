@@ -1,11 +1,12 @@
 package com.hexaware.amazecare.Model;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 import java.util.List;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -21,7 +22,15 @@ public class Patient {
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
-    @Column(length = 50, nullable = false)
+    public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	@Column(length = 50, nullable = false)
     private String firstName;
 
     @Column(length = 50, nullable = false)
@@ -44,10 +53,11 @@ public class Patient {
     @Email(message="Enter correct emailid in the format @gmail.com")
     private String email;
 
-    @Column(columnDefinition = "TEXT",nullable = false)
+    @Column(nullable = false,length=255)
     private String address;
+    
 
-    @Column
+	@Column
     @Pattern(regexp = "^[0-9]{10}$",message="Enter correct phone number")
     @Size(min=10,max=10)
     private String emergencyContact;
@@ -55,7 +65,7 @@ public class Patient {
     @Column(columnDefinition = "TEXT")
     private String allergies;
 
-    @Column(length = 12, nullable = false)
+    @Column(length = 12, nullable = true)
     @Pattern(regexp="^[0-9]{12}",message="Enter correct aadhar number")
     @Size(min=12,max=12)
     private String aadharCard;
@@ -100,7 +110,11 @@ public class Patient {
 		this.allergies = allergies;
 		this.aadharCard = aadharCard;
 		this.bloodGroup = bloodGroup;
+		
+		
 	}
+
+	
 
 	public int getPatientId() {
 		return patientId;
@@ -218,8 +232,9 @@ public class Patient {
 	public String toString() {
 		return "Patient [patientId=" + patientId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", contactNumber=" + contactNumber
-				+ ", email=" + email + ", address=" + address + ", emergencyContact=" + emergencyContact
-				+ ", allergies=" + allergies + ", aadharCard=" + aadharCard + ", bloodGroup=" + bloodGroup + "]";
+				+ ", email=" + email + " address=" + address + ", emergencyContact="
+				+ emergencyContact + ", allergies=" + allergies + ", aadharCard=" + aadharCard + ", bloodGroup="
+				+ bloodGroup + ", appointments=" + appointments + ", medicalRecords=" + medicalRecords + "]";
 	}
     
     

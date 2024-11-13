@@ -98,6 +98,8 @@ public class AppointmentDTO {
         this.consultationType = consultationType;
     }
 
+	
+
     // toString method
     @Override
     public String toString() {

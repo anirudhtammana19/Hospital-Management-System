@@ -12,6 +12,8 @@ public interface AppointmentRepo extends JpaRepository<Appointment,Integer> {
 	 
 	 List<Appointment> findByDoctor_DoctorId(int doctorId);
 	 
+	 
+	 
 }
 
 
