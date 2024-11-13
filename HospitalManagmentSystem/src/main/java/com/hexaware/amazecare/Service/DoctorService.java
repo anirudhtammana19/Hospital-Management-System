@@ -2,9 +2,12 @@ package com.hexaware.amazecare.Service;
 import com.hexaware.amazecare.DTO.AppointmentDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDTO;
+import com.hexaware.amazecare.DTO.PatientDTO;
 import com.hexaware.amazecare.DTO.PrescriptionDTO;
 import com.hexaware.amazecare.Model.Appointment;
 import com.hexaware.amazecare.Model.Appointment.Status;
+import com.hexaware.amazecare.Model.Patient.BloodGroup;
+import com.hexaware.amazecare.Model.Patient.Gender;
 import com.hexaware.amazecare.Model.Doctor;
 import com.hexaware.amazecare.Model.MedicalRecord;
 import com.hexaware.amazecare.Model.Prescription;
@@ -47,21 +50,60 @@ public class DoctorService {
 	
 	public DoctorDTO editDoctorProfile(int doctorid, DoctorDTO doc) {
 		
-		
 		Doctor doctor=doctorRepo.findById(doctorid).orElse(null);
-		Users u= userRepo.findByUsername(doctor.getEmail());
-		if(u==null) {
+		if(doctor==null) {
 			return null;
 		}
-		u.setUsername(doc.getEmail());
-		u.setPassword(doc.getPassword());
-		userRepo.save(u);
-		doctor=model.map(doc, Doctor.class);
-		doctor.setDoctorId(doctorid);
-		doctor.setUser(u);
-		Doctor updatedDoctor=doctorRepo.save(doctor);
-		return model.map(updatedDoctor, DoctorDTO.class);
-	}
+	    if(doc.getFirstName()!=null) {
+	    	doctor.setFirstName(doc.getFirstName());
+	    }
+	    if(doc.getLastName()!=null) {
+	    	doctor.setLastName(doc.getLastName());
+	    }
+	    if(doc.getGender()!=null) {
+	    	doctor.setGender(doc.getGender());
+	    }
+	    if(doc.getContactNumber()!=null) {
+	    	doctor.setContactNumber(doc.getContactNumber());
+	    }
+	    if(doc.getEmail()!=null) {
+	    	doctor.setEmail(doc.getEmail());
+	    }
+	    if(doc.getProfile_image()!=null) {
+	    	doctor.setProfile_image(doc.getProfile_image());
+	    }
+	    if(doc.getDesignation()!=null) {
+	    	doctor.setDesignation(doc.getDesignation());
+	    }
+	    if(doc.getExperience()!=0) {
+	    	doctor.setExperience(doc.getExperience());
+	    }
+	    if(doc.getQualification()!=null) {
+	    	doctor.setQualification(doc.getQualification());
+	    }
+	     
+	    if(doc.getBloodGroup()!=null) {
+	    	doctor.setBloodGroup(doc.getBloodGroup());
+	    }
+	    
+	    if(doc.getSpecialty()!=null) {
+	    	doctor.setSpecialty(doc.getSpecialty());
+	    }
+	    
+	    Users u = userRepo.findByUsername(doc.getEmail()); 
+	    if (u != null) {
+	    	if(doc.getEmail()!=null) {
+	    		u.setUsername(doc.getEmail());
+		    }
+	    	if(doc.getPassword()!=null) {
+	    		u.setPassword(doc.getPassword());
+		    }
+	    	doctor.setUser(u);
+	        userRepo.save(u); 
+	    }
+	    doctorRepo.save(doctor);
+	    return model.map(doctor, DoctorDTO.class);
+		}
 
 	public DoctorDTO viewDoctorProfile(int doctorid) {
 		Doctor doctor=doctorRepo.findById(doctorid).orElse(null);
@@ -73,12 +115,7 @@ public class DoctorService {
 		
 		List<Appointment> appointments=appointRepo.findByDoctor_DoctorId(doctorid);
 		
-		 return appointments.stream().map(i -> {
-		        AppointmentDTO dto = model.map(i, AppointmentDTO.class);
-		        dto.setDoctorFirstName(i.getDoctor().getFirstName());
-		        dto.setPatientFirstName(i.getPatient().getFirstName());
-		        return dto;
-		    }).toList();
+		 return appointments.stream().map(i -> model.map(i, AppointmentDTO.class)).toList();
 	}
 
 	public List<MedicalRecordDTO> viewPatientMedicalRecords(int patientid) {

@@ -209,4 +209,10 @@ public class PatientService {
 		}).toList();
 	}
 
+	public PatientDTO viewPatientProfile(int patientid) {
+		Patient doctor=pr.findById(patientid).orElse(null);
+		
+		return mapper.map(doctor, PatientDTO.class);
+	}
+
 }

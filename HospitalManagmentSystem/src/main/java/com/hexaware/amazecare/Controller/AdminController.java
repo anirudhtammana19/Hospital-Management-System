@@ -59,7 +59,7 @@ public class AdminController {
 	@Autowired
 	AdminService as;
 	
-	@PostMapping("/adddoc")
+	@PostMapping("/doctor/add")
 	public ResponseEntity<DoctorDTO> adddoctor(@RequestBody DoctorDTO d){
 		
 		DoctorDTO doc = as.addadoctor(d);

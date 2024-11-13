@@ -56,6 +56,17 @@ public class PatientController {
 	    return new ResponseEntity<>(savedData, HttpStatus.OK); // Corrected syntax
 	}
 	
+	//View Profile
+		@GetMapping("/viewProfile/{patientid}")
+		public ResponseEntity<PatientDTO> viewDoctorProfile(@PathVariable int patientid) throws DoctorNotFoundException{
+			
+			PatientDTO patient=ps.viewPatientProfile(patientid);
+			if(patient==null) {
+				throw new DoctorNotFoundException("Doctor does not exist!!");
+			}
+			return new ResponseEntity<>(patient,HttpStatus.OK);
+		}
+	
 	@PutMapping("/updateprofile/{id}")
 	public ResponseEntity<PatientDTO> updateProfile(@PathVariable int id, @RequestBody PatientDTO p) throws PatientNotFoundException {
 	    PatientDTO updatedProfile = ps.updateprofile(id, p);
