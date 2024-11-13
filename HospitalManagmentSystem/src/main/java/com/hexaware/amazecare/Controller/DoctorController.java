@@ -111,9 +111,10 @@ public class DoctorController {
 	
 	//Reschedule Appointment
 	@PutMapping("/rescheduleAppointment/{doctorid}/{appointmentid}/{date}/{time}")
-	public ResponseEntity<AppointmentDTO> rescheduleAppointment(@PathVariable int doctorid,@PathVariable int appointmentid,@PathVariable LocalDate date,@PathVariable LocalTime time) throws AppointmentNotFoundException{
+	public ResponseEntity<AppointmentDTO> rescheduleAppointment(@PathVariable int doctorid,@PathVariable int appointmentid,@PathVariable LocalDate date,@PathVariable String time) throws AppointmentNotFoundException{
 		
-		AppointmentDTO updated=service.rescheduleAppointment(doctorid,appointmentid,date,time);
+		LocalTime appointtime=LocalTime.parse(time);
+		AppointmentDTO updated=service.rescheduleAppointment(doctorid,appointmentid,date,appointtime);
 		if(updated==null) {
 			throw new AppointmentNotFoundException("Appointment does not exist!!");
 		}
