@@ -15,7 +15,7 @@ public class GlobalExceptionController {
 	
 
 	@ExceptionHandler(DoctorNotFoundException.class)
-	public ResponseEntity<errorDetails> CustomerNotFound(DoctorNotFoundException e) {
+	public ResponseEntity<errorDetails> DoctorNotFound(DoctorNotFoundException e) {
 		
 		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),"location not found",HttpStatus.NOT_FOUND.toString());
 	
@@ -23,12 +23,21 @@ public class GlobalExceptionController {
 	}
 	
 	@ExceptionHandler(AppointmentNotFoundException.class)
-	public ResponseEntity<errorDetails> CustomerNotFound(AppointmentNotFoundException e) {
+	public ResponseEntity<errorDetails> AppointmentNotFound(AppointmentNotFoundException e) {
 		
 		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),"location not found",HttpStatus.NOT_FOUND.toString());
 	
 		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 	}
+
+	@ExceptionHandler(AppointmentCancelledException.class)
+	public ResponseEntity<errorDetails> AppointmentCancelled(AppointmentCancelledException e) {
+		
+		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),"location not found",HttpStatus.CONFLICT.toString());
+	
+		return new ResponseEntity<>(error,HttpStatus.CONFLICT);
+	}
+	
 	@ExceptionHandler(PatientNotFoundException.class)
 	public ResponseEntity<errorDetails> PatientNotFound(PatientNotFoundException p){
 		errorDetails error = new errorDetails(LocalDateTime.now(),p.getMessage(),"patient not found",HttpStatus.NOT_FOUND.toString());

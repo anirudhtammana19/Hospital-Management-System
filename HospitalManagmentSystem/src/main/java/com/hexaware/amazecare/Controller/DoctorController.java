@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -117,6 +118,27 @@ public class DoctorController {
 		AppointmentDTO updated=service.rescheduleAppointment(doctorid,appointmentid,date,appointtime);
 		if(updated==null) {
 			throw new AppointmentNotFoundException("Appointment does not exist!!");
+		}
+		return new ResponseEntity<>(updated,HttpStatus.OK);
+	}
+	
+	//Consultation
+	@PostMapping("/conductAppointment/{appointmentid}")
+	public ResponseEntity<MedicalRecordDTO> conductAppointment(@PathVariable int appointmentid,@RequestBody MedicalRecordDTO record) throws AppointmentNotFoundException{
+		
+		MedicalRecordDTO updated=service.conductAppointment(appointmentid,record);
+		if(updated==null) {
+			throw new AppointmentNotFoundException("Appointment does not exist!!");
+		}
+		return new ResponseEntity<>(updated,HttpStatus.OK);
+	}
+	
+	@PutMapping("/editRecord/{recordid}")
+	public ResponseEntity<MedicalRecordDTO> editRecord(@PathVariable int recordid,@RequestBody MedicalRecordDTO record) throws RecordsNotFoundException{
+		
+		MedicalRecordDTO updated=service.editRecord(recordid,record);
+		if(updated==null) {
+			throw new RecordsNotFoundException("Medical record with ID " + recordid + " not found");
 		}
 		return new ResponseEntity<>(updated,HttpStatus.OK);
 	}
