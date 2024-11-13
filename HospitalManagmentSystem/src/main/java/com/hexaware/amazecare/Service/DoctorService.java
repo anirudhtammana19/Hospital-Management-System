@@ -126,7 +126,7 @@ public class DoctorService {
 	public AppointmentDTO rescheduleAppointment(int doctorid, int appointmentid, LocalDate date, LocalTime time) {
 		Appointment app=appointRepo.findById(appointmentid).orElse(null);
 		if(app!=null) {
-			if(app.getDoctor().getDoctorId()==doctorid && app.getStatus().equals(Status.SCHEDULED)) {
+			if(app.getDoctor().getDoctorId()==doctorid && (app.getStatus().equals(Status.SCHEDULED) || app.getStatus().equals(Status.RESCHEDULED))) {
 				app.setAppointmentDate(date);
 				app.setAppointmentTime(time);
 				app.setStatus(Status.RESCHEDULED);

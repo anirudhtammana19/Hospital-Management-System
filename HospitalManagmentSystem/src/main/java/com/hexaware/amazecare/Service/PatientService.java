@@ -184,7 +184,7 @@ public class PatientService {
 
 	public AppointmentDTO rescheduleAppointmentByPatient(int appointmentid, LocalDate date, LocalTime time) {
 		Appointment app = ar.findById(appointmentid).orElse(null);
-		if (app != null && app.getStatus().equals(Status.SCHEDULED)) {
+		if (app != null && (app.getStatus().equals(Status.SCHEDULED) || app.getStatus().equals(Status.RESCHEDULED))) {
 			app.setAppointmentDate(date);
 			app.setAppointmentTime(time);
 			app.setStatus(Status.RESCHEDULED);
