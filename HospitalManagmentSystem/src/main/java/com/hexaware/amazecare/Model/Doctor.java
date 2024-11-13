@@ -73,7 +73,7 @@ public class Doctor {
     @Column(nullable = false)
     private Gender gender;
 
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL)
     private List<Appointment> appointments;
     
 

@@ -29,7 +29,7 @@ public class MedicalRecord {
     @JoinColumn(name="doctorId",nullable = false)
     private Doctor doctor;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "appointmentId",nullable = false)
     private Appointment appointment;
     

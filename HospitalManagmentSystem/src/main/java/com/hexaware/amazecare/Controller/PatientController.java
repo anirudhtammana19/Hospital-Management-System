@@ -87,7 +87,7 @@ public class PatientController {
 		
 	}
 	
-	@DeleteMapping("/deleteappointment/{appointmentid}")
+	/*@DeleteMapping("/deleteappointment/{appointmentid}")
 	public ResponseEntity<String> deleteappointmnet(@PathVariable int appointmentid) throws AppointmentNotFoundException{
 		
 		String r= ps.deleteaappointment(appointmentid);
@@ -96,7 +96,7 @@ public class PatientController {
 		}
 		return new ResponseEntity<>(r,HttpStatus.OK);
 		
-	}
+	}*/
 	
 	@PostMapping("/bookappointment/{patientid}/{doctorid}")
 	public ResponseEntity<AppointmentDTO> bookappointmnet(@PathVariable int patientid,@PathVariable int doctorid,@RequestBody AppointmentDTO a) throws DoctorNotFoundException{

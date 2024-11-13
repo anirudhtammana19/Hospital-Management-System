@@ -139,7 +139,7 @@ public class PatientService {
 		
 	}
 
-	public String deleteaappointment(int appointmentid) {
+	/*public String deleteaappointment(int appointmentid) {
 		
 		Appointment appointment = ar.findById(appointmentid).orElse(null);
 		if (appointment!=null) {
@@ -149,7 +149,7 @@ public class PatientService {
 			return "Appointment cancelled successfully";
 		}
 		return "Appointment not found";
-	}
+	}*/
 	
 	
 	public AppointmentDTO bookanappointment(AppointmentDTO a, int patientid, int doctorid) throws DoctorNotFoundException {
