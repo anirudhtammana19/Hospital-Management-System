@@ -1,13 +1,17 @@
 package com.hexaware.amazecare.Service;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hexaware.amazecare.DTO.AppointmentDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
+import com.hexaware.amazecare.DTO.MedicalRecordDTO;
+import com.hexaware.amazecare.DTO.PatientDTO;
 import com.hexaware.amazecare.Model.Appointment;
 import com.hexaware.amazecare.Model.Doctor;
 import com.hexaware.amazecare.Model.MedicalRecord;
@@ -22,17 +26,17 @@ import com.hexaware.amazecare.Repository.UserRepo;
 @Service
 public class AdminService {
 	@Autowired
-	DoctorRepo dr;
+	DoctorRepo doctorRepo;
 	@Autowired
 	ModelMapper mapper;
 	@Autowired
 	UserRepo ur;
 	@Autowired
-	AppointmentRepo ar;
+	AppointmentRepo appointRepo;
 	@Autowired
-	PatientRepo pr;
+	PatientRepo patientRepo;
 	@Autowired
-	MedicalRecordRepo mr;
+	MedicalRecordRepo medicalRepo;
 	
 	public DoctorDTO addadoctor(DoctorDTO d) {
 		
@@ -46,49 +50,82 @@ public class AdminService {
 		ur.save(user);
 		doctor.setUser(user);
 		
-		dr.save(doctor);
+		doctorRepo.save(doctor);
 		return mapper.map(doctor, DoctorDTO.class);
 		
 		
 	} 
+	
+	public List<DoctorDTO> viewAllDoctors() {
+		List<Doctor> list = doctorRepo.findAll();
+		List<DoctorDTO> out=list.stream().map(i->{
+			DoctorDTO j=mapper.map(i,DoctorDTO.class);
+			j.setPassword(i.getUser().getPassword());
+			return j;}).toList();
+		return out;
+	}
+
+	public List<PatientDTO> viewAllPatients() {
+		List<Patient> list = patientRepo.findAll();
+		List<PatientDTO> out=list.stream().map(i->{
+			PatientDTO j=mapper.map(i,PatientDTO.class);
+			j.setPassword(i.getUser().getPassword());
+			return j;}).toList();
+		return out;
+		
+		
+	}
+
+	public List<MedicalRecordDTO> viewAllRecords() {
+		List<MedicalRecord> list = medicalRepo.findAll();
+		return list.stream().map(i->mapper.map(i,MedicalRecordDTO.class)).toList();
+	}
+
+	public List<AppointmentDTO> viewAllAppointments() {
+		List<Appointment> list = appointRepo.findAll();
+		return list.stream().map(i->mapper.map(i,AppointmentDTO.class)).toList();
+		
+	}
+
+	
 	public String deleteaappointment(int appointmentid) {
 		
-		Appointment appointment = ar.findById(appointmentid).orElse(null);
+		Appointment appointment = appointRepo.findById(appointmentid).orElse(null);
 		if (appointment!=null) {
 			
-			ar.delete(appointment);
+			appointRepo.delete(appointment);
 			return "Appointment deleted successfully";
 		}
 		return "Appointment not found";
 	}
 	
 	public String deletedoctorbyid(int doctorid)  {
-		Doctor doctor = dr.findById(doctorid).orElse(null);
+		Doctor doctor = doctorRepo.findById(doctorid).orElse(null);
 		if(doctor==null) {
 			return null;
 			
 		}
-		dr.delete(doctor);
+		doctorRepo.delete(doctor);
 		return "Doctor deleted successfully";
 	}
 	
 	public String deletepatientbyid(int patientid)  {
-		Patient patient = pr.findById(patientid).orElse(null);
+		Patient patient = patientRepo.findById(patientid).orElse(null);
 		if(patient==null) {
 			return null;
 			
 		}
-		pr.delete(patient);
+		patientRepo.delete(patient);
 		return "Doctor deleted successfully";
 	}
 	
 	public String deleterecordbyid(int recordid)  {
-		MedicalRecord record = mr.findById(recordid).orElse(null);
+		MedicalRecord record = medicalRepo.findById(recordid).orElse(null);
 		if(record==null) {
 			return null;
 			
 		}
-		mr.delete(record);
+		medicalRepo.delete(record);
 		return "Doctor deleted successfully";
 	}
 

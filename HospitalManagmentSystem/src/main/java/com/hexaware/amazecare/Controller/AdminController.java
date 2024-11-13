@@ -1,9 +1,13 @@
 package com.hexaware.amazecare.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hexaware.amazecare.DTO.AppointmentDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
+import com.hexaware.amazecare.DTO.MedicalRecordDTO;
+import com.hexaware.amazecare.DTO.PatientDTO;
 import com.hexaware.amazecare.Exception.AppointmentNotFoundException;
 import com.hexaware.amazecare.Exception.DoctorNotFoundException;
 import com.hexaware.amazecare.Exception.PatientNotFoundException;
@@ -60,6 +67,29 @@ public class AdminController {
 		return new ResponseEntity<>(doc,HttpStatus.CREATED);
 		
 	}
+	@GetMapping("/getAllDoctors")
+	public ResponseEntity<List<DoctorDTO>> viewdoctor(){
+		List<DoctorDTO> doc=as.viewAllDoctors();
+		return new ResponseEntity<>(doc,HttpStatus.OK);
+	} 
+	
+	@GetMapping("/getAllPatients")
+	public ResponseEntity<List<PatientDTO>> viewPatient(){
+		List<PatientDTO> patients=as.viewAllPatients();
+		return new ResponseEntity<>(patients,HttpStatus.OK);
+	} 
+
+	@GetMapping("/getAllAppointments")
+	public ResponseEntity<List<AppointmentDTO>> viewAppointment(){
+		List<AppointmentDTO> Appointments=as.viewAllAppointments();
+		return new ResponseEntity<>(Appointments,HttpStatus.OK);
+	} 
+
+	@GetMapping("/getAllRecords")
+	public ResponseEntity<List<MedicalRecordDTO>> viewRecord(){
+		List<MedicalRecordDTO> Records=as.viewAllRecords();
+		return new ResponseEntity<>(Records,HttpStatus.OK);
+	} 
 	
 	@DeleteMapping("/deleteappointment/{appointmentid}")
 	public ResponseEntity<String> deleteappointmnet(@PathVariable int appointmentid) throws AppointmentNotFoundException{
@@ -102,15 +132,11 @@ public class AdminController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
+
+
+
+
+
+
+
