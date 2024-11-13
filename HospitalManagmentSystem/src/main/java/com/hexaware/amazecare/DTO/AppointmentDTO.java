@@ -25,7 +25,7 @@ public class AppointmentDTO {
     		Status status, String reason, String visitType, ConsultationType consultationType) {
 		super();
 		this.patientFirstName = patientName;
-		DoctorFirstName = doctorName;
+		this.DoctorFirstName = doctorName;
 		this.appointmentDate = appointmentDate;
 		this.appointmentTime = appointmentTime;
 		this.status = status;

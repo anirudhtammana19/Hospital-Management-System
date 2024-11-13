@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.hexaware.amazecare.DTO.AppointmentDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDTO;
 import com.hexaware.amazecare.DTO.PatientDTO;
+import com.hexaware.amazecare.Exception.DoctorNotFoundException;
 import com.hexaware.amazecare.Exception.PatientNotFoundException;
 import com.hexaware.amazecare.Model.Appointment;
 import com.hexaware.amazecare.Model.Appointment.Status;
@@ -116,17 +117,23 @@ public class PatientService {
 		
 		List<Appointment> appointment = ar.findByPatient_PatientId(patientid);
 		
-		List<AppointmentDTO> appointmentDTOs = appointment.stream().map(i->mapper.map(appointment, AppointmentDTO.class)).collect(Collectors.toList());
+		List<AppointmentDTO> appointmentDTOs = appointment.stream()
+			    .map(i -> mapper.map(i, AppointmentDTO.class))
+			    .collect(Collectors.toList());
+
 		
 		return appointmentDTOs;
 		
 	}
 	
-	public List<MedicalRecordDTO> getpatientmedicalrecords(int patientid){
+	public List<MedicalRecordDTO> getpatientmedicalrecords(int patientid) {
 		
 		List<MedicalRecord> record = mr.findByPatient_PatientId(patientid);
-		
-		List<MedicalRecordDTO> recorddto = record.stream().map(i->mapper.map(record, MedicalRecordDTO.class)).collect(Collectors.toList());
+	
+		List<MedicalRecordDTO> recorddto = record.stream()
+			    .map(i -> mapper.map(i, MedicalRecordDTO.class))
+			    .collect(Collectors.toList());
+
 		
 		return recorddto;
 		
@@ -139,45 +146,61 @@ public class PatientService {
 			
 			appointment.setStatus(Appointment.Status.CANCELLED);
 			ar.save(appointment);
-			return "Appointment canclled successfully";
+			return "Appointment cancelled successfully";
 		}
 		return "Appointment not found";
 	}
 	
 	
-	public AppointmentDTO bookanappointment(AppointmentDTO a) {
-		Appointment appointment = mapper.map(a, Appointment.class);
-		
-		Doctor doctor = (Doctor) dr.findByfirstName(a.getDoctorFirstName());
-		
-		if(doctor!=null) {
-			
-			appointment.setDoctor(doctor);
-			
-			appointment.setStatus(Appointment.Status.REQUESTED);
-			
-			ar.save(appointment);
-			
-			return mapper.map(appointment, AppointmentDTO.class);
-		}
-		return null;
+	public AppointmentDTO bookanappointment(AppointmentDTO a, int patientid, int doctorid) throws DoctorNotFoundException {
+	    // Convert AppointmentDTO to Appointment entity using the mapper
+	    Appointment appointment = mapper.map(a, Appointment.class);
+	    
+	    // Look for the doctor by ID
+	    Optional<Doctor> doctorOpt = dr.findById(doctorid);
+	    // Look for the patient by ID
+	    Optional<Patient> patientOpt = pr.findById(patientid);
+	    
+	    if (doctorOpt.isPresent() && patientOpt.isPresent()) {
+	        // Set the doctor and patient if found
+	        Doctor doctor = doctorOpt.get();
+	        Patient patient = patientOpt.get();
+
+	        // Set the appointment details
+	        appointment.setDoctor(doctor);
+	        appointment.setPatient(patient);
+	        appointment.setStatus(Appointment.Status.REQUESTED); // default status
+
+	        // Save the appointment
+	        ar.save(appointment);
+
+	        // Map the saved appointment back to AppointmentDTO
+	        return mapper.map(appointment, AppointmentDTO.class);
+	    } else {
+	        // If either doctor or patient is not found, throw exception
+	        if (!doctorOpt.isPresent()) {
+	            throw new DoctorNotFoundException("Doctor with ID " + doctorid + " not found");
+	        }
+	        throw new DoctorNotFoundException("Patient with ID " + patientid + " not found");
+	    }
 	}
 
-	public AppointmentDTO rescheduleAppointmentByPatient(int patientid, int appointmentid, LocalDate date, LocalTime time) {
+
+
+	public AppointmentDTO rescheduleAppointmentByPatient(int appointmentid, LocalDate date, LocalTime time) {
 	    Appointment app = ar.findById(appointmentid).orElse(null);
-	    if (app != null) {
-	        if (app.getPatient().getPatientId() == patientid && app.getStatus().equals(Status.SCHEDULED)) {
-	            app.setAppointmentDate(date);
-	            app.setAppointmentTime(time);
-	            app.setStatus(Status.RESCHEDULED);
-	            ar.save(app);
-	            AppointmentDTO appDTO = mapper.map(app, AppointmentDTO.class);
-	            appDTO.setDoctorFirstName(app.getDoctor().getFirstName());
-	            appDTO.setPatientFirstName(app.getPatient().getFirstName());
-	            return appDTO;
-	        }
+	    if (app != null && app.getStatus().equals(Status.SCHEDULED)) {
+	        app.setAppointmentDate(date);
+	        app.setAppointmentTime(time);
+	        app.setStatus(Status.RESCHEDULED);
+	        ar.save(app);
+	        AppointmentDTO appDTO = mapper.map(app, AppointmentDTO.class);
+	        return appDTO;
+	    } else {
+	        // Optional: return an error or empty response if not scheduled
+	        return null;
 	    }
-	    return null;
+
 	}
 
 	

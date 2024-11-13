@@ -1,6 +1,7 @@
 package com.hexaware.amazecare.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,5 +16,6 @@ public interface DoctorRepo extends JpaRepository<Doctor,Integer> {
 	
 	public List<Doctor> findByFirstNameStartingWith(String firstName);
 
-	public Doctor findByfirstName(String a);
+	
+
 }

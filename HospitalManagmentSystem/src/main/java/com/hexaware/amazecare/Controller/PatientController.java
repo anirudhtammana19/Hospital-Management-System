@@ -35,6 +35,7 @@ public class PatientController {
 	 * login-
 	 * logout-
 	 * register- insert done
+	
 	 * book appointment {doctorid}done
 	 * view appointments done
 	 * view medical history done
@@ -75,7 +76,7 @@ public class PatientController {
 		
 	}
 	
-	@GetMapping("/getmedicalrecors/{patientid}")
+	@GetMapping("/getmedicalrecords/{patientid}")
 	public ResponseEntity<List<MedicalRecordDTO>> findallmedicalrecords(@PathVariable int patientid)throws RecordsNotFoundException{
 		
 		List<MedicalRecordDTO> records = ps.getpatientmedicalrecords(patientid) ;
@@ -97,10 +98,10 @@ public class PatientController {
 		
 	}
 	
-	@PostMapping("/bookappointment")
-	public ResponseEntity<AppointmentDTO> bookappointmnet(@RequestBody AppointmentDTO a) throws DoctorNotFoundException{
+	@PostMapping("/bookappointment/{patientid}/{doctorid}")
+	public ResponseEntity<AppointmentDTO> bookappointmnet(@PathVariable int patientid,@PathVariable int doctorid,@RequestBody AppointmentDTO a) throws DoctorNotFoundException{
 		
-		AppointmentDTO appointment = ps.bookanappointment(a);
+		AppointmentDTO appointment = ps.bookanappointment(a,doctorid,patientid);
 		if (appointment==null) {
 			throw new DoctorNotFoundException("Doctor not found");
 		}
@@ -116,7 +117,7 @@ public class PatientController {
 	        @PathVariable String time) throws AppointmentNotFoundException {
 
 	    LocalTime appointtime = LocalTime.parse(time);
-	    AppointmentDTO updated = ps.rescheduleAppointmentByPatient(patientid, appointmentid, date, appointtime);
+	    AppointmentDTO updated = ps.rescheduleAppointmentByPatient(appointmentid, date, appointtime);
 	    if (updated == null) {
 	        throw new AppointmentNotFoundException("Appointment does not exist!!");
 	    }
