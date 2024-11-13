@@ -47,7 +47,6 @@ public class Appointment {
     private Status status;
 
     @Column(length = 255)
-    @Size(min=10,message="Please give the reason of consulation briefly")
     private String reason;
 
     @Column( length = 50)

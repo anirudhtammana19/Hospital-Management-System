@@ -3,36 +3,54 @@ package com.hexaware.amazecare.DTO;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.hexaware.amazecare.Model.Appointment.ConsultationType;
+import com.hexaware.amazecare.Model.Appointment.Status;
+
 public class AppointmentDTO {
 
-
+	String patientFirstName;
+	String DoctorFirstName;
     private LocalDate appointmentDate;
     private LocalTime appointmentTime;
-    private String status;
+    private Status status;
     private String reason;
     private String visitType;
-    private String consultationType;
+    private ConsultationType consultationType;
 
     public AppointmentDTO() {
     	super();
     }
-    	
-        
-    // Constructor
-    public AppointmentDTO( LocalDate appointmentDate, 
-                          LocalTime appointmentTime, String status, String reason, 
-                          String visitType, String consultationType) {
-      
-        this.appointmentDate = appointmentDate;
-        this.appointmentTime = appointmentTime;
-        this.status = status;
-        this.reason = reason;
-        this.visitType = visitType;
-        this.consultationType = consultationType;
-    }
 
+    public AppointmentDTO(String patientName, String doctorName, LocalDate appointmentDate, LocalTime appointmentTime,
+    		Status status, String reason, String visitType, ConsultationType consultationType) {
+		super();
+		this.patientFirstName = patientName;
+		DoctorFirstName = doctorName;
+		this.appointmentDate = appointmentDate;
+		this.appointmentTime = appointmentTime;
+		this.status = status;
+		this.reason = reason;
+		this.visitType = visitType;
+		this.consultationType = consultationType;
+	}
 
-    public LocalDate getAppointmentDate() {
+	public String getPatientFirstName() {
+		return patientFirstName;
+	}
+
+	public void setPatientFirstName(String patientFirstName) {
+		this.patientFirstName = patientFirstName;
+	}
+
+	public String getDoctorFirstName() {
+		return DoctorFirstName;
+	}
+
+	public void setDoctorFirstName(String doctorFirstName) {
+		DoctorFirstName = doctorFirstName;
+	}
+
+	public LocalDate getAppointmentDate() {
         return appointmentDate;
     }
 
@@ -48,11 +66,11 @@ public class AppointmentDTO {
         this.appointmentTime = appointmentTime;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -72,11 +90,11 @@ public class AppointmentDTO {
         this.visitType = visitType;
     }
 
-    public String getConsultationType() {
+    public ConsultationType getConsultationType() {
         return consultationType;
     }
 
-    public void setConsultationType(String consultationType) {
+    public void setConsultationType(ConsultationType consultationType) {
         this.consultationType = consultationType;
     }
 

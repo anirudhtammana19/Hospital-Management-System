@@ -4,6 +4,8 @@ import java.util.List;
 
 public class MedicalRecordDTO {
 
+	String patientFirstName;
+	String doctorFirstName;
     private List<PrescriptionDTO> prescriptions;
     private String symptoms;
     private String physicalExamination;
@@ -14,22 +16,38 @@ public class MedicalRecordDTO {
     public MedicalRecordDTO() {
     	super();
     }
-    // Constructor
-    public MedicalRecordDTO(int recordId, int patient, int doctor, int appointment,
-                            List<PrescriptionDTO> prescriptions, String symptoms, String physicalExamination,
-                            String treatmentPlan, String testsRecommended, String notes) {
-        
-        this.prescriptions = prescriptions;
-        this.symptoms = symptoms;
-        this.physicalExamination = physicalExamination;
-        this.treatmentPlan = treatmentPlan;
-        this.testsRecommended = testsRecommended;
-        this.notes = notes;
-    }
 
+    public MedicalRecordDTO(String patientName, String doctorName, List<PrescriptionDTO> prescriptions, String symptoms,
+			String physicalExamination, String treatmentPlan, String testsRecommended, String notes) {
+		super();
+		this.patientFirstName = patientName;
+		this.doctorFirstName = doctorName;
+		this.prescriptions = prescriptions;
+		this.symptoms = symptoms;
+		this.physicalExamination = physicalExamination;
+		this.treatmentPlan = treatmentPlan;
+		this.testsRecommended = testsRecommended;
+		this.notes = notes;
+	}
 
+    
+	public String getPatientFirstName() {
+		return patientFirstName;
+	}
 
-    public List<PrescriptionDTO> getPrescriptions() {
+	public void setPatientFirstName(String patientFirstName) {
+		this.patientFirstName = patientFirstName;
+	}
+
+	public String getDoctorFirstName() {
+		return doctorFirstName;
+	}
+
+	public void setDoctorFirstName(String doctorFirstName) {
+		this.doctorFirstName = doctorFirstName;
+	}
+
+	public List<PrescriptionDTO> getPrescriptions() {
         return prescriptions;
     }
 

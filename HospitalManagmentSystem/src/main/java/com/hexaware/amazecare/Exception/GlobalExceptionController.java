@@ -18,6 +18,14 @@ public class GlobalExceptionController {
 		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(AppointmentNotFoundException.class)
+	public ResponseEntity<errorDetails> CustomerNotFound(AppointmentNotFoundException e) {
+		
+		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),"location not found",HttpStatus.NOT_FOUND.toString());
+	
+		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+	}
+	
 	/*
 	 * @ExceptionHandler(Exception.class) public ResponseEntity<errorDetails>
 	 * AllException(Exception e) {

@@ -1,6 +1,5 @@
 package com.hexaware.amazecare.DTO;
 
-import com.hexaware.amazecare.Model.MedicalRecord;
 import com.hexaware.amazecare.Model.Prescription.Frequency;
 
 public class PrescriptionDTO {
