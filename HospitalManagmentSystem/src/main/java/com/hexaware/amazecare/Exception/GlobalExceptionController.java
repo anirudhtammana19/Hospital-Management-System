@@ -44,6 +44,12 @@ public class GlobalExceptionController {
 		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(PrescriptionsNotFoundException.class)
+	public ResponseEntity<errorDetails> PrescriptionsNotFound(PrescriptionsNotFoundException p){
+		errorDetails error = new errorDetails(LocalDateTime.now(),p.getMessage(),"Prescriptions not found",HttpStatus.NOT_FOUND.toString());
+		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<errorDetails> handelallexceptions(Exception e,HttpServletRequest hr){
 		String path = hr.getRequestURI();

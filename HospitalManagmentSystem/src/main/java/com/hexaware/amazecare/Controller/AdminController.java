@@ -19,6 +19,7 @@ import com.hexaware.amazecare.DTO.AppointmentDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDTO;
 import com.hexaware.amazecare.DTO.PatientDTO;
+import com.hexaware.amazecare.DTO.UsersDTO;
 import com.hexaware.amazecare.Exception.AppointmentNotFoundException;
 import com.hexaware.amazecare.Exception.DoctorNotFoundException;
 import com.hexaware.amazecare.Exception.PatientNotFoundException;
@@ -59,6 +60,15 @@ public class AdminController {
 	@Autowired
 	AdminService as;
 	
+	@PutMapping("/admin/editProfile")
+	public ResponseEntity<UsersDTO> editAdmin(@RequestBody UsersDTO d){
+		
+		UsersDTO admin = as.editAdmin(d);
+		
+		return new ResponseEntity<>(admin,HttpStatus.CREATED);
+		
+	}
+	
 	@PostMapping("/doctor/add")
 	public ResponseEntity<DoctorDTO> adddoctor(@RequestBody DoctorDTO d){
 		
@@ -67,11 +77,24 @@ public class AdminController {
 		return new ResponseEntity<>(doc,HttpStatus.CREATED);
 		
 	}
+	
+	@GetMapping("/getDoctors/{name}")
+	public ResponseEntity<List<DoctorDTO>> viewdoctors(@PathVariable String name){
+		List<DoctorDTO> doc=as.viewDoctorsByName(name);
+		return new ResponseEntity<>(doc,HttpStatus.OK);
+	}
+	
 	@GetMapping("/getAllDoctors")
 	public ResponseEntity<List<DoctorDTO>> viewdoctor(){
 		List<DoctorDTO> doc=as.viewAllDoctors();
 		return new ResponseEntity<>(doc,HttpStatus.OK);
 	} 
+	
+	@GetMapping("/getPatients/{name}")
+	public ResponseEntity<List<PatientDTO>> viewPatients(@PathVariable String name){
+		List<PatientDTO> patients=as.viewPatientsByName(name);
+		return new ResponseEntity<>(patients,HttpStatus.OK);
+	}
 	
 	@GetMapping("/getAllPatients")
 	public ResponseEntity<List<PatientDTO>> viewPatient(){

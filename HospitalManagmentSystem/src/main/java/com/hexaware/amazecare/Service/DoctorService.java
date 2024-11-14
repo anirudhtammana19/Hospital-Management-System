@@ -214,59 +214,80 @@ public class DoctorService {
 	    Mrecord.setTestsRecommended(record.getTestsRecommended());
 	    Mrecord.setNotes(record.getNotes());
 
-	    List<Prescription> updatedPrescription=editPrescriptions(record.getPrescriptions(), Mrecord.getPrescriptions(),Mrecord);
-	   
-	    if (updatedPrescription != null) {
-	        for (Prescription prescription : updatedPrescription) {
-	            prescription.setMedicalRecord(Mrecord);
-	        }
-	    }
-	    Mrecord.setPrescriptions(updatedPrescription);
 	    MedicalRecord updated = medicalRepo.save(Mrecord);
 
 	    MedicalRecordDTO recordDTO = model.map(updated, MedicalRecordDTO.class);
-	    recordDTO.setDoctorFirstName(updated.getDoctor().getFirstName());
-	    recordDTO.setPatientFirstName(updated.getPatient().getFirstName());
-
 	    return recordDTO;
 	}
 
-	@Transactional
-	public List<Prescription> editPrescriptions(List<PrescriptionDTO> dtoList, List<Prescription> originalList, MedicalRecord Mrecord) {
-	    int minSize = Math.min(dtoList.size(), originalList.size());
 
-	    // Update existing prescriptions
-	    for (int i = 0; i < minSize; i++) {
-	        originalList.get(i).setMedicationName(dtoList.get(i).getMedicationName());
-	        originalList.get(i).setDosage(dtoList.get(i).getDosage());
-	        originalList.get(i).setDuration(dtoList.get(i).getDuration());
-	        originalList.get(i).setFrequency(dtoList.get(i).getFrequency());
-	        originalList.get(i).setNotes(dtoList.get(i).getNotes());
-	    }
-
-	    // Add new prescriptions if dtoList is larger than originalList
-	    for (int i = minSize; i < dtoList.size(); i++) {
-	        Prescription newPrescription = model.map(dtoList.get(i), Prescription.class);
-	        newPrescription.setMedicalRecord(Mrecord);  // Link to the MedicalRecord
-	        originalList.add(newPrescription);
-	    }
-
-	    // Remove excess prescriptions if originalList is larger than dtoList
-	    if (originalList.size() > dtoList.size()) {
-	        List<Prescription> excessPrescriptions = originalList.subList(dtoList.size(), originalList.size());
-	        
-	        // Delete them from the database
-	        for (Prescription prescription : excessPrescriptions) {
-	            prescriptionRepo.delete(prescription);  // Assuming prescriptionRepo is your repository
-	        }
-	        
-	        // Now remove them from the in-memory list
-	        excessPrescriptions.clear();
-	    }
-
-	    return originalList;
+	public PrescriptionDTO editPrescriptions(int recordid, int prescriptionid, PrescriptionDTO prescription) {
+		Prescription p=prescriptionRepo.findById(prescriptionid).orElse(null);
+		if(p.getMedicalRecord().getRecordId()==recordid) {
+			if(prescription.getDosage()!=null) {
+				p.setDosage(prescription.getDosage());	
+			}
+			if(prescription.getDuration()!=0) {
+				p.setDuration(prescription.getDuration());	
+			}
+			if(prescription.getFrequency()!=null) {
+				p.setFrequency(prescription.getFrequency());	
+			}
+			if(prescription.getMedicationName()!=null) {
+				p.setMedicationName(prescription.getMedicationName());	
+			}
+			if(prescription.getNotes()!=null) {
+				p.setNotes(prescription.getNotes());	
+			}
+			Prescription updated=prescriptionRepo.save(p);
+			MedicalRecord record=medicalRepo.findById(recordid).orElse(null);
+			if(record!=null) {
+				List<Prescription> prescriptions = record.getPrescriptions();
+				for (int i = 0; i < prescriptions.size(); i++) {
+	                if (prescriptions.get(i).getPrescriptionId() == prescriptionid) {
+	                    prescriptions.set(i, updated);  // Replace the old prescription with the updated one
+	                    break;
+	                }
+	            }
+	            medicalRepo.save(record); 
+				
+			}
+			return model.map(updated, PrescriptionDTO.class);
+		}
+		return null;
 	}
 	
-	
+	public boolean deletePrescription(int recordId, int prescriptionId) {
+	    
+	    Prescription prescription = prescriptionRepo.findById(prescriptionId).orElse(null);
+	    if (prescription != null && prescription.getMedicalRecord().getRecordId() == recordId) {
+
+	        MedicalRecord record = prescription.getMedicalRecord();
+	        record.getPrescriptions().remove(prescription);
+	        medicalRepo.save(record);
+
+
+	        prescriptionRepo.delete(prescription);
+	        return true;  
+	    }
+
+	    return false;  
+	}
+
+	 public PrescriptionDTO addPrescription(int recordId, PrescriptionDTO prescriptionDTO) {
+	        
+	        MedicalRecord medicalRecord = medicalRepo.findById(recordId).orElse(null);
+	        
+	        if (medicalRecord == null) {
+	            return null;
+	        }
+	        Prescription prescription = model.map(prescriptionDTO, Prescription.class);
+	        
+	        prescription.setMedicalRecord(medicalRecord);
+
+	        Prescription savedPrescription = prescriptionRepo.save(prescription);
+
+	        return model.map(savedPrescription, PrescriptionDTO.class);
+	    }
 	
 }

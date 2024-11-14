@@ -1,43 +1,20 @@
-package com.hexaware.amazecare.Model;
+package com.hexaware.amazecare.DTO;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
+import com.hexaware.amazecare.Model.Users.Role;
 
+public class UsersDTO {
 
-@Entity
-public class Users {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
-
-    @Column(length = 50, unique = true, nullable = false)
     private String username;
-
-    //@Column(length = 25, nullable = false)
     private String password;
-    
-    @Enumerated(EnumType.STRING)
-    @Column(length = 7, nullable = false)
     private Role role;
 
-    public enum Role {
-        PATIENT, DOCTOR, ADMIN
-    }
     
-	public Users() {
+	public UsersDTO() {
 		super();
 	}
 
-	public Users(Long userId, String username, String password, Role role) {
+	public UsersDTO(Long userId, String username, String password, Role role) {
 		super();
 		this.userId = userId;
 		this.username = username;

@@ -4,6 +4,8 @@ import com.hexaware.amazecare.Model.Prescription.Frequency;
 
 public class PrescriptionDTO {
 
+	private int prescriptionId;
+	private int recordId;
     private String medicationName;
     private String dosage;
     private Frequency frequency;
@@ -14,18 +16,35 @@ public class PrescriptionDTO {
     	super();
     }
 
-    public PrescriptionDTO( String medicationName, String dosage,
-                           Frequency frequency, int duration, String notes) {
-        
-        this.medicationName = medicationName;
-        this.dosage = dosage;
-        this.frequency = frequency;
-        this.duration = duration;
-        this.notes = notes;
-    }
+    public PrescriptionDTO(int prescriptionId, int recordId, String medicationName, String dosage, Frequency frequency,
+			int duration, String notes) {
+		super();
+		this.prescriptionId = prescriptionId;
+		this.recordId = recordId;
+		this.medicationName = medicationName;
+		this.dosage = dosage;
+		this.frequency = frequency;
+		this.duration = duration;
+		this.notes = notes;
+	}
+    
+	public int getPrescriptionId() {
+		return prescriptionId;
+	}
 
+	public void setPrescriptionId(int prescriptionId) {
+		this.prescriptionId = prescriptionId;
+	}
 
-    public String getMedicationName() {
+	public int getRecordId() {
+		return recordId;
+	}
+
+	public void setRecordId(int recordId) {
+		this.recordId = recordId;
+	}
+
+	public String getMedicationName() {
         return medicationName;
     }
 
@@ -65,9 +84,10 @@ public class PrescriptionDTO {
         this.notes = notes;
     }
 
-    @Override
-    public String toString() {
-        return "PrescriptionDTO [ medicationName=" + medicationName + ", dosage=" + dosage + ", frequency=" + frequency
-                + ", duration=" + duration + ", notes=" + notes + "]";
-    }
+	@Override
+	public String toString() {
+		return "PrescriptionDTO [prescriptionId=" + prescriptionId + ", recordId=" + recordId + ", medicationName="
+				+ medicationName + ", dosage=" + dosage + ", frequency=" + frequency + ", duration=" + duration
+				+ ", notes=" + notes + "]";
+	}
 }

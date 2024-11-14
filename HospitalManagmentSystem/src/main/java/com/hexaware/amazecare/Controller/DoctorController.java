@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hexaware.amazecare.DTO.AppointmentDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDTO;
+import com.hexaware.amazecare.DTO.PrescriptionDTO;
 import com.hexaware.amazecare.Exception.AppointmentNotFoundException;
 import com.hexaware.amazecare.Exception.DoctorNotFoundException;
+import com.hexaware.amazecare.Exception.PrescriptionsNotFoundException;
 import com.hexaware.amazecare.Exception.RecordsNotFoundException;
 import com.hexaware.amazecare.Model.Doctor;
 import com.hexaware.amazecare.Model.MedicalRecord;
@@ -143,5 +146,38 @@ public class DoctorController {
 		return new ResponseEntity<>(updated,HttpStatus.OK);
 	}
 	
+	 @PostMapping("/add/{recordId}")
+	    public ResponseEntity<PrescriptionDTO> addPrescription(@PathVariable int recordId,@RequestBody PrescriptionDTO prescriptionDTO) throws RecordsNotFoundException {
+
+	            PrescriptionDTO addedPrescription = service.addPrescription(recordId, prescriptionDTO);
+	            if(addedPrescription==null) {
+	            	throw new RecordsNotFoundException("Medical record not found for id: " + recordId);
+	            }
+	            return new ResponseEntity<>(addedPrescription,HttpStatus.CREATED);
+	        
+	    }
+	
+	@PutMapping("/editRecord/{recordid}/{prescriptionid}")
+	public ResponseEntity<PrescriptionDTO> editPrescriptions(@PathVariable int recordid,@PathVariable int prescriptionid,@RequestBody PrescriptionDTO Prescription) throws PrescriptionsNotFoundException{
+		
+		PrescriptionDTO updated=service.editPrescriptions(recordid,prescriptionid,Prescription);
+		if(updated==null) {
+			throw new PrescriptionsNotFoundException("Medical record with ID " + recordid + " not found");
+		}
+		return new ResponseEntity<>(updated,HttpStatus.OK);
+	}
+	
+	 @DeleteMapping("/delete/{recordId}/{prescriptionId}")
+	    public ResponseEntity<String> deletePrescription(@PathVariable int recordId,@PathVariable int prescriptionId) {
+	        
+	        boolean isDeleted = service.deletePrescription(recordId, prescriptionId);
+
+	        if (isDeleted) {
+	            return ResponseEntity.ok("Prescription deleted successfully.");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                    .body("Prescription not found or does not belong to the specified medical record.");
+	        }
+	    }
 	
 }

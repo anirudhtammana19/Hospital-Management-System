@@ -12,16 +12,20 @@ import com.hexaware.amazecare.DTO.AppointmentDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDTO;
 import com.hexaware.amazecare.DTO.PatientDTO;
+import com.hexaware.amazecare.DTO.UsersDTO;
 import com.hexaware.amazecare.Model.Appointment;
 import com.hexaware.amazecare.Model.Doctor;
 import com.hexaware.amazecare.Model.MedicalRecord;
 import com.hexaware.amazecare.Model.Patient;
 import com.hexaware.amazecare.Model.Users;
+import com.hexaware.amazecare.Model.Users.Role;
 import com.hexaware.amazecare.Repository.AppointmentRepo;
 import com.hexaware.amazecare.Repository.DoctorRepo;
 import com.hexaware.amazecare.Repository.MedicalRecordRepo;
 import com.hexaware.amazecare.Repository.PatientRepo;
 import com.hexaware.amazecare.Repository.UserRepo;
+
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class AdminService {
@@ -37,6 +41,18 @@ public class AdminService {
 	PatientRepo patientRepo;
 	@Autowired
 	MedicalRecordRepo medicalRepo;
+	
+    @PostConstruct
+    public void init() {
+        if (ur.findByRole(Role.ADMIN)==null) {
+            Users admin = new Users();
+            admin.setUsername("admin");
+            admin.setPassword("admin123"); // hashed password
+            admin.setRole(Role.ADMIN);
+            ur.save(admin);
+        }
+    }
+
 	
 	public DoctorDTO addadoctor(DoctorDTO d) {
 		
@@ -127,6 +143,36 @@ public class AdminService {
 		}
 		medicalRepo.delete(record);
 		return "Doctor deleted successfully";
+	}
+
+	public UsersDTO editAdmin(UsersDTO d) {
+		Users admin=ur.findByRole(Role.ADMIN);
+		if(d.getUsername()!=null) {
+			admin.setUsername(d.getUsername());
+		}
+		if(d.getPassword()!=null) {
+			admin.setPassword(d.getPassword());
+		}
+		Users updated=ur.save(admin);
+		return mapper.map(updated, UsersDTO.class);
+	}
+
+
+	public List<DoctorDTO> viewDoctorsByName(String name) {
+		List<Doctor> doc=doctorRepo.findByFirstNameStartingWith(name);
+		if(doc.isEmpty()) {
+			return null;
+		}	
+		return doc.stream().map(i->mapper.map(i, DoctorDTO.class)).toList() ;
+	}
+
+
+	public List<PatientDTO> viewPatientsByName(String name) {
+		List<Patient> patients=patientRepo.findByFirstNameStartingWith(name);
+		if(patients.isEmpty()) {
+			return null;
+		}	
+		return patients.stream().map(i->mapper.map(i, PatientDTO.class)).toList() ;
 	}
 
 }
