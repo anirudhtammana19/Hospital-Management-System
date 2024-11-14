@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class DoctorService {
+public class DoctorServiceImpl implements IDoctorService{
 
 	@Autowired
 	DoctorRepo doctorRepo;

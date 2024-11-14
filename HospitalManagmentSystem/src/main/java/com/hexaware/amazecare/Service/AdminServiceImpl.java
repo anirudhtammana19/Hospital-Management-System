@@ -32,7 +32,7 @@ import com.hexaware.amazecare.Repository.UserRepo;
 import jakarta.annotation.PostConstruct;
 
 @Service
-public class AdminService {
+public class AdminServiceImpl implements IAdminService {
 	@Autowired
 	DoctorRepo doctorRepo;
 	@Autowired

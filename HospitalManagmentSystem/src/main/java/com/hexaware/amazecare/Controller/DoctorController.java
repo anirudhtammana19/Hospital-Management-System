@@ -30,7 +30,7 @@ import com.hexaware.amazecare.Exception.PrescriptionsNotFoundException;
 import com.hexaware.amazecare.Exception.RecordsNotFoundException;
 import com.hexaware.amazecare.Model.Doctor;
 import com.hexaware.amazecare.Model.MedicalRecord;
-import com.hexaware.amazecare.Service.DoctorService;
+import com.hexaware.amazecare.Service.DoctorServiceImpl;
 
 @RestController
 @RequestMapping("/api")
@@ -38,7 +38,7 @@ public class DoctorController {
 	
 	
 	@Autowired
-	DoctorService service;
+	DoctorServiceImpl service;
 	
 	//Edit Profile
 	@PutMapping("/doctor/editProfile/{doctorid}")

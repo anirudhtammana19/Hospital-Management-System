@@ -28,7 +28,7 @@ import com.hexaware.amazecare.Exception.AppointmentNotFoundException;
 import com.hexaware.amazecare.Exception.DoctorNotFoundException;
 import com.hexaware.amazecare.Exception.PatientNotFoundException;
 import com.hexaware.amazecare.Exception.RecordsNotFoundException;
-import com.hexaware.amazecare.Service.PatientService;
+import com.hexaware.amazecare.Service.PatientServiceImpl;
 
 
 
@@ -38,7 +38,7 @@ public class PatientController {
 
 
 	@Autowired
-	PatientService service;
+	PatientServiceImpl service;
 	
 	
 

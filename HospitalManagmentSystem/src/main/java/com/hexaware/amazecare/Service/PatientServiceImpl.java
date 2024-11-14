@@ -34,7 +34,7 @@ import com.hexaware.amazecare.Repository.PatientRepo;
 import com.hexaware.amazecare.Repository.UserRepo;
 
 @Service
-public class PatientService {
+public class PatientServiceImpl implements IPatientService{
 
 	@Autowired
 	PatientRepo patientRepo;
