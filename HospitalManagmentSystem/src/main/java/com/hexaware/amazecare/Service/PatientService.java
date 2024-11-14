@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.hexaware.amazecare.DTO.AppointmentDTO;
 import com.hexaware.amazecare.DTO.AppointmentDetailsDTO;
-import com.hexaware.amazecare.DTO.DoctorDTO;
 import com.hexaware.amazecare.DTO.DoctorDetailsDTO;
-import com.hexaware.amazecare.DTO.MedicalRecordDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDetailsDTO;
 import com.hexaware.amazecare.DTO.PatientDTO;
 import com.hexaware.amazecare.DTO.PatientDetailsDTO;
@@ -39,42 +37,42 @@ import com.hexaware.amazecare.Repository.UserRepo;
 public class PatientService {
 
 	@Autowired
-	PatientRepo pr;
+	PatientRepo patientRepo;
 	@Autowired
-	UserRepo ur;
+	UserRepo userRepo;
 	@Autowired
-	ModelMapper mapper;
+	ModelMapper modelMapper;
 	@Autowired
-	MedicalRecordRepo mr;
+	MedicalRecordRepo medicalRecordRepo;
 	@Autowired
-	AppointmentRepo ar;
+	AppointmentRepo appointmentRepo;
 	@Autowired
-	DoctorRepo dr;
+	DoctorRepo doctorRepo;
 
 	public PatientDetailsDTO savedata(PatientDTO pd) {
 
-		Patient patient = mapper.map(pd, Patient.class);
+		Patient patient = modelMapper.map(pd, Patient.class);
 		Users user = new Users();
 		user.setUsername(pd.getEmail());
 		user.setPassword(pd.getPassword());
 		user.setRole(Users.Role.PATIENT);
-		Users savedUser = ur.save(user);
+		Users savedUser = userRepo.save(user);
 
 		patient.setUser(savedUser);
 
-		pr.save(patient);
+		patientRepo.save(patient);
 
-		return mapper.map(patient, PatientDetailsDTO.class);
+		return modelMapper.map(patient, PatientDetailsDTO.class);
 	}
 
 	public PatientDetailsDTO updateprofile(int id, PatientDTO pd) throws PatientNotFoundException  {
 	   
-		Patient existingPatient = pr.findById(id).orElse(null);
+		Patient existingPatient = patientRepo.findById(id).orElse(null);
 		
 		if(existingPatient==null) {
 			return null;
 		}
-		Users u = ur.findByUsername(existingPatient.getEmail());
+		Users u = userRepo.findByUsername(existingPatient.getEmail());
 		
 	    if(pd.getFirstName()!=null) {
 	    	existingPatient.setFirstName(pd.getFirstName());
@@ -119,19 +117,19 @@ public class PatientService {
 	    		u.setPassword(pd.getPassword());
 		    }
 	    	existingPatient.setUser(u);
-	        ur.save(u); 
+	        userRepo.save(u); 
 	    }
 
-	    Patient updated=pr.save(existingPatient);
+	    Patient updated=patientRepo.save(existingPatient);
 
-	    return mapper.map(updated, PatientDetailsDTO.class);
+	    return modelMapper.map(updated, PatientDetailsDTO.class);
 	}
 
 	public List<AppointmentDetailsDTO> getpatientappoints(int patientid) {
 
-		List<Appointment> appointment = ar.findByPatient_PatientId(patientid);
+		List<Appointment> appointment = appointmentRepo.findByPatient_PatientId(patientid);
 
-		List<AppointmentDetailsDTO> appointmentDTOs = appointment.stream().map(i -> mapper.map(i, AppointmentDetailsDTO.class))
+		List<AppointmentDetailsDTO> appointmentDTOs = appointment.stream().map(i -> modelMapper.map(i, AppointmentDetailsDTO.class))
 				.collect(Collectors.toList());
 
 		return appointmentDTOs;
@@ -140,9 +138,9 @@ public class PatientService {
 
 	public List<MedicalRecordDetailsDTO> getpatientmedicalrecords(int patientid) {
 
-		List<MedicalRecord> record = mr.findByPatient_PatientId(patientid);
+		List<MedicalRecord> record = medicalRecordRepo.findByPatient_PatientId(patientid);
 
-		List<MedicalRecordDetailsDTO> recorddto = record.stream().map(i -> mapper.map(i, MedicalRecordDetailsDTO.class))
+		List<MedicalRecordDetailsDTO> recorddto = record.stream().map(i -> modelMapper.map(i, MedicalRecordDetailsDTO.class))
 				.collect(Collectors.toList());
 
 		return recorddto;
@@ -153,10 +151,10 @@ public class PatientService {
 	public AppointmentDetailsDTO bookanappointment(AppointmentDTO a, int patientid, int doctorid)
 			throws DoctorNotFoundException, PatientNotFoundException {
 
-		Appointment appointment = mapper.map(a, Appointment.class);
+		Appointment appointment = modelMapper.map(a, Appointment.class);
 
-		Optional<Doctor> doctorOpt = dr.findById(doctorid);
-		Optional<Patient> patientOpt = pr.findById(patientid);
+		Optional<Doctor> doctorOpt = doctorRepo.findById(doctorid);
+		Optional<Patient> patientOpt = patientRepo.findById(patientid);
 
 		if (doctorOpt.isPresent() && patientOpt.isPresent()) {
 
@@ -167,9 +165,9 @@ public class PatientService {
 			appointment.setPatient(patient);
 			appointment.setStatus(Appointment.Status.REQUESTED); // default status
 
-			Appointment updated=ar.save(appointment);
+			Appointment updated=appointmentRepo.save(appointment);
 
-			return mapper.map(updated, AppointmentDetailsDTO.class);
+			return modelMapper.map(updated, AppointmentDetailsDTO.class);
 		} else {
 			if (!doctorOpt.isPresent()) {
 				throw new DoctorNotFoundException("Doctor with ID " + doctorid + " not found");
@@ -179,13 +177,13 @@ public class PatientService {
 	}
 
 	public AppointmentDetailsDTO rescheduleAppointmentByPatient(int appointmentid, LocalDate date, LocalTime time) {
-		Appointment app = ar.findById(appointmentid).orElse(null);
+		Appointment app = appointmentRepo.findById(appointmentid).orElse(null);
 		if (app != null && (app.getStatus().equals(Status.SCHEDULED) || app.getStatus().equals(Status.RESCHEDULED))) {
 			app.setAppointmentDate(date);
 			app.setAppointmentTime(time);
 			app.setStatus(Status.RESCHEDULED);
-			Appointment updated =ar.save(app);
-			AppointmentDetailsDTO appDTO = mapper.map(updated, AppointmentDetailsDTO.class);
+			Appointment updated =appointmentRepo.save(app);
+			AppointmentDetailsDTO appDTO = modelMapper.map(updated, AppointmentDetailsDTO.class);
 			return appDTO;
 		} else {
 			return null;
@@ -194,21 +192,21 @@ public class PatientService {
 	}
 
 	public List<DoctorDetailsDTO> getAvailableDoctors(String speciality) {
-		List<Doctor> doc = dr.findBySpecialtyStartingWith(speciality);
+		List<Doctor> doc = doctorRepo.findBySpecialtyStartingWith(speciality);
 		if(doc.isEmpty()) {
 			return null;
 		}
 		return doc.stream().map(i ->{
-			DoctorDetailsDTO dto=mapper.map(i, DoctorDetailsDTO.class);
+			DoctorDetailsDTO dto=modelMapper.map(i, DoctorDetailsDTO.class);
 					dto.setPassword("Forbidden");
 			return dto;
 		}).toList();
 	}
 
 	public PatientDetailsDTO viewPatientProfile(int patientid) {
-		Patient doctor=pr.findById(patientid).orElse(null);
+		Patient doctor=patientRepo.findById(patientid).orElse(null);
 		
-		return mapper.map(doctor, PatientDetailsDTO.class);
+		return modelMapper.map(doctor, PatientDetailsDTO.class);
 	}
 
 }

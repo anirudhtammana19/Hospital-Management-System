@@ -2,6 +2,8 @@ package com.hexaware.amazecare.DTO;
 
 import java.util.List;
 
+import com.hexaware.amazecare.Model.Prescription;
+
 public class MedicalRecordDetailsDTO {
 
 	int recordId;
@@ -9,7 +11,7 @@ public class MedicalRecordDetailsDTO {
 	String patientFirstName;
 	int doctorId;
 	String doctorFirstName;
-    private List<PrescriptionDTO> prescriptions;
+    private List<PrescriptionDetailsDTO> prescriptions;
     private String symptoms;
     private String physicalExamination;
     private String treatmentPlan;
@@ -21,7 +23,7 @@ public class MedicalRecordDetailsDTO {
     }
     
 	public MedicalRecordDetailsDTO(int recordId, int patientId, String patientFirstName, int doctorId, String doctorFirstName,
-			List<PrescriptionDTO> prescriptions, String symptoms, String physicalExamination, String treatmentPlan,
+			List<PrescriptionDetailsDTO> prescriptions, String symptoms, String physicalExamination, String treatmentPlan,
 			String testsRecommended, String notes) {
 		super();
 		this.recordId = recordId;
@@ -77,11 +79,11 @@ public class MedicalRecordDetailsDTO {
 		this.doctorFirstName = doctorFirstName;
 	}
 
-	public List<PrescriptionDTO> getPrescriptions() {
+	public List<PrescriptionDetailsDTO> getPrescriptions() {
         return prescriptions;
     }
 
-    public void setPrescriptions(List<PrescriptionDTO> prescriptions) {
+    public void setPrescriptions(List<PrescriptionDetailsDTO> prescriptions) {
         this.prescriptions = prescriptions;
     }
 

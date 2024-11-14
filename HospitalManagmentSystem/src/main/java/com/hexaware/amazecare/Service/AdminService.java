@@ -36,9 +36,9 @@ public class AdminService {
 	@Autowired
 	DoctorRepo doctorRepo;
 	@Autowired
-	ModelMapper mapper;
+	ModelMapper modelMapper;
 	@Autowired
-	UserRepo ur;
+	UserRepo userRepo;
 	@Autowired
 	AppointmentRepo appointRepo;
 	@Autowired
@@ -46,33 +46,33 @@ public class AdminService {
 	@Autowired
 	MedicalRecordRepo medicalRepo;
 	
-	//Part of Lifecycle of SpringBoot
+	//Part of Life cycle of Spring Core
     @PostConstruct
     public void init() {
-        if (ur.findByRole(Role.ADMIN)==null) {
+        if (userRepo.findByRole(Role.ADMIN)==null) {
             Users admin = new Users();
             admin.setUsername("admin");
             admin.setPassword("admin123"); // hashed password
             admin.setRole(Role.ADMIN);
-            ur.save(admin);
+            userRepo.save(admin);
         }
     }
 
 	
 	public DoctorDetailsDTO addadoctor(DoctorDTO d) {
 		
-		Doctor doctor = mapper.map(d, Doctor.class);
+		Doctor doctor = modelMapper.map(d, Doctor.class);
 		
 		Users user = new Users();
 		user.setUsername(d.getEmail());
 		user.setPassword(d.getPassword());
 		user.setRole(Users.Role.DOCTOR);
 		
-		ur.save(user);
+		userRepo.save(user);
 		doctor.setUser(user);
 		
 		doctorRepo.save(doctor);
-		return mapper.map(doctor, DoctorDetailsDTO.class);
+		return modelMapper.map(doctor, DoctorDetailsDTO.class);
 		
 		
 	} 
@@ -87,7 +87,7 @@ public class AdminService {
 			return null;
 		}
 		List<DoctorDetailsDTO> out=list.stream().map(i->{
-			DoctorDetailsDTO j=mapper.map(i,DoctorDetailsDTO.class);
+			DoctorDetailsDTO j=modelMapper.map(i,DoctorDetailsDTO.class);
 			j.setPassword(i.getUser().getPassword());
 			return j;}).toList();
 		return out;
@@ -99,7 +99,7 @@ public class AdminService {
 			return null;
 		}
 		List<PatientDetailsDTO> out=list.stream().map(i->{
-			PatientDetailsDTO j=mapper.map(i,PatientDetailsDTO.class);
+			PatientDetailsDTO j=modelMapper.map(i,PatientDetailsDTO.class);
 			j.setPassword(i.getUser().getPassword());
 			return j;}).toList();
 		return out;
@@ -112,7 +112,7 @@ public class AdminService {
 		if(list.isEmpty()) {
 			return null;
 		}
-		return list.stream().map(i->mapper.map(i,MedicalRecordDetailsDTO.class)).toList();
+		return list.stream().map(i->modelMapper.map(i,MedicalRecordDetailsDTO.class)).toList();
 	}
 
 	public List<AppointmentDetailsDTO> viewAllAppointments() {
@@ -120,7 +120,7 @@ public class AdminService {
 		if(list.isEmpty()) {
 			return null;
 		}
-		return list.stream().map(i->mapper.map(i,AppointmentDetailsDTO.class)).toList();
+		return list.stream().map(i->modelMapper.map(i,AppointmentDetailsDTO.class)).toList();
 		
 	}
 
@@ -167,15 +167,15 @@ public class AdminService {
 	}
 
 	public UsersDTO editAdmin(UsersDTO d) {
-		Users admin=ur.findByRole(Role.ADMIN);
+		Users admin=userRepo.findByRole(Role.ADMIN);
 		if(d.getUsername()!=null) {
 			admin.setUsername(d.getUsername());
 		}
 		if(d.getPassword()!=null) {
 			admin.setPassword(d.getPassword());
 		}
-		Users updated=ur.save(admin);
-		return mapper.map(updated, UsersDTO.class);
+		Users updated=userRepo.save(admin);
+		return modelMapper.map(updated, UsersDTO.class);
 	}
 
 
@@ -184,7 +184,7 @@ public class AdminService {
 		if(doc.isEmpty()) {
 			return null;
 		}	
-		return doc.stream().map(i->mapper.map(i, DoctorDetailsDTO.class)).toList() ;
+		return doc.stream().map(i->modelMapper.map(i, DoctorDetailsDTO.class)).toList() ;
 	}
 
 
@@ -193,7 +193,7 @@ public class AdminService {
 		if(patients.isEmpty()) {
 			return null;
 		}	
-		return patients.stream().map(i->mapper.map(i, PatientDetailsDTO.class)).toList() ;
+		return patients.stream().map(i->modelMapper.map(i, PatientDetailsDTO.class)).toList() ;
 	}
 
 }

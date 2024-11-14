@@ -1,17 +1,13 @@
 package com.hexaware.amazecare.Service;
-import com.hexaware.amazecare.DTO.AppointmentDTO;
 import com.hexaware.amazecare.DTO.AppointmentDetailsDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
 import com.hexaware.amazecare.DTO.DoctorDetailsDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDetailsDTO;
-import com.hexaware.amazecare.DTO.PatientDTO;
 import com.hexaware.amazecare.DTO.PrescriptionDTO;
 import com.hexaware.amazecare.DTO.PrescriptionDetailsDTO;
 import com.hexaware.amazecare.Model.Appointment;
 import com.hexaware.amazecare.Model.Appointment.Status;
-import com.hexaware.amazecare.Model.Patient.BloodGroup;
-import com.hexaware.amazecare.Model.Patient.Gender;
 import com.hexaware.amazecare.Model.Doctor;
 import com.hexaware.amazecare.Model.MedicalRecord;
 import com.hexaware.amazecare.Model.Prescription;
@@ -50,7 +46,7 @@ public class DoctorService {
 	PrescriptionRepo prescriptionRepo;
 	
 	@Autowired
-	ModelMapper model;
+	ModelMapper modelMapper;
 	
 	public DoctorDetailsDTO editDoctorProfile(int doctorid, DoctorDTO doc) {
 		
@@ -106,26 +102,26 @@ public class DoctorService {
 	        userRepo.save(u); 
 	    }
 	    doctorRepo.save(doctor);
-	    return model.map(doctor, DoctorDetailsDTO.class);
+	    return modelMapper.map(doctor, DoctorDetailsDTO.class);
 		}
 
 	public DoctorDetailsDTO viewDoctorProfile(int doctorid) {
 		Doctor doctor=doctorRepo.findById(doctorid).orElse(null);
 		
-		return model.map(doctor, DoctorDetailsDTO.class);
+		return modelMapper.map(doctor, DoctorDetailsDTO.class);
 	}
 
 	public List<AppointmentDetailsDTO> viewDoctorAppointments(int doctorid) {
 		
 		List<Appointment> appointments=appointRepo.findByDoctor_DoctorId(doctorid);
 		
-		 return appointments.stream().map(i -> model.map(i, AppointmentDetailsDTO.class)).toList();
+		 return appointments.stream().map(i -> modelMapper.map(i, AppointmentDetailsDTO.class)).toList();
 	}
 
 	public List<MedicalRecordDetailsDTO> viewPatientMedicalRecords(int patientid) {
 		List<MedicalRecord> records= medicalRepo.findByPatient_PatientId(patientid);
 		
-		 return records.stream().map(i -> model.map(i, MedicalRecordDetailsDTO.class)).toList();
+		 return records.stream().map(i -> modelMapper.map(i, MedicalRecordDetailsDTO.class)).toList();
 	}
 
 	public AppointmentDetailsDTO acceptAppointment(int doctorid, int appointmentid) {
@@ -135,7 +131,7 @@ public class DoctorService {
 			if(app.getDoctor().getDoctorId()==doctorid && app.getStatus().equals(Status.REQUESTED)) {
 				app.setStatus(Status.SCHEDULED);
 				appointRepo.save(app);
-				AppointmentDetailsDTO appDTO=model.map(app, AppointmentDetailsDTO.class);
+				AppointmentDetailsDTO appDTO=modelMapper.map(app, AppointmentDetailsDTO.class);
 				return appDTO;
 			}
 		}
@@ -148,7 +144,7 @@ public class DoctorService {
 			if(app.getDoctor().getDoctorId()==doctorid ) {
 				app.setStatus(Status.CANCELLED);
 				appointRepo.save(app);
-				return model.map(app, AppointmentDetailsDTO.class);
+				return modelMapper.map(app, AppointmentDetailsDTO.class);
 			}
 		}
 		return null;
@@ -162,7 +158,7 @@ public class DoctorService {
 				app.setAppointmentTime(time);
 				app.setStatus(Status.RESCHEDULED);
 				appointRepo.save(app);
-				return model.map(app, AppointmentDetailsDTO.class);
+				return modelMapper.map(app, AppointmentDetailsDTO.class);
 				
 			}
 		}
@@ -175,12 +171,12 @@ public class DoctorService {
 			return null;
 		}
 		app.setStatus(Status.COMPLETED);
-		MedicalRecord Mrecord=model.map(record, MedicalRecord.class);
+		MedicalRecord Mrecord=modelMapper.map(record, MedicalRecord.class);
 		Mrecord.setAppointment(app);
 		Mrecord.setDoctor(app.getDoctor());
 		Mrecord.setPatient(app.getPatient());
 		MedicalRecord updated=medicalRepo.save(Mrecord);
-		return model.map(updated, MedicalRecordDetailsDTO.class);
+		return modelMapper.map(updated, MedicalRecordDetailsDTO.class);
 		
 
 	}
@@ -202,7 +198,7 @@ public class DoctorService {
 
 	    MedicalRecord updated = medicalRepo.save(Mrecord);
 
-	    return model.map(updated, MedicalRecordDetailsDTO.class);
+	    return modelMapper.map(updated, MedicalRecordDetailsDTO.class);
 	    
 	}
 
@@ -238,7 +234,7 @@ public class DoctorService {
 	            medicalRepo.save(record); 
 				
 			}
-			return model.map(updated, PrescriptionDetailsDTO.class);
+			return modelMapper.map(updated, PrescriptionDetailsDTO.class);
 		}
 		return null;
 	}
@@ -267,13 +263,13 @@ public class DoctorService {
 	        if (medicalRecord == null) {
 	            return null;
 	        }
-	        Prescription prescription = model.map(prescriptionDTO, Prescription.class);
+	        Prescription prescription = modelMapper.map(prescriptionDTO, Prescription.class);
 	        
 	        prescription.setMedicalRecord(medicalRecord);
 
 	        Prescription savedPrescription = prescriptionRepo.save(prescription);
 
-	        return model.map(savedPrescription, PrescriptionDetailsDTO.class);
+	        return modelMapper.map(savedPrescription, PrescriptionDetailsDTO.class);
 	    }
 	
 }
