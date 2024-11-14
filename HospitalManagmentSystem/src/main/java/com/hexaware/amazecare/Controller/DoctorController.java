@@ -33,7 +33,7 @@ import com.hexaware.amazecare.Model.MedicalRecord;
 import com.hexaware.amazecare.Service.DoctorService;
 
 @RestController
-@RequestMapping("/api/doctor")
+@RequestMapping("/api")
 public class DoctorController {
 	
 	
@@ -41,7 +41,7 @@ public class DoctorController {
 	DoctorService service;
 	
 	//Edit Profile
-	@PutMapping("/editProfile/{doctorid}")
+	@PutMapping("/doctor/editProfile/{doctorid}")
 	public ResponseEntity<DoctorDetailsDTO> editDoctor(@PathVariable int doctorid,@RequestBody DoctorDTO doc) throws DoctorNotFoundException{
 		
 		DoctorDetailsDTO updated=service.editDoctorProfile(doctorid,doc);
@@ -52,7 +52,7 @@ public class DoctorController {
 	}
 	
 	//View Profile
-	@GetMapping("/viewProfile/{doctorid}")
+	@GetMapping("/doctor/viewProfile/{doctorid}")
 	public ResponseEntity<DoctorDetailsDTO> viewDoctorProfile(@PathVariable int doctorid) throws DoctorNotFoundException{
 		
 		DoctorDetailsDTO doctor=service.viewDoctorProfile(doctorid);
@@ -63,7 +63,7 @@ public class DoctorController {
 	}
 	
 	//View Appointments
-	@GetMapping("/viewAppointments/{doctorid}")
+	@GetMapping("/doctor/viewAppointments/{doctorid}")
 	public ResponseEntity<List<AppointmentDetailsDTO>> viewDoctorAppointments(@PathVariable int doctorid) throws AppointmentNotFoundException{
 		
 		List<AppointmentDetailsDTO> appointments=service.viewDoctorAppointments(doctorid);
@@ -74,7 +74,7 @@ public class DoctorController {
 	}
 	
 	//View Patient History
-	@GetMapping("/viewPatientHistory/{patientid}")
+	@GetMapping("/patient/viewPatientHistory/{patientid}")
 	public ResponseEntity<List<MedicalRecordDetailsDTO>> viewPatientRecords(@PathVariable int patientid) throws RecordsNotFoundException{
 		
 		List<MedicalRecordDetailsDTO> records=service.viewPatientMedicalRecords(patientid);
@@ -85,7 +85,7 @@ public class DoctorController {
 	}
 	
 	//Accept Appointment
-	@PutMapping("/acceptAppointment/{doctorid},{appointmentid}")
+	@PutMapping("/doctor/acceptAppointment/{doctorid},{appointmentid}")
 	public ResponseEntity<AppointmentDetailsDTO> acceptAppointment(@PathVariable int doctorid,@PathVariable int appointmentid) throws AppointmentNotFoundException{
 		
 		AppointmentDetailsDTO updated=service.acceptAppointment(doctorid,appointmentid);
@@ -96,7 +96,7 @@ public class DoctorController {
 	}
 	
 	//Cancel Appointment
-	@PutMapping("/cancelAppointment/{doctorid},{appointmentid}")
+	@PutMapping("/doctor/cancelAppointment/{doctorid},{appointmentid}")
 	public ResponseEntity<AppointmentDetailsDTO> cancelAppointment(@PathVariable int doctorid,@PathVariable int appointmentid) throws AppointmentNotFoundException{
 		
 		AppointmentDetailsDTO updated=service.cancelAppointment(doctorid,appointmentid);
@@ -107,7 +107,7 @@ public class DoctorController {
 	}
 	
 	//Reschedule Appointment
-	@PutMapping("/rescheduleAppointment/{doctorid}/{appointmentid}/{date}/{time}")
+	@PutMapping("/doctor/rescheduleAppointment/{doctorid}/{appointmentid}/{date}/{time}")
 	public ResponseEntity<AppointmentDetailsDTO> rescheduleAppointment(@PathVariable int doctorid,@PathVariable int appointmentid,@PathVariable LocalDate date,@PathVariable String time) throws AppointmentNotFoundException{
 		
 		LocalTime appointtime=LocalTime.parse(time);
@@ -119,7 +119,7 @@ public class DoctorController {
 	}
 	
 	//Consultation
-	@PostMapping("/conductAppointment/{appointmentid}")
+	@PostMapping("/doctor/conductAppointment/{appointmentid}")
 	public ResponseEntity<MedicalRecordDetailsDTO> conductAppointment(@PathVariable int appointmentid,@RequestBody MedicalRecordDTO record) throws AppointmentNotFoundException{
 		
 		MedicalRecordDetailsDTO updated=service.conductAppointment(appointmentid,record);
@@ -129,7 +129,7 @@ public class DoctorController {
 		return new ResponseEntity<>(updated,HttpStatus.OK);
 	}
 	
-	@PutMapping("/editRecord/{recordid}")
+	@PutMapping("/medicalRecord/editRecord/{recordid}")
 	public ResponseEntity<MedicalRecordDetailsDTO> editRecord(@PathVariable int recordid,@RequestBody MedicalRecordDTO record) throws RecordsNotFoundException{
 		
 		MedicalRecordDetailsDTO updated=service.editRecord(recordid,record);
@@ -139,7 +139,7 @@ public class DoctorController {
 		return new ResponseEntity<>(updated,HttpStatus.OK);
 	}
 	
-	 @PostMapping("/addPrescription/{recordId}")
+	 @PostMapping("/medicalRecord/addPrescription/{recordId}")
 	    public ResponseEntity<PrescriptionDetailsDTO> addPrescription(@PathVariable int recordId,@RequestBody PrescriptionDTO prescriptionDTO) throws RecordsNotFoundException {
 
 	            PrescriptionDetailsDTO addedPrescription = service.addPrescription(recordId, prescriptionDTO);
@@ -150,7 +150,7 @@ public class DoctorController {
 	        
 	    }
 	
-	@PutMapping("/editPrescription/{recordid}/{prescriptionid}")
+	@PutMapping("/medicalRecord/editPrescription/{recordid}/{prescriptionid}")
 	public ResponseEntity<PrescriptionDetailsDTO> editPrescriptions(@PathVariable int recordid,@PathVariable int prescriptionid,@RequestBody PrescriptionDTO Prescription) throws PrescriptionsNotFoundException{
 		
 		PrescriptionDetailsDTO updated=service.editPrescriptions(recordid,prescriptionid,Prescription);
@@ -160,7 +160,7 @@ public class DoctorController {
 		return new ResponseEntity<>(updated,HttpStatus.OK);
 	}
 	
-	 @DeleteMapping("/deletePrescription/{recordId}/{prescriptionId}")
+	 @DeleteMapping("/medicalRecord/deletePrescription/{recordId}/{prescriptionId}")
 	    public ResponseEntity<String> deletePrescription(@PathVariable int recordId,@PathVariable int prescriptionId) {
 	        
 	        boolean isDeleted = service.deletePrescription(recordId, prescriptionId);

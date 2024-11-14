@@ -32,13 +32,13 @@ import com.hexaware.amazecare.Model.Doctor;
 import com.hexaware.amazecare.Service.AdminService;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 public class AdminController {
 
 	@Autowired
 	AdminService service;
 	
-	@PutMapping("/editProfile")
+	@PutMapping("/admin/editProfile")
 	public ResponseEntity<UsersDTO> editAdmin(@RequestBody UsersDTO d){
 		
 		UsersDTO admin = service.editAdmin(d);
@@ -47,7 +47,7 @@ public class AdminController {
 		
 	}
 	
-	@PostMapping("/addDoctor")
+	@PostMapping("/admin/addDoctor")
 	public ResponseEntity<DoctorDetailsDTO> adddoctor(@RequestBody DoctorDTO d){
 		
 		DoctorDetailsDTO doc = service.addadoctor(d);
@@ -61,7 +61,7 @@ public class AdminController {
 	        return service.getDistinctSpecialties();
 	    }
 	
-	@GetMapping("/getDoctors/{name}")
+	@GetMapping("/admin/getDoctors/{name}")
 	public ResponseEntity<List<DoctorDetailsDTO>> viewdoctors(@PathVariable String name) throws DoctorNotFoundException{
 		List<DoctorDetailsDTO> doc=service.viewDoctorsByName(name);
 		if(doc==null) {
@@ -70,7 +70,7 @@ public class AdminController {
 		return new ResponseEntity<>(doc,HttpStatus.OK);
 	}
 	
-	@GetMapping("/getAllDoctors")
+	@GetMapping("/admin/getAllDoctors")
 	public ResponseEntity<List<DoctorDetailsDTO>> viewdoctor() throws DoctorNotFoundException{
 		List<DoctorDetailsDTO> doc=service.viewAllDoctors();
 		if(doc==null) {
@@ -79,7 +79,7 @@ public class AdminController {
 		return new ResponseEntity<>(doc,HttpStatus.OK);
 	} 
 	
-	@GetMapping("/getPatients/{name}")
+	@GetMapping("/admin/getPatients/{name}")
 	public ResponseEntity<List<PatientDetailsDTO>> viewPatients(@PathVariable String name) throws PatientNotFoundException{
 		List<PatientDetailsDTO> patients=service.viewPatientsByName(name);
 		if(patients==null) {
@@ -88,7 +88,7 @@ public class AdminController {
 		return new ResponseEntity<>(patients,HttpStatus.OK);
 	}
 	
-	@GetMapping("/getAllPatients")
+	@GetMapping("/admin/getAllPatients")
 	public ResponseEntity<List<PatientDetailsDTO>> viewPatient() throws PatientNotFoundException{
 		List<PatientDetailsDTO> patients=service.viewAllPatients();
 		if(patients==null) {
@@ -97,7 +97,7 @@ public class AdminController {
 		return new ResponseEntity<>(patients,HttpStatus.OK);
 	} 
 
-	@GetMapping("/getAllAppointments")
+	@GetMapping("/admin/getAllAppointments")
 	public ResponseEntity<List<AppointmentDetailsDTO>> viewAppointment() throws AppointmentNotFoundException{
 		List<AppointmentDetailsDTO> Appointments=service.viewAllAppointments();
 		if(Appointments==null) {
@@ -106,7 +106,7 @@ public class AdminController {
 		return new ResponseEntity<>(Appointments,HttpStatus.OK);
 	} 
 
-	@GetMapping("/getAllRecords")
+	@GetMapping("/admin/getAllRecords")
 	public ResponseEntity<List<MedicalRecordDetailsDTO>> viewRecord() throws RecordsNotFoundException{
 		List<MedicalRecordDetailsDTO> Records=service.viewAllRecords();
 		if(Records==null) {
@@ -115,7 +115,7 @@ public class AdminController {
 		return new ResponseEntity<>(Records,HttpStatus.OK);
 	} 
 	
-	@DeleteMapping("/deleteappointment/{appointmentid}")
+	@DeleteMapping("/admin/deleteappointment/{appointmentid}")
 	public ResponseEntity<String> deleteappointmnet(@PathVariable int appointmentid) throws AppointmentNotFoundException{
 		
 		String r= service.deleteaappointment(appointmentid);
@@ -126,7 +126,7 @@ public class AdminController {
 		
 	}
 	
-	@DeleteMapping("/deletedoctorbyid/{doctorid}")
+	@DeleteMapping("/admin/deletedoctorbyid/{doctorid}")
 	public ResponseEntity<String> deletedoctorbyid(@PathVariable int doctorid) throws DoctorNotFoundException{
 		String doctor = service.deletedoctorbyid(doctorid);
 		if(doctor==null){
@@ -136,7 +136,7 @@ public class AdminController {
 		
 	}
 	
-	@DeleteMapping("/deletepatientbyid/{patientid}")
+	@DeleteMapping("/admin/deletepatientbyid/{patientid}")
 	public ResponseEntity<String> deletepatientbyid(@PathVariable int patientid) throws PatientNotFoundException{
 		String patient = service.deletepatientbyid(patientid);
 		if(patient==null){
@@ -145,7 +145,7 @@ public class AdminController {
 		return new ResponseEntity<>(patient,HttpStatus.OK);
 		
 	}
-	@DeleteMapping("/deleterecordbyid/{recordid}")
+	@DeleteMapping("/admin/deleterecordbyid/{recordid}")
 	public ResponseEntity<String> deleterecordbyid(@PathVariable int recordid) throws RecordsNotFoundException{
 		String record = service.deleterecordbyid(recordid);
 		if(record==null){

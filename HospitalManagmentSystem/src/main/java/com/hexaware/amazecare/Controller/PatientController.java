@@ -114,7 +114,7 @@ public class PatientController {
 		return new ResponseEntity<>(appointment,HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/rescheduleAppointmentByPatient/{appointmentid}/{date}/{time}")
+	@PutMapping("/rescheduleAppointment/{appointmentid}/{date}/{time}")
 	public ResponseEntity<AppointmentDetailsDTO> rescheduleAppointmentByPatient( 
 	        @PathVariable int appointmentid, 
 	        @PathVariable LocalDate date, 
@@ -127,11 +127,6 @@ public class PatientController {
 	    }
 	    return new ResponseEntity<>(updated, HttpStatus.OK);
 	}
-
-	
-	
-
-
 
 }
 
