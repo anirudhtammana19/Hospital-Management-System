@@ -70,6 +70,7 @@ public class DoctorService {
 	    }
 	    if(doc.getEmail()!=null) {
 	    	doctor.setEmail(doc.getEmail());
+	    	u.setUsername(doc.getEmail());
 	    }
 	    if(doc.getProfile_image()!=null) {
 	    	doctor.setProfile_image(doc.getProfile_image());
@@ -93,9 +94,7 @@ public class DoctorService {
 	    }
 	    
 	    if (u != null) {
-	    	if(doc.getEmail()!=null) {
-	    		u.setUsername(doc.getEmail());
-		    }
+	    	
 	    	if(doc.getPassword()!=null) {
 	    		u.setPassword(doc.getPassword());
 		    }

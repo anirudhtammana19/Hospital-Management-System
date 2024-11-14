@@ -66,10 +66,12 @@ public class PatientService {
 	public PatientDTO updateprofile(int id, PatientDTO pd) throws PatientNotFoundException  {
 	   
 		Patient existingPatient = pr.findById(id).orElse(null);
-		Users u = ur.findByUsername(existingPatient.getEmail());
+		
 		if(existingPatient==null) {
 			return null;
 		}
+		Users u = ur.findByUsername(existingPatient.getEmail());
+		
 	    if(pd.getFirstName()!=null) {
 	    	existingPatient.setFirstName(pd.getFirstName());
 	    }
@@ -87,6 +89,7 @@ public class PatientService {
 	    }
 	    if(pd.getEmail()!=null) {
 	    	existingPatient.setEmail(pd.getEmail());
+	    	u.setUsername(pd.getEmail());
 	    }
 	    if(pd.getAddress()!=null) {
 	    	existingPatient.setAddress(pd.getAddress());
@@ -107,9 +110,7 @@ public class PatientService {
 	    
 	     
 	    if (u != null) {
-	    	if(pd.getEmail()!=null) {
-	    		u.setUsername(pd.getEmail());
-		    }
+	    	
 	    	if(pd.getPassword()!=null) {
 	    		u.setPassword(pd.getPassword());
 		    }
