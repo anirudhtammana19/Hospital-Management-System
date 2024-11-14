@@ -84,38 +84,56 @@ public class AdminController {
 	    }
 	
 	@GetMapping("/getDoctors/{name}")
-	public ResponseEntity<List<DoctorDTO>> viewdoctors(@PathVariable String name){
+	public ResponseEntity<List<DoctorDTO>> viewdoctors(@PathVariable String name) throws DoctorNotFoundException{
 		List<DoctorDTO> doc=as.viewDoctorsByName(name);
+		if(doc==null) {
+			throw new DoctorNotFoundException("No Doctors Found!");
+		}
 		return new ResponseEntity<>(doc,HttpStatus.OK);
 	}
 	
 	@GetMapping("/getAllDoctors")
-	public ResponseEntity<List<DoctorDTO>> viewdoctor(){
+	public ResponseEntity<List<DoctorDTO>> viewdoctor() throws DoctorNotFoundException{
 		List<DoctorDTO> doc=as.viewAllDoctors();
+		if(doc==null) {
+			throw new DoctorNotFoundException("No Doctors Found!");
+		}
 		return new ResponseEntity<>(doc,HttpStatus.OK);
 	} 
 	
 	@GetMapping("/getPatients/{name}")
-	public ResponseEntity<List<PatientDTO>> viewPatients(@PathVariable String name){
+	public ResponseEntity<List<PatientDTO>> viewPatients(@PathVariable String name) throws PatientNotFoundException{
 		List<PatientDTO> patients=as.viewPatientsByName(name);
+		if(patients==null) {
+			throw new PatientNotFoundException("No Patients Found!");
+		}
 		return new ResponseEntity<>(patients,HttpStatus.OK);
 	}
 	
 	@GetMapping("/getAllPatients")
-	public ResponseEntity<List<PatientDTO>> viewPatient(){
+	public ResponseEntity<List<PatientDTO>> viewPatient() throws PatientNotFoundException{
 		List<PatientDTO> patients=as.viewAllPatients();
+		if(patients==null) {
+			throw new PatientNotFoundException("No Patients Found!");
+		}
 		return new ResponseEntity<>(patients,HttpStatus.OK);
 	} 
 
 	@GetMapping("/getAllAppointments")
-	public ResponseEntity<List<AppointmentDTO>> viewAppointment(){
+	public ResponseEntity<List<AppointmentDTO>> viewAppointment() throws AppointmentNotFoundException{
 		List<AppointmentDTO> Appointments=as.viewAllAppointments();
+		if(Appointments==null) {
+			throw new AppointmentNotFoundException("No Appointments Found!");
+		}
 		return new ResponseEntity<>(Appointments,HttpStatus.OK);
 	} 
 
 	@GetMapping("/getAllRecords")
-	public ResponseEntity<List<MedicalRecordDTO>> viewRecord(){
+	public ResponseEntity<List<MedicalRecordDTO>> viewRecord() throws RecordsNotFoundException{
 		List<MedicalRecordDTO> Records=as.viewAllRecords();
+		if(Records==null) {
+			throw new RecordsNotFoundException("No MedicalRecords Found!");
+		}
 		return new ResponseEntity<>(Records,HttpStatus.OK);
 	} 
 	

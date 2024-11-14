@@ -78,6 +78,9 @@ public class AdminService {
 	 
 	public List<DoctorDTO> viewAllDoctors() {
 		List<Doctor> list = doctorRepo.findAll();
+		if(list.isEmpty()) {
+			return null;
+		}
 		List<DoctorDTO> out=list.stream().map(i->{
 			DoctorDTO j=mapper.map(i,DoctorDTO.class);
 			j.setPassword(i.getUser().getPassword());
@@ -87,6 +90,9 @@ public class AdminService {
 
 	public List<PatientDTO> viewAllPatients() {
 		List<Patient> list = patientRepo.findAll();
+		if(list.isEmpty()) {
+			return null;
+		}
 		List<PatientDTO> out=list.stream().map(i->{
 			PatientDTO j=mapper.map(i,PatientDTO.class);
 			j.setPassword(i.getUser().getPassword());
@@ -98,11 +104,17 @@ public class AdminService {
 
 	public List<MedicalRecordDTO> viewAllRecords() {
 		List<MedicalRecord> list = medicalRepo.findAll();
+		if(list.isEmpty()) {
+			return null;
+		}
 		return list.stream().map(i->mapper.map(i,MedicalRecordDTO.class)).toList();
 	}
 
 	public List<AppointmentDTO> viewAllAppointments() {
 		List<Appointment> list = appointRepo.findAll();
+		if(list.isEmpty()) {
+			return null;
+		}
 		return list.stream().map(i->mapper.map(i,AppointmentDTO.class)).toList();
 		
 	}
