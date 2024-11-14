@@ -66,6 +66,7 @@ public class PatientService {
 	public PatientDTO updateprofile(int id, PatientDTO pd) throws PatientNotFoundException  {
 	   
 		Patient existingPatient = pr.findById(id).orElse(null);
+		Users u = ur.findByUsername(existingPatient.getEmail());
 		if(existingPatient==null) {
 			return null;
 		}
@@ -104,7 +105,7 @@ public class PatientService {
 	    	existingPatient.setBloodGroup(BloodGroup.valueOf(pd.getBloodGroup()));
 	    }
 	    
-	    Users u = ur.findByUsername(pd.getEmail()); 
+	     
 	    if (u != null) {
 	    	if(pd.getEmail()!=null) {
 	    		u.setUsername(pd.getEmail());
