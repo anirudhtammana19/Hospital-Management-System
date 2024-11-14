@@ -45,7 +45,7 @@ public class PatientController {
 	@PostMapping("/register")
 	public ResponseEntity<PatientDetailsDTO> register(@RequestBody PatientDTO p) {
 	    PatientDetailsDTO savedData = service.savedata(p); 
-	    return new ResponseEntity<>(savedData, HttpStatus.OK); // Corrected syntax
+	    return new ResponseEntity<>(savedData, HttpStatus.CREATED); 
 	}
 	
 	//View Profile
