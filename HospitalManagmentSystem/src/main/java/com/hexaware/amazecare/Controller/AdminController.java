@@ -78,6 +78,11 @@ public class AdminController {
 		
 	}
 	
+	 @GetMapping("/api/doctors/distinct-specialties")
+	    public List<String> getDistinctSpecialties() {
+	        return as.getDistinctSpecialties();
+	    }
+	
 	@GetMapping("/getDoctors/{name}")
 	public ResponseEntity<List<DoctorDTO>> viewdoctors(@PathVariable String name){
 		List<DoctorDTO> doc=as.viewDoctorsByName(name);

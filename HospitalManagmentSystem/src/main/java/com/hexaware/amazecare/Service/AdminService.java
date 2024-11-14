@@ -72,6 +72,10 @@ public class AdminService {
 		
 	} 
 	
+	 public List<String> getDistinctSpecialties() {
+	        return doctorRepo.findAllDistinctSpecialties();
+	    }
+	 
 	public List<DoctorDTO> viewAllDoctors() {
 		List<Doctor> list = doctorRepo.findAll();
 		List<DoctorDTO> out=list.stream().map(i->{
