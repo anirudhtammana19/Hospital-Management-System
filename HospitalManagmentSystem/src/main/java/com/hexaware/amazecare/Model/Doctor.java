@@ -27,7 +27,7 @@ public class Doctor {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int doctorId;
     
-    @OneToOne(targetEntity = Users.class,fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Users.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 

@@ -146,7 +146,7 @@ public class DoctorController {
 		return new ResponseEntity<>(updated,HttpStatus.OK);
 	}
 	
-	 @PostMapping("/add/{recordId}")
+	 @PostMapping("/addPrescription/{recordId}")
 	    public ResponseEntity<PrescriptionDTO> addPrescription(@PathVariable int recordId,@RequestBody PrescriptionDTO prescriptionDTO) throws RecordsNotFoundException {
 
 	            PrescriptionDTO addedPrescription = service.addPrescription(recordId, prescriptionDTO);
@@ -157,7 +157,7 @@ public class DoctorController {
 	        
 	    }
 	
-	@PutMapping("/editRecord/{recordid}/{prescriptionid}")
+	@PutMapping("/editPrescription/{recordid}/{prescriptionid}")
 	public ResponseEntity<PrescriptionDTO> editPrescriptions(@PathVariable int recordid,@PathVariable int prescriptionid,@RequestBody PrescriptionDTO Prescription) throws PrescriptionsNotFoundException{
 		
 		PrescriptionDTO updated=service.editPrescriptions(recordid,prescriptionid,Prescription);
@@ -167,7 +167,7 @@ public class DoctorController {
 		return new ResponseEntity<>(updated,HttpStatus.OK);
 	}
 	
-	 @DeleteMapping("/delete/{recordId}/{prescriptionId}")
+	 @DeleteMapping("/deletePrescription/{recordId}/{prescriptionId}")
 	    public ResponseEntity<String> deletePrescription(@PathVariable int recordId,@PathVariable int prescriptionId) {
 	        
 	        boolean isDeleted = service.deletePrescription(recordId, prescriptionId);
