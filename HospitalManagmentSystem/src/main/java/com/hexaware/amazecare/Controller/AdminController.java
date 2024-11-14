@@ -140,7 +140,7 @@ public class AdminController {
 		
 	}
 	
-	@DeleteMapping("/deletepatientbyid/{patiendid}")
+	@DeleteMapping("/deletepatientbyid/{patientid}")
 	public ResponseEntity<String> deletepatientbyid(@PathVariable int patientid) throws PatientNotFoundException{
 		String patient = as.deletedoctorbyid(patientid);
 		if(patient==null){
