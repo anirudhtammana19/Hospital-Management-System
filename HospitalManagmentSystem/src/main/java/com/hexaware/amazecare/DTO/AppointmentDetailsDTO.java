@@ -6,9 +6,13 @@ import java.time.LocalTime;
 import com.hexaware.amazecare.Model.Appointment.ConsultationType;
 import com.hexaware.amazecare.Model.Appointment.Status;
 
-public class AppointmentDTO {
+public class AppointmentDetailsDTO {
 
-
+	int appointmentId;
+	int patientId;
+	String patientFirstName;
+	int doctorId;
+	String doctorFirstName;
     private LocalDate appointmentDate;
     private LocalTime appointmentTime;
     private Status status;
@@ -16,15 +20,19 @@ public class AppointmentDTO {
     private String visitType;
     private ConsultationType consultationType;
 
-    public AppointmentDTO() {
+    public AppointmentDetailsDTO() {
     	super();
     }
 
-    
-    
-	public AppointmentDTO(LocalDate appointmentDate, LocalTime appointmentTime, Status status, String reason,
+	public AppointmentDetailsDTO(int appointmentId, int patientId, String patientFirstName, int doctorId,
+			String doctorFirstName, LocalDate appointmentDate, LocalTime appointmentTime, Status status, String reason,
 			String visitType, ConsultationType consultationType) {
 		super();
+		this.appointmentId = appointmentId;
+		this.patientId = patientId;
+		this.patientFirstName = patientFirstName;
+		this.doctorId = doctorId;
+		this.doctorFirstName = doctorFirstName;
 		this.appointmentDate = appointmentDate;
 		this.appointmentTime = appointmentTime;
 		this.status = status;
@@ -33,7 +41,45 @@ public class AppointmentDTO {
 		this.consultationType = consultationType;
 	}
 
+	public int getAppointmentId() {
+		return appointmentId;
+	}
 
+	public void setAppointmentId(int appointmentId) {
+		this.appointmentId = appointmentId;
+	}
+
+	public int getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+
+	public int getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
+	}
+
+	public String getPatientFirstName() {
+		return patientFirstName;
+	}
+
+	public void setPatientFirstName(String patientFirstName) {
+		this.patientFirstName = patientFirstName;
+	}
+
+	public String getDoctorFirstName() {
+		return doctorFirstName;
+	}
+
+	public void setDoctorFirstName(String doctorFirstName) {
+		this.doctorFirstName = doctorFirstName;
+	}
 
 	public LocalDate getAppointmentDate() {
         return appointmentDate;

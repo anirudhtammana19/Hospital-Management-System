@@ -10,36 +10,41 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 
-public class PatientDTO {
+public class PatientDetailsDTO {
 
+	private int patientId;
     private String firstName;
     private String lastName;
-        
+    
+    
     private LocalDate dateOfBirth;
     private String gender;
     
     private String contactNumber;
-  
+   
     private String email;
     private String address;
     
     private String emergencyContact;
-    private String allergies;  
+    private String allergies;
+    
     
     private String aadharCard;
+    
     private String bloodGroup;
     
     private String password;
     
-	public PatientDTO() {
+	public PatientDetailsDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public PatientDTO(String firstName, String lastName, LocalDate dateOfBirth, String gender,
+	public PatientDetailsDTO(int patientId, String firstName, String lastName, LocalDate dateOfBirth, String gender,
 			String contactNumber, String email, String address, String emergencyContact, String allergies,
 			String aadharCard, String bloodGroup, String password) {
 		super();
+		this.patientId = patientId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dateOfBirth = dateOfBirth;
@@ -52,6 +57,14 @@ public class PatientDTO {
 		this.aadharCard = aadharCard;
 		this.bloodGroup = bloodGroup;
 		this.password = password;
+	}
+
+	public int getPatientId() {
+		return patientId;
+	}
+
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
 	}
 
 	public String getFirstName() {

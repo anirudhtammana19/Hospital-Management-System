@@ -8,8 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class DoctorDTO {
+public class DoctorDetailsDTO {
     
+	int doctorId;
     private String firstName;
     private String lastName;
 
@@ -33,15 +34,16 @@ public class DoctorDTO {
     private String password;
 
 
-    public DoctorDTO() {
+    public DoctorDetailsDTO() {
         // Default constructor
     	super();
     }    
     
-    public DoctorDTO(String firstName, String lastName, String profile_image, String specialty,
+    public DoctorDetailsDTO(int doctorId, String firstName, String lastName, String profile_image, String specialty,
 			int experience, String qualification, String designation, String contactNumber, String email,
 			BloodGroup bloodGroup, Gender gender, String password) {
 		super();
+		this.doctorId = doctorId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.profile_image = profile_image;
@@ -54,6 +56,14 @@ public class DoctorDTO {
 		this.bloodGroup = bloodGroup;
 		this.gender = gender;
 		this.password = password;
+	}
+
+	public int getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
 	}
 
 	public String getFirstName() {

@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hexaware.amazecare.DTO.AppointmentDTO;
+import com.hexaware.amazecare.DTO.AppointmentDetailsDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
+import com.hexaware.amazecare.DTO.DoctorDetailsDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDTO;
+import com.hexaware.amazecare.DTO.MedicalRecordDetailsDTO;
 import com.hexaware.amazecare.DTO.PatientDTO;
+import com.hexaware.amazecare.DTO.PatientDetailsDTO;
 import com.hexaware.amazecare.DTO.UsersDTO;
 import com.hexaware.amazecare.Model.Appointment;
 import com.hexaware.amazecare.Model.Doctor;
@@ -42,6 +46,7 @@ public class AdminService {
 	@Autowired
 	MedicalRecordRepo medicalRepo;
 	
+	//Part of Lifecycle of SpringBoot
     @PostConstruct
     public void init() {
         if (ur.findByRole(Role.ADMIN)==null) {
@@ -54,7 +59,7 @@ public class AdminService {
     }
 
 	
-	public DoctorDTO addadoctor(DoctorDTO d) {
+	public DoctorDetailsDTO addadoctor(DoctorDTO d) {
 		
 		Doctor doctor = mapper.map(d, Doctor.class);
 		
@@ -67,7 +72,7 @@ public class AdminService {
 		doctor.setUser(user);
 		
 		doctorRepo.save(doctor);
-		return mapper.map(doctor, DoctorDTO.class);
+		return mapper.map(doctor, DoctorDetailsDTO.class);
 		
 		
 	} 
@@ -76,25 +81,25 @@ public class AdminService {
 	        return doctorRepo.findAllDistinctSpecialties();
 	    }
 	 
-	public List<DoctorDTO> viewAllDoctors() {
+	public List<DoctorDetailsDTO> viewAllDoctors() {
 		List<Doctor> list = doctorRepo.findAll();
 		if(list.isEmpty()) {
 			return null;
 		}
-		List<DoctorDTO> out=list.stream().map(i->{
-			DoctorDTO j=mapper.map(i,DoctorDTO.class);
+		List<DoctorDetailsDTO> out=list.stream().map(i->{
+			DoctorDetailsDTO j=mapper.map(i,DoctorDetailsDTO.class);
 			j.setPassword(i.getUser().getPassword());
 			return j;}).toList();
 		return out;
 	}
 
-	public List<PatientDTO> viewAllPatients() {
+	public List<PatientDetailsDTO> viewAllPatients() {
 		List<Patient> list = patientRepo.findAll();
 		if(list.isEmpty()) {
 			return null;
 		}
-		List<PatientDTO> out=list.stream().map(i->{
-			PatientDTO j=mapper.map(i,PatientDTO.class);
+		List<PatientDetailsDTO> out=list.stream().map(i->{
+			PatientDetailsDTO j=mapper.map(i,PatientDetailsDTO.class);
 			j.setPassword(i.getUser().getPassword());
 			return j;}).toList();
 		return out;
@@ -102,20 +107,20 @@ public class AdminService {
 		
 	}
 
-	public List<MedicalRecordDTO> viewAllRecords() {
+	public List<MedicalRecordDetailsDTO> viewAllRecords() {
 		List<MedicalRecord> list = medicalRepo.findAll();
 		if(list.isEmpty()) {
 			return null;
 		}
-		return list.stream().map(i->mapper.map(i,MedicalRecordDTO.class)).toList();
+		return list.stream().map(i->mapper.map(i,MedicalRecordDetailsDTO.class)).toList();
 	}
 
-	public List<AppointmentDTO> viewAllAppointments() {
+	public List<AppointmentDetailsDTO> viewAllAppointments() {
 		List<Appointment> list = appointRepo.findAll();
 		if(list.isEmpty()) {
 			return null;
 		}
-		return list.stream().map(i->mapper.map(i,AppointmentDTO.class)).toList();
+		return list.stream().map(i->mapper.map(i,AppointmentDetailsDTO.class)).toList();
 		
 	}
 
@@ -174,21 +179,21 @@ public class AdminService {
 	}
 
 
-	public List<DoctorDTO> viewDoctorsByName(String name) {
+	public List<DoctorDetailsDTO> viewDoctorsByName(String name) {
 		List<Doctor> doc=doctorRepo.findByFirstNameStartingWith(name);
 		if(doc.isEmpty()) {
 			return null;
 		}	
-		return doc.stream().map(i->mapper.map(i, DoctorDTO.class)).toList() ;
+		return doc.stream().map(i->mapper.map(i, DoctorDetailsDTO.class)).toList() ;
 	}
 
 
-	public List<PatientDTO> viewPatientsByName(String name) {
+	public List<PatientDetailsDTO> viewPatientsByName(String name) {
 		List<Patient> patients=patientRepo.findByFirstNameStartingWith(name);
 		if(patients.isEmpty()) {
 			return null;
 		}	
-		return patients.stream().map(i->mapper.map(i, PatientDTO.class)).toList() ;
+		return patients.stream().map(i->mapper.map(i, PatientDetailsDTO.class)).toList() ;
 	}
 
 }

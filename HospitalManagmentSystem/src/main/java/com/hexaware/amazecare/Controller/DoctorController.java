@@ -17,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hexaware.amazecare.DTO.AppointmentDTO;
+import com.hexaware.amazecare.DTO.AppointmentDetailsDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
+import com.hexaware.amazecare.DTO.DoctorDetailsDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDTO;
+import com.hexaware.amazecare.DTO.MedicalRecordDetailsDTO;
 import com.hexaware.amazecare.DTO.PrescriptionDTO;
+import com.hexaware.amazecare.DTO.PrescriptionDetailsDTO;
 import com.hexaware.amazecare.Exception.AppointmentNotFoundException;
 import com.hexaware.amazecare.Exception.DoctorNotFoundException;
 import com.hexaware.amazecare.Exception.PrescriptionsNotFoundException;
@@ -31,27 +35,16 @@ import com.hexaware.amazecare.Service.DoctorService;
 @RestController
 @RequestMapping("/api/doctor")
 public class DoctorController {
-	/*
-	 * login,logout--
-	 * edit profile
-	 * view appointments
-	 * view patient medical records
-	 * Accept appointment
-	 * Deny Appointment
-	 * do consultation -insert medical record,prescription
-	 * Rescheduled appointments
-	 * modify records & prescription
-	 * 
-	 * */
+	
 	
 	@Autowired
 	DoctorService service;
 	
 	//Edit Profile
 	@PutMapping("/editProfile/{doctorid}")
-	public ResponseEntity<DoctorDTO> editDoctor(@PathVariable int doctorid,@RequestBody DoctorDTO doc) throws DoctorNotFoundException{
+	public ResponseEntity<DoctorDetailsDTO> editDoctor(@PathVariable int doctorid,@RequestBody DoctorDTO doc) throws DoctorNotFoundException{
 		
-		DoctorDTO updated=service.editDoctorProfile(doctorid,doc);
+		DoctorDetailsDTO updated=service.editDoctorProfile(doctorid,doc);
 		if(updated==null) {
 			throw new DoctorNotFoundException("Doctor does not exist!!");
 		}
@@ -60,9 +53,9 @@ public class DoctorController {
 	
 	//View Profile
 	@GetMapping("/viewProfile/{doctorid}")
-	public ResponseEntity<DoctorDTO> viewDoctorProfile(@PathVariable int doctorid) throws DoctorNotFoundException{
+	public ResponseEntity<DoctorDetailsDTO> viewDoctorProfile(@PathVariable int doctorid) throws DoctorNotFoundException{
 		
-		DoctorDTO doctor=service.viewDoctorProfile(doctorid);
+		DoctorDetailsDTO doctor=service.viewDoctorProfile(doctorid);
 		if(doctor==null) {
 			throw new DoctorNotFoundException("Doctor does not exist!!");
 		}
@@ -71,9 +64,9 @@ public class DoctorController {
 	
 	//View Appointments
 	@GetMapping("/viewAppointments/{doctorid}")
-	public ResponseEntity<List<AppointmentDTO>> viewDoctorAppointments(@PathVariable int doctorid) throws AppointmentNotFoundException{
+	public ResponseEntity<List<AppointmentDetailsDTO>> viewDoctorAppointments(@PathVariable int doctorid) throws AppointmentNotFoundException{
 		
-		List<AppointmentDTO> appointments=service.viewDoctorAppointments(doctorid);
+		List<AppointmentDetailsDTO> appointments=service.viewDoctorAppointments(doctorid);
 		if(appointments.isEmpty()) {
 			throw new AppointmentNotFoundException("Doctor does not any Appointments!!");
 		}
@@ -82,9 +75,9 @@ public class DoctorController {
 	
 	//View Patient History
 	@GetMapping("/viewPatientHistory/{patientid}")
-	public ResponseEntity<List<MedicalRecordDTO>> viewPatientRecords(@PathVariable int patientid) throws RecordsNotFoundException{
+	public ResponseEntity<List<MedicalRecordDetailsDTO>> viewPatientRecords(@PathVariable int patientid) throws RecordsNotFoundException{
 		
-		List<MedicalRecordDTO> records=service.viewPatientMedicalRecords(patientid);
+		List<MedicalRecordDetailsDTO> records=service.viewPatientMedicalRecords(patientid);
 		if(records.isEmpty()) {
 			throw new RecordsNotFoundException("Patient does not any Medical Records!!");
 		}
@@ -93,9 +86,9 @@ public class DoctorController {
 	
 	//Accept Appointment
 	@PutMapping("/acceptAppointment/{doctorid},{appointmentid}")
-	public ResponseEntity<AppointmentDTO> acceptAppointment(@PathVariable int doctorid,@PathVariable int appointmentid) throws AppointmentNotFoundException{
+	public ResponseEntity<AppointmentDetailsDTO> acceptAppointment(@PathVariable int doctorid,@PathVariable int appointmentid) throws AppointmentNotFoundException{
 		
-		AppointmentDTO updated=service.acceptAppointment(doctorid,appointmentid);
+		AppointmentDetailsDTO updated=service.acceptAppointment(doctorid,appointmentid);
 		if(updated==null) {
 			throw new AppointmentNotFoundException("Appointment does not exist!!");
 		}
@@ -104,9 +97,9 @@ public class DoctorController {
 	
 	//Cancel Appointment
 	@PutMapping("/cancelAppointment/{doctorid},{appointmentid}")
-	public ResponseEntity<AppointmentDTO> cancelAppointment(@PathVariable int doctorid,@PathVariable int appointmentid) throws AppointmentNotFoundException{
+	public ResponseEntity<AppointmentDetailsDTO> cancelAppointment(@PathVariable int doctorid,@PathVariable int appointmentid) throws AppointmentNotFoundException{
 		
-		AppointmentDTO updated=service.cancelAppointment(doctorid,appointmentid);
+		AppointmentDetailsDTO updated=service.cancelAppointment(doctorid,appointmentid);
 		if(updated==null) {
 			throw new AppointmentNotFoundException("Appointment does not exist!!");
 		}
@@ -115,10 +108,10 @@ public class DoctorController {
 	
 	//Reschedule Appointment
 	@PutMapping("/rescheduleAppointment/{doctorid}/{appointmentid}/{date}/{time}")
-	public ResponseEntity<AppointmentDTO> rescheduleAppointment(@PathVariable int doctorid,@PathVariable int appointmentid,@PathVariable LocalDate date,@PathVariable String time) throws AppointmentNotFoundException{
+	public ResponseEntity<AppointmentDetailsDTO> rescheduleAppointment(@PathVariable int doctorid,@PathVariable int appointmentid,@PathVariable LocalDate date,@PathVariable String time) throws AppointmentNotFoundException{
 		
 		LocalTime appointtime=LocalTime.parse(time);
-		AppointmentDTO updated=service.rescheduleAppointment(doctorid,appointmentid,date,appointtime);
+		AppointmentDetailsDTO updated=service.rescheduleAppointment(doctorid,appointmentid,date,appointtime);
 		if(updated==null) {
 			throw new AppointmentNotFoundException("Appointment does not exist!!");
 		}
@@ -127,9 +120,9 @@ public class DoctorController {
 	
 	//Consultation
 	@PostMapping("/conductAppointment/{appointmentid}")
-	public ResponseEntity<MedicalRecordDTO> conductAppointment(@PathVariable int appointmentid,@RequestBody MedicalRecordDTO record) throws AppointmentNotFoundException{
+	public ResponseEntity<MedicalRecordDetailsDTO> conductAppointment(@PathVariable int appointmentid,@RequestBody MedicalRecordDTO record) throws AppointmentNotFoundException{
 		
-		MedicalRecordDTO updated=service.conductAppointment(appointmentid,record);
+		MedicalRecordDetailsDTO updated=service.conductAppointment(appointmentid,record);
 		if(updated==null) {
 			throw new AppointmentNotFoundException("Appointment does not exist!!");
 		}
@@ -137,9 +130,9 @@ public class DoctorController {
 	}
 	
 	@PutMapping("/editRecord/{recordid}")
-	public ResponseEntity<MedicalRecordDTO> editRecord(@PathVariable int recordid,@RequestBody MedicalRecordDTO record) throws RecordsNotFoundException{
+	public ResponseEntity<MedicalRecordDetailsDTO> editRecord(@PathVariable int recordid,@RequestBody MedicalRecordDTO record) throws RecordsNotFoundException{
 		
-		MedicalRecordDTO updated=service.editRecord(recordid,record);
+		MedicalRecordDetailsDTO updated=service.editRecord(recordid,record);
 		if(updated==null) {
 			throw new RecordsNotFoundException("Medical record with ID " + recordid + " not found");
 		}
@@ -147,9 +140,9 @@ public class DoctorController {
 	}
 	
 	 @PostMapping("/addPrescription/{recordId}")
-	    public ResponseEntity<PrescriptionDTO> addPrescription(@PathVariable int recordId,@RequestBody PrescriptionDTO prescriptionDTO) throws RecordsNotFoundException {
+	    public ResponseEntity<PrescriptionDetailsDTO> addPrescription(@PathVariable int recordId,@RequestBody PrescriptionDTO prescriptionDTO) throws RecordsNotFoundException {
 
-	            PrescriptionDTO addedPrescription = service.addPrescription(recordId, prescriptionDTO);
+	            PrescriptionDetailsDTO addedPrescription = service.addPrescription(recordId, prescriptionDTO);
 	            if(addedPrescription==null) {
 	            	throw new RecordsNotFoundException("Medical record not found for id: " + recordId);
 	            }
@@ -158,9 +151,9 @@ public class DoctorController {
 	    }
 	
 	@PutMapping("/editPrescription/{recordid}/{prescriptionid}")
-	public ResponseEntity<PrescriptionDTO> editPrescriptions(@PathVariable int recordid,@PathVariable int prescriptionid,@RequestBody PrescriptionDTO Prescription) throws PrescriptionsNotFoundException{
+	public ResponseEntity<PrescriptionDetailsDTO> editPrescriptions(@PathVariable int recordid,@PathVariable int prescriptionid,@RequestBody PrescriptionDTO Prescription) throws PrescriptionsNotFoundException{
 		
-		PrescriptionDTO updated=service.editPrescriptions(recordid,prescriptionid,Prescription);
+		PrescriptionDetailsDTO updated=service.editPrescriptions(recordid,prescriptionid,Prescription);
 		if(updated==null) {
 			throw new PrescriptionsNotFoundException("Medical record with ID " + recordid + " not found");
 		}

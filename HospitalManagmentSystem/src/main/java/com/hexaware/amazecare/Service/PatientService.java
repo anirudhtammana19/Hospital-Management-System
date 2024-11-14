@@ -12,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hexaware.amazecare.DTO.AppointmentDTO;
+import com.hexaware.amazecare.DTO.AppointmentDetailsDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
+import com.hexaware.amazecare.DTO.DoctorDetailsDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDTO;
+import com.hexaware.amazecare.DTO.MedicalRecordDetailsDTO;
 import com.hexaware.amazecare.DTO.PatientDTO;
+import com.hexaware.amazecare.DTO.PatientDetailsDTO;
 import com.hexaware.amazecare.Exception.DoctorNotFoundException;
 import com.hexaware.amazecare.Exception.PatientNotFoundException;
 import com.hexaware.amazecare.Model.Appointment;
@@ -47,7 +51,7 @@ public class PatientService {
 	@Autowired
 	DoctorRepo dr;
 
-	public PatientDTO savedata(PatientDTO pd) {
+	public PatientDetailsDTO savedata(PatientDTO pd) {
 
 		Patient patient = mapper.map(pd, Patient.class);
 		Users user = new Users();
@@ -60,10 +64,10 @@ public class PatientService {
 
 		pr.save(patient);
 
-		return mapper.map(patient, PatientDTO.class);
+		return mapper.map(patient, PatientDetailsDTO.class);
 	}
 
-	public PatientDTO updateprofile(int id, PatientDTO pd) throws PatientNotFoundException  {
+	public PatientDetailsDTO updateprofile(int id, PatientDTO pd) throws PatientNotFoundException  {
 	   
 		Patient existingPatient = pr.findById(id).orElse(null);
 		
@@ -118,45 +122,35 @@ public class PatientService {
 	        ur.save(u); 
 	    }
 
-	    pr.save(existingPatient);
+	    Patient updated=pr.save(existingPatient);
 
-	    return mapper.map(existingPatient, PatientDTO.class);
+	    return mapper.map(updated, PatientDetailsDTO.class);
 	}
 
-	public List<AppointmentDTO> getpatientappoints(int patientid) {
+	public List<AppointmentDetailsDTO> getpatientappoints(int patientid) {
 
 		List<Appointment> appointment = ar.findByPatient_PatientId(patientid);
 
-		List<AppointmentDTO> appointmentDTOs = appointment.stream().map(i -> mapper.map(i, AppointmentDTO.class))
+		List<AppointmentDetailsDTO> appointmentDTOs = appointment.stream().map(i -> mapper.map(i, AppointmentDetailsDTO.class))
 				.collect(Collectors.toList());
 
 		return appointmentDTOs;
 
 	}
 
-	public List<MedicalRecordDTO> getpatientmedicalrecords(int patientid) {
+	public List<MedicalRecordDetailsDTO> getpatientmedicalrecords(int patientid) {
 
 		List<MedicalRecord> record = mr.findByPatient_PatientId(patientid);
 
-		List<MedicalRecordDTO> recorddto = record.stream().map(i -> mapper.map(i, MedicalRecordDTO.class))
+		List<MedicalRecordDetailsDTO> recorddto = record.stream().map(i -> mapper.map(i, MedicalRecordDetailsDTO.class))
 				.collect(Collectors.toList());
 
 		return recorddto;
 
 	}
 
-	/*
-	 * public String deleteaappointment(int appointmentid) {
-	 * 
-	 * Appointment appointment = ar.findById(appointmentid).orElse(null); if
-	 * (appointment!=null) {
-	 * 
-	 * appointment.setStatus(Appointment.Status.CANCELLED); ar.save(appointment);
-	 * return "Appointment cancelled successfully"; } return
-	 * "Appointment not found"; }
-	 */
 
-	public AppointmentDTO bookanappointment(AppointmentDTO a, int patientid, int doctorid)
+	public AppointmentDetailsDTO bookanappointment(AppointmentDTO a, int patientid, int doctorid)
 			throws DoctorNotFoundException, PatientNotFoundException {
 
 		Appointment appointment = mapper.map(a, Appointment.class);
@@ -173,9 +167,9 @@ public class PatientService {
 			appointment.setPatient(patient);
 			appointment.setStatus(Appointment.Status.REQUESTED); // default status
 
-			ar.save(appointment);
+			Appointment updated=ar.save(appointment);
 
-			return mapper.map(appointment, AppointmentDTO.class);
+			return mapper.map(updated, AppointmentDetailsDTO.class);
 		} else {
 			if (!doctorOpt.isPresent()) {
 				throw new DoctorNotFoundException("Doctor with ID " + doctorid + " not found");
@@ -184,14 +178,14 @@ public class PatientService {
 		}
 	}
 
-	public AppointmentDTO rescheduleAppointmentByPatient(int appointmentid, LocalDate date, LocalTime time) {
+	public AppointmentDetailsDTO rescheduleAppointmentByPatient(int appointmentid, LocalDate date, LocalTime time) {
 		Appointment app = ar.findById(appointmentid).orElse(null);
 		if (app != null && (app.getStatus().equals(Status.SCHEDULED) || app.getStatus().equals(Status.RESCHEDULED))) {
 			app.setAppointmentDate(date);
 			app.setAppointmentTime(time);
 			app.setStatus(Status.RESCHEDULED);
-			ar.save(app);
-			AppointmentDTO appDTO = mapper.map(app, AppointmentDTO.class);
+			Appointment updated =ar.save(app);
+			AppointmentDetailsDTO appDTO = mapper.map(updated, AppointmentDetailsDTO.class);
 			return appDTO;
 		} else {
 			return null;
@@ -199,22 +193,22 @@ public class PatientService {
 
 	}
 
-	public List<DoctorDTO> getAvailableDoctors(String speciality) {
+	public List<DoctorDetailsDTO> getAvailableDoctors(String speciality) {
 		List<Doctor> doc = dr.findBySpecialtyStartingWith(speciality);
 		if(doc.isEmpty()) {
 			return null;
 		}
 		return doc.stream().map(i ->{
-			DoctorDTO dto=mapper.map(i, DoctorDTO.class);
+			DoctorDetailsDTO dto=mapper.map(i, DoctorDetailsDTO.class);
 					dto.setPassword("Forbidden");
 			return dto;
 		}).toList();
 	}
 
-	public PatientDTO viewPatientProfile(int patientid) {
+	public PatientDetailsDTO viewPatientProfile(int patientid) {
 		Patient doctor=pr.findById(patientid).orElse(null);
 		
-		return mapper.map(doctor, PatientDTO.class);
+		return mapper.map(doctor, PatientDetailsDTO.class);
 	}
 
 }

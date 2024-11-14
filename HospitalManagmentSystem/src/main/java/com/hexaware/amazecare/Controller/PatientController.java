@@ -17,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.hexaware.amazecare.DTO.AppointmentDTO;
+import com.hexaware.amazecare.DTO.AppointmentDetailsDTO;
 import com.hexaware.amazecare.DTO.DoctorDTO;
+import com.hexaware.amazecare.DTO.DoctorDetailsDTO;
 import com.hexaware.amazecare.DTO.MedicalRecordDTO;
+import com.hexaware.amazecare.DTO.MedicalRecordDetailsDTO;
 import com.hexaware.amazecare.DTO.PatientDTO;
+import com.hexaware.amazecare.DTO.PatientDetailsDTO;
 import com.hexaware.amazecare.Exception.AppointmentNotFoundException;
 import com.hexaware.amazecare.Exception.DoctorNotFoundException;
 import com.hexaware.amazecare.Exception.PatientNotFoundException;
@@ -32,35 +36,23 @@ import com.hexaware.amazecare.Service.PatientService;
 @RequestMapping("/api/patient")
 public class PatientController {
 
-	/*
-	 * login-
-	 * logout-
-	 * register- insert done
-	
-	 * book appointment {doctorid}done
-	 * view appointments done
-	 * view medical history done
-	 * update profile done
-	 * Reschedule appointment done
-	 * Cancel appointment done
-	 * 
-	 * */
+
 	@Autowired
-	PatientService ps;
+	PatientService service;
 	
 	
 
 	@PostMapping("/register")
-	public ResponseEntity<PatientDTO> register(@RequestBody PatientDTO p) {
-	    PatientDTO savedData = ps.savedata(p); 
+	public ResponseEntity<PatientDetailsDTO> register(@RequestBody PatientDTO p) {
+	    PatientDetailsDTO savedData = service.savedata(p); 
 	    return new ResponseEntity<>(savedData, HttpStatus.OK); // Corrected syntax
 	}
 	
 	//View Profile
 		@GetMapping("/viewProfile/{patientid}")
-		public ResponseEntity<PatientDTO> viewDoctorProfile(@PathVariable int patientid) throws DoctorNotFoundException{
+		public ResponseEntity<PatientDetailsDTO> viewDoctorProfile(@PathVariable int patientid) throws DoctorNotFoundException{
 			
-			PatientDTO patient=ps.viewPatientProfile(patientid);
+			PatientDetailsDTO patient=service.viewPatientProfile(patientid);
 			if(patient==null) {
 				throw new DoctorNotFoundException("Doctor does not exist!!");
 			}
@@ -68,8 +60,8 @@ public class PatientController {
 		}
 	
 	@PutMapping("/updateprofile/{id}")
-	public ResponseEntity<PatientDTO> updateProfile(@PathVariable int id, @RequestBody PatientDTO p) throws PatientNotFoundException {
-	    PatientDTO updatedProfile = ps.updateprofile(id, p);
+	public ResponseEntity<PatientDetailsDTO> updateProfile(@PathVariable int id, @RequestBody PatientDTO p) throws PatientNotFoundException {
+	    PatientDetailsDTO updatedProfile = service.updateprofile(id, p);
 	    if (updatedProfile == null) {
 	        throw new PatientNotFoundException("Patient does not exist");
 	    }
@@ -77,9 +69,9 @@ public class PatientController {
 	}
 	
 	@GetMapping("/getappointments/{patientid}")
-	public ResponseEntity<List<AppointmentDTO>> findallappointments(@PathVariable int patientid) throws AppointmentNotFoundException{
+	public ResponseEntity<List<AppointmentDetailsDTO>> findallappointments(@PathVariable int patientid) throws AppointmentNotFoundException{
 		
-		List<AppointmentDTO> appointments = ps.getpatientappoints(patientid);
+		List<AppointmentDetailsDTO> appointments = service.getpatientappoints(patientid);
 		
 		if(appointments.isEmpty()) {
 			throw new AppointmentNotFoundException("Appointments for patient not found");
@@ -89,9 +81,9 @@ public class PatientController {
 	}
 	
 	@GetMapping("/getmedicalrecords/{patientid}")
-	public ResponseEntity<List<MedicalRecordDTO>> findallmedicalrecords(@PathVariable int patientid)throws RecordsNotFoundException{
+	public ResponseEntity<List<MedicalRecordDetailsDTO>> findallmedicalrecords(@PathVariable int patientid)throws RecordsNotFoundException{
 		
-		List<MedicalRecordDTO> records = ps.getpatientmedicalrecords(patientid) ;
+		List<MedicalRecordDetailsDTO> records = service.getpatientmedicalrecords(patientid) ;
 		if (records.isEmpty()) {
 			throw new RecordsNotFoundException("patient record not found");
 		}
@@ -100,9 +92,9 @@ public class PatientController {
 	}
 	
 	@GetMapping("/getAvailableDoctors/{speciality}")
-	public ResponseEntity<List<DoctorDTO>> getAvailableDoctors(@PathVariable String speciality)throws RecordsNotFoundException, DoctorNotFoundException{
+	public ResponseEntity<List<DoctorDetailsDTO>> getAvailableDoctors(@PathVariable String speciality)throws RecordsNotFoundException, DoctorNotFoundException{
 		
-		List<DoctorDTO> doctors = ps.getAvailableDoctors(speciality) ;
+		List<DoctorDetailsDTO> doctors = service.getAvailableDoctors(speciality) ;
 		if (doctors==null) {
 			throw new DoctorNotFoundException("doctor record not found");
 		}
@@ -110,21 +102,11 @@ public class PatientController {
 		
 	}
 	
-	/*@DeleteMapping("/deleteappointment/{appointmentid}")
-	public ResponseEntity<String> deleteappointmnet(@PathVariable int appointmentid) throws AppointmentNotFoundException{
-		
-		String r= ps.deleteaappointment(appointmentid);
-		if (r==null) {
-			throw new AppointmentNotFoundException("No appointment found");
-		}
-		return new ResponseEntity<>(r,HttpStatus.OK);
-		
-	}*/
 	
 	@PostMapping("/bookappointment/{patientid}/{doctorid}")
-	public ResponseEntity<AppointmentDTO> bookappointmnet(@PathVariable int patientid,@PathVariable int doctorid,@RequestBody AppointmentDTO a) throws DoctorNotFoundException, PatientNotFoundException{
+	public ResponseEntity<AppointmentDetailsDTO> bookappointmnet(@PathVariable int patientid,@PathVariable int doctorid,@RequestBody AppointmentDTO a) throws DoctorNotFoundException, PatientNotFoundException{
 		
-		AppointmentDTO appointment = ps.bookanappointment(a,patientid,doctorid);
+		AppointmentDetailsDTO appointment = service.bookanappointment(a,patientid,doctorid);
 		if (appointment==null) {
 			throw new DoctorNotFoundException("Doctor not found");
 		}
@@ -133,13 +115,13 @@ public class PatientController {
 	}
 	
 	@PutMapping("/rescheduleAppointmentByPatient/{appointmentid}/{date}/{time}")
-	public ResponseEntity<AppointmentDTO> rescheduleAppointmentByPatient( 
+	public ResponseEntity<AppointmentDetailsDTO> rescheduleAppointmentByPatient( 
 	        @PathVariable int appointmentid, 
 	        @PathVariable LocalDate date, 
 	        @PathVariable String time) throws AppointmentNotFoundException {
 
 	    LocalTime appointtime = LocalTime.parse(time);
-	    AppointmentDTO updated = ps.rescheduleAppointmentByPatient(appointmentid, date, appointtime);
+	    AppointmentDetailsDTO updated = service.rescheduleAppointmentByPatient(appointmentid, date, appointtime);
 	    if (updated == null) {
 	        throw new AppointmentNotFoundException("Appointment does not exist!!");
 	    }

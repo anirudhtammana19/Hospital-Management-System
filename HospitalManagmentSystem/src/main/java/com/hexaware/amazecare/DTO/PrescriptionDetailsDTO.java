@@ -2,26 +2,46 @@ package com.hexaware.amazecare.DTO;
 
 import com.hexaware.amazecare.Model.Prescription.Frequency;
 
-public class PrescriptionDTO {
+public class PrescriptionDetailsDTO {
 
+	private int prescriptionId;
+	private int recordId;
     private String medicationName;
     private String dosage;
     private Frequency frequency;
     private int duration;
     private String notes;
 
-    public PrescriptionDTO() {
+    public PrescriptionDetailsDTO() {
     	super();
     }
 
-    public PrescriptionDTO( String medicationName, String dosage, Frequency frequency,
+    public PrescriptionDetailsDTO(int prescriptionId, int recordId, String medicationName, String dosage, Frequency frequency,
 			int duration, String notes) {
 		super();
+		this.prescriptionId = prescriptionId;
+		this.recordId = recordId;
 		this.medicationName = medicationName;
 		this.dosage = dosage;
 		this.frequency = frequency;
 		this.duration = duration;
 		this.notes = notes;
+	}
+    
+	public int getPrescriptionId() {
+		return prescriptionId;
+	}
+
+	public void setPrescriptionId(int prescriptionId) {
+		this.prescriptionId = prescriptionId;
+	}
+
+	public int getRecordId() {
+		return recordId;
+	}
+
+	public void setRecordId(int recordId) {
+		this.recordId = recordId;
 	}
 
 	public String getMedicationName() {
@@ -66,7 +86,8 @@ public class PrescriptionDTO {
 
 	@Override
 	public String toString() {
-		return "PrescriptionDTO [ medicationName="+ medicationName + ", dosage=" + dosage + ", frequency=" + frequency + ", duration=" + duration
+		return "PrescriptionDTO [prescriptionId=" + prescriptionId + ", recordId=" + recordId + ", medicationName="
+				+ medicationName + ", dosage=" + dosage + ", frequency=" + frequency + ", duration=" + duration
 				+ ", notes=" + notes + "]";
 	}
 }
