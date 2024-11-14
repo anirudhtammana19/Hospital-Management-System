@@ -51,9 +51,11 @@ public class DoctorService {
 	public DoctorDTO editDoctorProfile(int doctorid, DoctorDTO doc) {
 		
 		Doctor doctor=doctorRepo.findById(doctorid).orElse(null);
+		
 		if(doctor==null) {
 			return null;
 		}
+		Users u = userRepo.findByUsername(doctor.getEmail()); 
 	    if(doc.getFirstName()!=null) {
 	    	doctor.setFirstName(doc.getFirstName());
 	    }
@@ -90,7 +92,6 @@ public class DoctorService {
 	    	doctor.setSpecialty(doc.getSpecialty());
 	    }
 	    
-	    Users u = userRepo.findByUsername(doc.getEmail()); 
 	    if (u != null) {
 	    	if(doc.getEmail()!=null) {
 	    		u.setUsername(doc.getEmail());
