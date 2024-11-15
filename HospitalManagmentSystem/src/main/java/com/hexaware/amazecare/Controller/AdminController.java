@@ -31,13 +31,14 @@ import com.hexaware.amazecare.Exception.PatientNotFoundException;
 import com.hexaware.amazecare.Exception.RecordsNotFoundException;
 import com.hexaware.amazecare.Model.Doctor;
 import com.hexaware.amazecare.Service.AdminServiceImpl;
+import com.hexaware.amazecare.Service.IAdminService;
 
 @RestController
 @RequestMapping("/api")
 public class AdminController {
 
 	@Autowired
-	AdminServiceImpl service;
+	IAdminService service;
 	
 	@PutMapping("/admin/editProfile")
 	public ResponseEntity<UsersDTO> editAdmin(@RequestBody UsersDTO d){
