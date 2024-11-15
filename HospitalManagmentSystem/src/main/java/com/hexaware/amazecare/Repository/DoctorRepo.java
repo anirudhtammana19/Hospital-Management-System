@@ -9,10 +9,13 @@ import org.springframework.stereotype.Repository;
 
 
 import com.hexaware.amazecare.Model.Doctor;
+import com.hexaware.amazecare.Model.Patient;
 
 @Repository
 public interface DoctorRepo extends JpaRepository<Doctor,Integer> {
 
+	public Optional<Doctor> findByEmail(String email);
+	
 	public List<Doctor> findBySpecialtyStartingWith(String speciality);
 	
 	public List<Doctor> findByFirstNameStartingWith(String firstName);

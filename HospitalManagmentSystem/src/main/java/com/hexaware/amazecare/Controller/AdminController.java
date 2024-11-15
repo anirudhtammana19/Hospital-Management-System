@@ -26,6 +26,7 @@ import com.hexaware.amazecare.DTO.PatientDetailsDTO;
 import com.hexaware.amazecare.DTO.UsersDTO;
 import com.hexaware.amazecare.Exception.AppointmentNotFoundException;
 import com.hexaware.amazecare.Exception.DoctorNotFoundException;
+import com.hexaware.amazecare.Exception.DuplicateDoctorFoundException;
 import com.hexaware.amazecare.Exception.PatientNotFoundException;
 import com.hexaware.amazecare.Exception.RecordsNotFoundException;
 import com.hexaware.amazecare.Model.Doctor;
@@ -48,9 +49,12 @@ public class AdminController {
 	}
 	
 	@PostMapping("/admin/addDoctor")
-	public ResponseEntity<DoctorDetailsDTO> adddoctor(@RequestBody DoctorDTO d){
+	public ResponseEntity<DoctorDetailsDTO> adddoctor(@RequestBody DoctorDTO d) throws DuplicateDoctorFoundException{
 		
 		DoctorDetailsDTO doc = service.addadoctor(d);
+		if(doc==null) {
+			throw new DuplicateDoctorFoundException("Given Email is already used for a doctor!!");
+		}
 		
 		return new ResponseEntity<>(doc,HttpStatus.CREATED);
 		

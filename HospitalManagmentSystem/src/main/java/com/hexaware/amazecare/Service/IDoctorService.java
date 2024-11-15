@@ -17,7 +17,7 @@ public interface IDoctorService {
 
 	public DoctorDetailsDTO editDoctorProfile(int doctorid, DoctorDTO doc);
 
-	public DoctorDetailsDTO viewDoctorProfile(int doctorid);
+	public DoctorDetailsDTO viewDoctorProfile();
 
 	public List<AppointmentDetailsDTO> viewDoctorAppointments(int doctorid);
 

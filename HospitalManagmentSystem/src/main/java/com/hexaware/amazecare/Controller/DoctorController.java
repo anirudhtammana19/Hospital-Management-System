@@ -52,10 +52,10 @@ public class DoctorController {
 	}
 	
 	//View Profile
-	@GetMapping("/doctor/viewProfile/{doctorid}")
-	public ResponseEntity<DoctorDetailsDTO> viewDoctorProfile(@PathVariable int doctorid) throws DoctorNotFoundException{
+	@GetMapping("/doctor/viewProfile")
+	public ResponseEntity<DoctorDetailsDTO> viewDoctorProfile() throws DoctorNotFoundException{
 		
-		DoctorDetailsDTO doctor=service.viewDoctorProfile(doctorid);
+		DoctorDetailsDTO doctor=service.viewDoctorProfile();
 		if(doctor==null) {
 			throw new DoctorNotFoundException("Doctor does not exist!!");
 		}

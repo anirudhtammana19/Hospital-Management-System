@@ -12,41 +12,68 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class GlobalExceptionController {
 	
-	
-
-	@ExceptionHandler(DoctorNotFoundException.class)
-	public ResponseEntity<errorDetails> DoctorNotFound(DoctorNotFoundException e) {
+	@ExceptionHandler(DuplicateDoctorFoundException.class)
+	public ResponseEntity<errorDetails> DuplicateDoctorFound(DuplicateDoctorFoundException e,HttpServletRequest hr) {
 		
-		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),"location not found",HttpStatus.NOT_FOUND.toString());
+		String path = hr.getRequestURI();
+		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),path,HttpStatus.NOT_FOUND.toString());
+	
+		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(DuplicatePatientFoundException.class)
+	public ResponseEntity<errorDetails> DuplicatePatientFound(DuplicatePatientFoundException e,HttpServletRequest hr) {
+		
+		String path = hr.getRequestURI();
+		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),path,HttpStatus.NOT_FOUND.toString());
+	
+		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(DoctorNotFoundException.class)
+	public ResponseEntity<errorDetails> DoctorNotFound(DoctorNotFoundException e,HttpServletRequest hr) {
+		
+		String path = hr.getRequestURI();
+		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),path,HttpStatus.NOT_FOUND.toString());
 	
 		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(AppointmentNotFoundException.class)
-	public ResponseEntity<errorDetails> AppointmentNotFound(AppointmentNotFoundException e) {
-		
-		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),"location not found",HttpStatus.NOT_FOUND.toString());
+	public ResponseEntity<errorDetails> AppointmentNotFound(AppointmentNotFoundException e,HttpServletRequest hr) {
+
+		String path = hr.getRequestURI();
+		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),path,HttpStatus.NOT_FOUND.toString());
 	
 		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(AppointmentCancelledException.class)
-	public ResponseEntity<errorDetails> AppointmentCancelled(AppointmentCancelledException e) {
-		
-		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),"location not found",HttpStatus.CONFLICT.toString());
+	public ResponseEntity<errorDetails> AppointmentCancelled(AppointmentCancelledException e,HttpServletRequest hr) {
+		String path = hr.getRequestURI();
+		errorDetails error= new errorDetails(LocalDateTime.now(),e.getMessage(),path,HttpStatus.CONFLICT.toString());
 	
 		return new ResponseEntity<>(error,HttpStatus.CONFLICT);
 	}
 	
 	@ExceptionHandler(PatientNotFoundException.class)
-	public ResponseEntity<errorDetails> PatientNotFound(PatientNotFoundException p){
-		errorDetails error = new errorDetails(LocalDateTime.now(),p.getMessage(),"patient not found",HttpStatus.NOT_FOUND.toString());
+	public ResponseEntity<errorDetails> PatientNotFound(PatientNotFoundException e,HttpServletRequest hr){
+		String path = hr.getRequestURI();
+		errorDetails error = new errorDetails(LocalDateTime.now(),e.getMessage(),path,HttpStatus.NOT_FOUND.toString());
 		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(PrescriptionsNotFoundException.class)
-	public ResponseEntity<errorDetails> PrescriptionsNotFound(PrescriptionsNotFoundException p){
-		errorDetails error = new errorDetails(LocalDateTime.now(),p.getMessage(),"Prescriptions not found",HttpStatus.NOT_FOUND.toString());
+	public ResponseEntity<errorDetails> PrescriptionsNotFound(PrescriptionsNotFoundException e,HttpServletRequest hr){
+		String path = hr.getRequestURI();
+		errorDetails error = new errorDetails(LocalDateTime.now(),e.getMessage(),path,HttpStatus.NOT_FOUND.toString());
+		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(RecordsNotFoundException.class)
+	public ResponseEntity<errorDetails> RecordsNotFound(RecordsNotFoundException e,HttpServletRequest hr){
+		String path = hr.getRequestURI();
+		errorDetails error = new errorDetails(LocalDateTime.now(),e.getMessage(),path,HttpStatus.NOT_FOUND.toString());
 		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 	}
 	
@@ -56,17 +83,5 @@ public class GlobalExceptionController {
 		errorDetails error = new errorDetails(LocalDateTime.now(),e.getMessage(),path,"Exception");
 		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 	}
-	
-	/*
-	 * @ExceptionHandler(Exception.class) public ResponseEntity<errorDetails>
-	 * AllException(Exception e) {
-	 * 
-	 * errorDetails error= new
-	 * errorDetails(LocalDateTime.now(),e.getClass().getSimpleName() + ": " +
-	 * e.getMessage(),"UnExpected Error",HttpStatus.INTERNAL_SERVER_ERROR.toString()
-	 * );
-	 * 
-	 * return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR); }
-	 */
 	
 }

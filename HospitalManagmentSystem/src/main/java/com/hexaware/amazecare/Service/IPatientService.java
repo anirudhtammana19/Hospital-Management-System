@@ -33,5 +33,5 @@ public interface IPatientService {
 	
 	public List<DoctorDetailsDTO> getAvailableDoctors(String speciality);
 	
-	public PatientDetailsDTO viewPatientProfile(int patientid);
+	public PatientDetailsDTO viewPatientProfile();
 }

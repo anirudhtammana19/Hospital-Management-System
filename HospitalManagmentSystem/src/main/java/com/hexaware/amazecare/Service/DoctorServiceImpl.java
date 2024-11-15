@@ -21,9 +21,12 @@ import com.hexaware.amazecare.Repository.UserRepo;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -109,10 +112,12 @@ public class DoctorServiceImpl implements IDoctorService{
 	    return modelMapper.map(doctor, DoctorDetailsDTO.class);
 		}
 
-	public DoctorDetailsDTO viewDoctorProfile(int doctorid) {
-		Doctor doctor=doctorRepo.findById(doctorid).orElse(null);
-		
-		return modelMapper.map(doctor, DoctorDetailsDTO.class);
+	public DoctorDetailsDTO viewDoctorProfile() {
+		Optional<Doctor> doctor=getCurrentDoctor();
+		if(doctor.isEmpty()) {
+			return null;
+		}
+		return modelMapper.map(doctor.get(), DoctorDetailsDTO.class);
 	}
 
 	public List<AppointmentDetailsDTO> viewDoctorAppointments(int doctorid) {
@@ -275,5 +280,11 @@ public class DoctorServiceImpl implements IDoctorService{
 
 	        return modelMapper.map(savedPrescription, PrescriptionDetailsDTO.class);
 	    }
+	 
+	 private Optional<Doctor> getCurrentDoctor(){
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			String username = auth.getName();
+			return doctorRepo.findByEmail(username);
+		}
 	
 }

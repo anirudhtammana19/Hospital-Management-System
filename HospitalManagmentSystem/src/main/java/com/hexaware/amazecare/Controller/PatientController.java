@@ -26,8 +26,10 @@ import com.hexaware.amazecare.DTO.PatientDTO;
 import com.hexaware.amazecare.DTO.PatientDetailsDTO;
 import com.hexaware.amazecare.Exception.AppointmentNotFoundException;
 import com.hexaware.amazecare.Exception.DoctorNotFoundException;
+import com.hexaware.amazecare.Exception.DuplicatePatientFoundException;
 import com.hexaware.amazecare.Exception.PatientNotFoundException;
 import com.hexaware.amazecare.Exception.RecordsNotFoundException;
+import com.hexaware.amazecare.Service.IPatientService;
 import com.hexaware.amazecare.Service.PatientServiceImpl;
 
 
@@ -38,21 +40,24 @@ public class PatientController {
 
 
 	@Autowired
-	PatientServiceImpl service;
+	IPatientService service;
 	
 	
 
 	@PostMapping("/register")
-	public ResponseEntity<PatientDetailsDTO> register(@RequestBody PatientDTO p) {
+	public ResponseEntity<PatientDetailsDTO> register(@RequestBody PatientDTO p) throws DuplicatePatientFoundException {
 	    PatientDetailsDTO savedData = service.savedata(p); 
+	    if(savedData==null) {
+	    	throw new DuplicatePatientFoundException("Given Email already has an account!!");
+	    }
 	    return new ResponseEntity<>(savedData, HttpStatus.CREATED); 
 	}
 	
 	//View Profile
-		@GetMapping("/patient/viewProfile/{patientid}")
-		public ResponseEntity<PatientDetailsDTO> viewDoctorProfile(@PathVariable int patientid) throws DoctorNotFoundException{
+		@GetMapping("/patient/viewProfile")
+		public ResponseEntity<PatientDetailsDTO> viewDoctorProfile() throws DoctorNotFoundException{
 			
-			PatientDetailsDTO patient=service.viewPatientProfile(patientid);
+			PatientDetailsDTO patient=service.viewPatientProfile();
 			if(patient==null) {
 				throw new DoctorNotFoundException("Doctor does not exist!!");
 			}

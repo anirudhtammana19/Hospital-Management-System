@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +56,10 @@ public class PatientServiceImpl implements IPatientService{
 
 	public PatientDetailsDTO savedata(PatientDTO pd) {
 
+		Optional<Patient> p=patientRepo.findByEmail(pd.getEmail());
+		if(p.isPresent()) {
+			return null;
+		}
 		Patient patient = modelMapper.map(pd, Patient.class);
 		Users user = new Users();
 		user.setUsername(pd.getEmail());
@@ -180,8 +186,9 @@ public class PatientServiceImpl implements IPatientService{
 	}
 
 	public AppointmentDetailsDTO rescheduleAppointmentByPatient(int appointmentid, LocalDate date, LocalTime time) {
+		
 		Appointment app = appointmentRepo.findById(appointmentid).orElse(null);
-		if (app != null && (app.getStatus().equals(Status.SCHEDULED) || app.getStatus().equals(Status.RESCHEDULED))) {
+		if (app.getPatient().getPatientId()==getCurrentPatient().get().getPatientId() && app != null && (app.getStatus().equals(Status.SCHEDULED) || app.getStatus().equals(Status.RESCHEDULED))) {
 			app.setAppointmentDate(date);
 			app.setAppointmentTime(time);
 			app.setStatus(Status.RESCHEDULED);
@@ -205,10 +212,19 @@ public class PatientServiceImpl implements IPatientService{
 		}).toList();
 	}
 
-	public PatientDetailsDTO viewPatientProfile(int patientid) {
-		Patient doctor=patientRepo.findById(patientid).orElse(null);
+	public PatientDetailsDTO viewPatientProfile() {
 		
-		return modelMapper.map(doctor, PatientDetailsDTO.class);
+		Optional<Patient> patient=getCurrentPatient();
+		if(patient.isEmpty()) {
+			return null;
+		}
+		return modelMapper.map(patient.get(), PatientDetailsDTO.class);
 	}
+	
+	 private Optional<Patient> getCurrentPatient(){
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			String username = auth.getName();
+			return patientRepo.findByEmail(username);
+		}
 
 }

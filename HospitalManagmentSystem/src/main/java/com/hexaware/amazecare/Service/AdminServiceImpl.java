@@ -64,6 +64,10 @@ public class AdminServiceImpl implements IAdminService {
 	
 	public DoctorDetailsDTO addadoctor(DoctorDTO d) {
 		
+		Optional<Doctor> doc=doctorRepo.findByEmail(d.getEmail());
+		if(doc.isPresent()) {
+			return null;
+		}
 		Doctor doctor = modelMapper.map(d, Doctor.class);
 		
 		Users user = new Users();
