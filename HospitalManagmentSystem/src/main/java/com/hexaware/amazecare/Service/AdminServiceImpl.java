@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hexaware.amazecare.DTO.AppointmentDTO;
@@ -45,6 +46,8 @@ public class AdminServiceImpl implements IAdminService {
 	PatientRepo patientRepo;
 	@Autowired
 	MedicalRecordRepo medicalRepo;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	//Part of Life cycle of Spring Core
     @PostConstruct
@@ -52,7 +55,7 @@ public class AdminServiceImpl implements IAdminService {
         if (userRepo.findByRole(Role.ADMIN)==null) {
             Users admin = new Users();
             admin.setUsername("admin");
-            admin.setPassword("admin123"); // hashed password
+            admin.setPassword(passwordEncoder.encode("admin123")); // hashed password
             admin.setRole(Role.ADMIN);
             userRepo.save(admin);
         }
@@ -65,7 +68,7 @@ public class AdminServiceImpl implements IAdminService {
 		
 		Users user = new Users();
 		user.setUsername(d.getEmail());
-		user.setPassword(d.getPassword());
+		user.setPassword(passwordEncoder.encode(d.getPassword())); 
 		user.setRole(Users.Role.DOCTOR);
 		
 		userRepo.save(user);
@@ -88,7 +91,6 @@ public class AdminServiceImpl implements IAdminService {
 		}
 		List<DoctorDetailsDTO> out=list.stream().map(i->{
 			DoctorDetailsDTO j=modelMapper.map(i,DoctorDetailsDTO.class);
-			j.setPassword(i.getUser().getPassword());
 			return j;}).toList();
 		return out;
 	}
@@ -100,7 +102,6 @@ public class AdminServiceImpl implements IAdminService {
 		}
 		List<PatientDetailsDTO> out=list.stream().map(i->{
 			PatientDetailsDTO j=modelMapper.map(i,PatientDetailsDTO.class);
-			j.setPassword(i.getUser().getPassword());
 			return j;}).toList();
 		return out;
 		
@@ -172,7 +173,7 @@ public class AdminServiceImpl implements IAdminService {
 			admin.setUsername(d.getUsername());
 		}
 		if(d.getPassword()!=null) {
-			admin.setPassword(d.getPassword());
+			admin.setPassword(passwordEncoder.encode(d.getPassword()));
 		}
 		Users updated=userRepo.save(admin);
 		return modelMapper.map(updated, UsersDTO.class);

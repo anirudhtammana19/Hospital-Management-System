@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hexaware.amazecare.DTO.AppointmentDTO;
@@ -48,13 +48,16 @@ public class PatientServiceImpl implements IPatientService{
 	AppointmentRepo appointmentRepo;
 	@Autowired
 	DoctorRepo doctorRepo;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	public PatientDetailsDTO savedata(PatientDTO pd) {
 
 		Patient patient = modelMapper.map(pd, Patient.class);
 		Users user = new Users();
 		user.setUsername(pd.getEmail());
-		user.setPassword(pd.getPassword());
+		user.setPassword(passwordEncoder.encode( pd.getPassword()));
 		user.setRole(Users.Role.PATIENT);
 		Users savedUser = userRepo.save(user);
 
@@ -72,7 +75,7 @@ public class PatientServiceImpl implements IPatientService{
 		if(existingPatient==null) {
 			return null;
 		}
-		Users u = userRepo.findByUsername(existingPatient.getEmail());
+		Users u = userRepo.findByUsername(existingPatient.getEmail()).get();
 		
 	    if(pd.getFirstName()!=null) {
 	    	existingPatient.setFirstName(pd.getFirstName());
@@ -114,7 +117,7 @@ public class PatientServiceImpl implements IPatientService{
 	    if (u != null) {
 	    	
 	    	if(pd.getPassword()!=null) {
-	    		u.setPassword(pd.getPassword());
+	    		u.setPassword(passwordEncoder.encode( pd.getPassword()));
 		    }
 	    	existingPatient.setUser(u);
 	        userRepo.save(u); 
@@ -198,7 +201,6 @@ public class PatientServiceImpl implements IPatientService{
 		}
 		return doc.stream().map(i ->{
 			DoctorDetailsDTO dto=modelMapper.map(i, DoctorDetailsDTO.class);
-					dto.setPassword("Forbidden");
 			return dto;
 		}).toList();
 	}

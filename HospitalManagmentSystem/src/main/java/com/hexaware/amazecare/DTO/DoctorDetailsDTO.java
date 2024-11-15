@@ -31,7 +31,6 @@ public class DoctorDetailsDTO {
 
     private Gender gender;
     
-    private String password;
 
 
     public DoctorDetailsDTO() {
@@ -41,7 +40,7 @@ public class DoctorDetailsDTO {
     
     public DoctorDetailsDTO(int doctorId, String firstName, String lastName, String profile_image, String specialty,
 			int experience, String qualification, String designation, String contactNumber, String email,
-			BloodGroup bloodGroup, Gender gender, String password) {
+			BloodGroup bloodGroup, Gender gender) {
 		super();
 		this.doctorId = doctorId;
 		this.firstName = firstName;
@@ -55,7 +54,6 @@ public class DoctorDetailsDTO {
 		this.email = email;
 		this.bloodGroup = bloodGroup;
 		this.gender = gender;
-		this.password = password;
 	}
 
 	public int getDoctorId() {
@@ -154,20 +152,14 @@ public class DoctorDetailsDTO {
 		this.gender = gender;
 	}
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	@Override
 	public String toString() {
 		return "DoctorDTO [firstName=" + firstName + ", lastName=" + lastName + ", profile_image=" + profile_image
 				+ ", specialty=" + specialty + ", experience=" + experience + ", qualification=" + qualification
 				+ ", designation=" + designation + ", contactNumber=" + contactNumber + ", email=" + email
-				+ ", bloodGroup=" + bloodGroup + ", gender=" + gender + ", password=" + password + "]";
+				+ ", bloodGroup=" + bloodGroup + ", gender=" + gender + "]";
 	}
 
 }

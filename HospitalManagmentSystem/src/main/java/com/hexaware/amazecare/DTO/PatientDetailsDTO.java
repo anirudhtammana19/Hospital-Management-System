@@ -33,7 +33,6 @@ public class PatientDetailsDTO {
     
     private String bloodGroup;
     
-    private String password;
     
 	public PatientDetailsDTO() {
 		super();
@@ -42,7 +41,7 @@ public class PatientDetailsDTO {
 
 	public PatientDetailsDTO(int patientId, String firstName, String lastName, LocalDate dateOfBirth, String gender,
 			String contactNumber, String email, String address, String emergencyContact, String allergies,
-			String aadharCard, String bloodGroup, String password) {
+			String aadharCard, String bloodGroup) {
 		super();
 		this.patientId = patientId;
 		this.firstName = firstName;
@@ -56,7 +55,6 @@ public class PatientDetailsDTO {
 		this.allergies = allergies;
 		this.aadharCard = aadharCard;
 		this.bloodGroup = bloodGroup;
-		this.password = password;
 	}
 
 	public int getPatientId() {
@@ -155,20 +153,13 @@ public class PatientDetailsDTO {
 		this.bloodGroup = bloodGroup;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	@Override
 	public String toString() {
 		return "PatientDTO [firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth
 				+ ", gender=" + gender + ", contactNumber=" + contactNumber + ", email=" + email + ", address="
 				+ address + ", emergencyContact=" + emergencyContact + ", allergies=" + allergies + ", aadharCard="
-				+ aadharCard + ", bloodGroup=" + bloodGroup + ", password=" + password + "]";
+				+ aadharCard + ", bloodGroup=" + bloodGroup + "]";
 	}
     
 }

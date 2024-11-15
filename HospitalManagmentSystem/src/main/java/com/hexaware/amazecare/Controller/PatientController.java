@@ -33,7 +33,7 @@ import com.hexaware.amazecare.Service.PatientServiceImpl;
 
 
 @RestController
-@RequestMapping("/api/patient")
+@RequestMapping("/api")
 public class PatientController {
 
 
@@ -49,7 +49,7 @@ public class PatientController {
 	}
 	
 	//View Profile
-		@GetMapping("/viewProfile/{patientid}")
+		@GetMapping("/patient/viewProfile/{patientid}")
 		public ResponseEntity<PatientDetailsDTO> viewDoctorProfile(@PathVariable int patientid) throws DoctorNotFoundException{
 			
 			PatientDetailsDTO patient=service.viewPatientProfile(patientid);
@@ -59,7 +59,7 @@ public class PatientController {
 			return new ResponseEntity<>(patient,HttpStatus.OK);
 		}
 	
-	@PutMapping("/updateprofile/{id}")
+	@PutMapping("/patient/updateprofile/{id}")
 	public ResponseEntity<PatientDetailsDTO> updateProfile(@PathVariable int id, @RequestBody PatientDTO p) throws PatientNotFoundException {
 	    PatientDetailsDTO updatedProfile = service.updateprofile(id, p);
 	    if (updatedProfile == null) {
@@ -68,7 +68,7 @@ public class PatientController {
 	    return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
 	}
 	
-	@GetMapping("/getappointments/{patientid}")
+	@GetMapping("/patient/getappointments/{patientid}")
 	public ResponseEntity<List<AppointmentDetailsDTO>> findallappointments(@PathVariable int patientid) throws AppointmentNotFoundException{
 		
 		List<AppointmentDetailsDTO> appointments = service.getpatientappoints(patientid);
@@ -80,7 +80,7 @@ public class PatientController {
 		
 	}
 	
-	@GetMapping("/getmedicalrecords/{patientid}")
+	@GetMapping("/patient/getmedicalrecords/{patientid}")
 	public ResponseEntity<List<MedicalRecordDetailsDTO>> findallmedicalrecords(@PathVariable int patientid)throws RecordsNotFoundException{
 		
 		List<MedicalRecordDetailsDTO> records = service.getpatientmedicalrecords(patientid) ;
@@ -91,7 +91,7 @@ public class PatientController {
 		
 	}
 	
-	@GetMapping("/getAvailableDoctors/{speciality}")
+	@GetMapping("/patient/getAvailableDoctors/{speciality}")
 	public ResponseEntity<List<DoctorDetailsDTO>> getAvailableDoctors(@PathVariable String speciality)throws RecordsNotFoundException, DoctorNotFoundException{
 		
 		List<DoctorDetailsDTO> doctors = service.getAvailableDoctors(speciality) ;
@@ -103,7 +103,7 @@ public class PatientController {
 	}
 	
 	
-	@PostMapping("/bookappointment/{patientid}/{doctorid}")
+	@PostMapping("/patient/bookappointment/{patientid}/{doctorid}")
 	public ResponseEntity<AppointmentDetailsDTO> bookappointmnet(@PathVariable int patientid,@PathVariable int doctorid,@RequestBody AppointmentDTO a) throws DoctorNotFoundException, PatientNotFoundException{
 		
 		AppointmentDetailsDTO appointment = service.bookanappointment(a,patientid,doctorid);
@@ -114,7 +114,7 @@ public class PatientController {
 		return new ResponseEntity<>(appointment,HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/rescheduleAppointment/{appointmentid}/{date}/{time}")
+	@PutMapping("/patient/rescheduleAppointment/{appointmentid}/{date}/{time}")
 	public ResponseEntity<AppointmentDetailsDTO> rescheduleAppointmentByPatient( 
 	        @PathVariable int appointmentid, 
 	        @PathVariable LocalDate date, 

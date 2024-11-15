@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +49,9 @@ public class DoctorServiceImpl implements IDoctorService{
 	@Autowired
 	ModelMapper modelMapper;
 	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 	public DoctorDetailsDTO editDoctorProfile(int doctorid, DoctorDTO doc) {
 		
 		Doctor doctor=doctorRepo.findById(doctorid).orElse(null);
@@ -55,7 +59,7 @@ public class DoctorServiceImpl implements IDoctorService{
 		if(doctor==null) {
 			return null;
 		}
-		Users u = userRepo.findByUsername(doctor.getEmail()); 
+		Users u = userRepo.findByUsername(doctor.getEmail()).get(); 
 	    if(doc.getFirstName()!=null) {
 	    	doctor.setFirstName(doc.getFirstName());
 	    }
@@ -96,7 +100,7 @@ public class DoctorServiceImpl implements IDoctorService{
 	    if (u != null) {
 	    	
 	    	if(doc.getPassword()!=null) {
-	    		u.setPassword(doc.getPassword());
+	    		u.setPassword(passwordEncoder.encode(doc.getPassword()));
 		    }
 	    	doctor.setUser(u);
 	        userRepo.save(u); 
