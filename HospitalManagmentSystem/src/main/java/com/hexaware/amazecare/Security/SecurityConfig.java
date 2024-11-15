@@ -34,17 +34,19 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(registry -> {
-			registry.requestMatchers("/api/register","/api/login").permitAll();
-			registry.requestMatchers("/api/admin/**").hasRole(Role.ADMIN.name());
-			registry.requestMatchers("/api/doctor/**").hasRole(Role.DOCTOR.name());
-
-			registry.requestMatchers("/api/patient/**").hasRole("PATIENT");
-			registry.requestMatchers("/api/getDoctorSpecialties").hasAnyRole(Role.ADMIN.name(), Role.PATIENT.name());
-			registry.requestMatchers("/api/medicalRecord/**").hasAnyRole(Role.ADMIN.name(), Role.DOCTOR.name());
-			registry.anyRequest().authenticated();
-		})
-				.httpBasic(Customizer.withDefaults())
+		return httpSecurity.csrf(csrf -> csrf.disable())
+				 .authorizeHttpRequests(auth -> auth
+			                .requestMatchers("/api/register","/api/login").permitAll()
+			                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+			                .requestMatchers("/api/doctor/viewProfile").hasRole("DOCTOR")
+			                .requestMatchers("/api/patient/viewProfile").hasRole("PATIENT")
+			                .requestMatchers("/api/patient/**").hasAnyRole("PATIENT", "ADMIN")
+			                .requestMatchers("/api/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
+			                .requestMatchers("/api/medicalRecord/**").hasAnyRole("DOCTOR", "ADMIN")
+			                .requestMatchers("/api/getDoctorSpecialties").hasAnyRole("PATIENT", "ADMIN")
+			                .anyRequest().authenticated()
+			            )
+								//.httpBasic(Customizer.withDefaults())
 				.sessionManagement(sessionManage->sessionManage.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				//.formLogin(formLogin->formLogin.permitAll())
 				.authenticationProvider(authenticationProvider())
