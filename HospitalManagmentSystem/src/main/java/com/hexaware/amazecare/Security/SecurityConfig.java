@@ -40,6 +40,7 @@ public class SecurityConfig {
 			                .requestMatchers("/api/admin/**").hasRole("ADMIN")
 			                .requestMatchers("/api/doctor/viewProfile").hasRole("DOCTOR")
 			                .requestMatchers("/api/patient/viewProfile").hasRole("PATIENT")
+			                
 			                .requestMatchers("/api/patient/**").hasAnyRole("PATIENT", "ADMIN")
 			                .requestMatchers("/api/doctor/**").hasAnyRole("DOCTOR", "ADMIN")
 			                .requestMatchers("/api/medicalRecord/**").hasAnyRole("DOCTOR", "ADMIN")

@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,9 +55,11 @@ public class PatientServiceImpl implements IPatientService{
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	Logger logger= LoggerFactory.getLogger(PatientServiceImpl.class);
 
 	public PatientDetailsDTO savedata(PatientDTO pd) {
-
+		logger.info("Request initiated to register new Patient");
 		Optional<Patient> p=patientRepo.findByEmail(pd.getEmail());
 		if(p.isPresent()) {
 			return null;
@@ -68,14 +72,13 @@ public class PatientServiceImpl implements IPatientService{
 		Users savedUser = userRepo.save(user);
 
 		patient.setUser(savedUser);
-
 		patientRepo.save(patient);
-
+		logger.info("Patient registered successfully!");
 		return modelMapper.map(patient, PatientDetailsDTO.class);
 	}
 
 	public PatientDetailsDTO updateprofile(int id, PatientDTO pd) throws PatientNotFoundException  {
-	   
+		logger.info("Request initiated to edit Profile of patient with id: "+id);
 		Patient existingPatient = patientRepo.findById(id).orElse(null);
 		
 		if(existingPatient==null) {
@@ -99,8 +102,12 @@ public class PatientServiceImpl implements IPatientService{
 	    	existingPatient.setContactNumber(pd.getContactNumber());
 	    }
 	    if(pd.getEmail()!=null) {
-	    	existingPatient.setEmail(pd.getEmail());
-	    	u.setUsername(pd.getEmail());
+	    	if(userRepo.findByUsername(pd.getEmail()).isPresent()) {
+	    		logger.info("An User exists with given Email id!");
+	    	}else {
+		    	existingPatient.setEmail(pd.getEmail());
+		    	u.setUsername(pd.getEmail());	
+	    	}
 	    }
 	    if(pd.getAddress()!=null) {
 	    	existingPatient.setAddress(pd.getAddress());
@@ -130,28 +137,28 @@ public class PatientServiceImpl implements IPatientService{
 	    }
 
 	    Patient updated=patientRepo.save(existingPatient);
-
+	    logger.info("Patient Profile was updated Successfully!");
 	    return modelMapper.map(updated, PatientDetailsDTO.class);
 	}
 
 	public List<AppointmentDetailsDTO> getpatientappoints(int patientid) {
-
+		logger.info("Request initiated to get Appointments of patient with id: "+patientid);
 		List<Appointment> appointment = appointmentRepo.findByPatient_PatientId(patientid);
 
 		List<AppointmentDetailsDTO> appointmentDTOs = appointment.stream().map(i -> modelMapper.map(i, AppointmentDetailsDTO.class))
 				.collect(Collectors.toList());
-
+		logger.info("Appointments of patient was retrieved Successfully!");
 		return appointmentDTOs;
 
 	}
 
 	public List<MedicalRecordDetailsDTO> getpatientmedicalrecords(int patientid) {
-
+		logger.info("Request initiated to get Medical Records of patient with id: "+patientid);
 		List<MedicalRecord> record = medicalRecordRepo.findByPatient_PatientId(patientid);
 
 		List<MedicalRecordDetailsDTO> recorddto = record.stream().map(i -> modelMapper.map(i, MedicalRecordDetailsDTO.class))
 				.collect(Collectors.toList());
-
+		logger.info("Medical Records of patient was retrieved Successfully!");
 		return recorddto;
 
 	}
@@ -159,7 +166,7 @@ public class PatientServiceImpl implements IPatientService{
 
 	public AppointmentDetailsDTO bookanappointment(AppointmentDTO a, int patientid, int doctorid)
 			throws DoctorNotFoundException, PatientNotFoundException {
-
+		logger.info("Request initiated to book an appointment with doctor :"+doctorid+" by patient : "+patientid);
 		Appointment appointment = modelMapper.map(a, Appointment.class);
 
 		Optional<Doctor> doctorOpt = doctorRepo.findById(doctorid);
@@ -175,7 +182,7 @@ public class PatientServiceImpl implements IPatientService{
 			appointment.setStatus(Appointment.Status.REQUESTED); // default status
 
 			Appointment updated=appointmentRepo.save(appointment);
-
+			logger.info("Appointment is requested!");
 			return modelMapper.map(updated, AppointmentDetailsDTO.class);
 		} else {
 			if (!doctorOpt.isPresent()) {
@@ -186,7 +193,7 @@ public class PatientServiceImpl implements IPatientService{
 	}
 
 	public AppointmentDetailsDTO rescheduleAppointmentByPatient(int appointmentid, LocalDate date, LocalTime time) {
-		
+		logger.info("Request initiated to reschedule an appointment!");
 		Appointment app = appointmentRepo.findById(appointmentid).orElse(null);
 		if (app.getPatient().getPatientId()==getCurrentPatient().get().getPatientId() && app != null && (app.getStatus().equals(Status.SCHEDULED) || app.getStatus().equals(Status.RESCHEDULED))) {
 			app.setAppointmentDate(date);
@@ -194,6 +201,7 @@ public class PatientServiceImpl implements IPatientService{
 			app.setStatus(Status.RESCHEDULED);
 			Appointment updated =appointmentRepo.save(app);
 			AppointmentDetailsDTO appDTO = modelMapper.map(updated, AppointmentDetailsDTO.class);
+			logger.info("Appointment was rescheduled Successfully!");
 			return appDTO;
 		} else {
 			return null;
@@ -202,8 +210,10 @@ public class PatientServiceImpl implements IPatientService{
 	}
 
 	public List<DoctorDetailsDTO> getAvailableDoctors(String speciality) {
+		logger.info("Request initiated to get all available doctors with Speciality:"+speciality);
 		List<Doctor> doc = doctorRepo.findBySpecialtyStartingWith(speciality);
 		if(doc.isEmpty()) {
+			logger.info("No doctors found with Speciality: "+speciality);
 			return null;
 		}
 		return doc.stream().map(i ->{
@@ -213,7 +223,7 @@ public class PatientServiceImpl implements IPatientService{
 	}
 
 	public PatientDetailsDTO viewPatientProfile() {
-		
+		logger.info("Request initiated to view Profile of patient");
 		Optional<Patient> patient=getCurrentPatient();
 		if(patient.isEmpty()) {
 			return null;
