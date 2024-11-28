@@ -8,11 +8,8 @@ import Header from '../User/Header'
 import Profile from './Profile'
 
 const PatientDashboard = (user) => {
-    const { patientId } = useParams();
+   
 
-    useEffect(() => {
-       ;
-    }, [patientId]);
   return (
     <div className="d-flex">
       {/* Sidebar */}
@@ -24,7 +21,7 @@ const PatientDashboard = (user) => {
       <div className="col-9">
         <Header userName={user.name} userType={'Patient'} />
         <div className="container mt-3">
-          <Profile profile={user.profile} />
+          <Profile profile={user} />
         </div>
       </div>
     </div>
