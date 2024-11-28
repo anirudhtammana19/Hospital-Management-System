@@ -1,48 +1,34 @@
-// JavaScript source code
-import React from 'react';
-import './PatientDashboard.css';
+
+import React from "react";
+
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import PatientNavbar from '../NavBar/navbar-patient';
-import { Link } from 'react-router-dom';
+import PatientNavBar from '../Navbar/PatientNavbar'
+import Header from '../User/Header'
+import Profile from './Profile'
 
-
-const PatientDashboard = () => {
+const PatientDashboard = (user) => {
     const { patientId } = useParams();
 
     useEffect(() => {
        ;
     }, [patientId]);
+  return (
+    <div className="d-flex">
+      {/* Sidebar */}
+      <div className="col-3">
+        <PatientNavBar />
+      </div>
 
-    return (
-        <div className="PatientDashboard">
-            {/* Navigation Bar */}
-            <PatientNavbar/>
-            {/* Patient Section */}
-            <div className="patient-section">
-                <div className="container">
-                    <div className="patient-box">
-                        <h2 className="heading">Welcome To AmazeCare</h2>
-                        <div className="text-center">
-                            <Link to={`/doctors/${patientId}`} className="btn btn-info button-spacing" id="doctorsListButton">
-                                Doctors Info
-                            </Link>
-
-                            <Link to={`/appointments/${patientId}`} className="btn btn-success button-spacing" id="viewAppointmentsButton">
-                                View Appointments
-                            </Link>
-
-                            <Link to={`/medical-history/${patientId}`} className="btn btn-warning button-spacing" id="medicalHistoryButton">
-                                Medical History
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            
+      {/* Main Content */}
+      <div className="col-9">
+        <Header userName={user.name} userType={'Patient'} />
+        <div className="container mt-3">
+          <Profile profile={user.profile} />
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
 
 export default PatientDashboard;
