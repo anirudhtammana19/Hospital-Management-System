@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from 'semantic-ui-react';
-import SignupForm from './Component/User/PatientSignUp';
-import './App.css';
+import SignupForm from './PatientSignUp';
+
+
 
 
 const Register = () => {

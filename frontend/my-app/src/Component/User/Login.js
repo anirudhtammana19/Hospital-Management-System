@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBIcon, MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
+import "./Login.css"
 
 function Login() {
   return (
@@ -9,7 +10,7 @@ function Login() {
       <MDBRow>
 
         <MDBCol col='10' md='6'>
-          <img src="https://files.oaiusercontent.com/file-NcKLiqd6AqsWTmDHzS5LqR?se=2024-11-27T07%3A47%3A20Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dbb519de5-c7e4-40c0-baf2-02b7a200f752.webp&sig=HZfzNh0wO2LYgHlb4hOUV288Ey4cVTd/aFKO/KWjj9k%3D" className="img-fluid" alt="Sample image" />
+          <img src="./Doctor Login.jpg" className="img-fluid" alt="Sample image" />
         </MDBCol>
 
         <MDBCol col='4' md='6'>
@@ -37,10 +38,13 @@ function Login() {
             <a href="!#">Forgot password?</a>
           </div>
 
-          <div className='text-center text-md-start mt-4 pt-2'>
-            <MDBBtn className="mb-0 px-5" size='lg'>Login</MDBBtn>
-            <p className="small fw-bold mt-2 pt-1 mb-2">Don't have an account? <a href="#!" className="link-danger">Register</a></p>
-          </div>
+          <div className='text-center text-md-start mt-4 pt-2' style={{ textAlign: 'center' }}>
+  <MDBBtn className="mb-0 px-5" size='lg' style={{ display: 'block', margin: '0 auto' }}>Login</MDBBtn>
+  <p className="small fw-bold mt-2 pt-1 mb-2">
+    Don't have an account? <a href="#!" className="link-danger">Register</a>
+  </p>
+</div>
+
 
         </MDBCol>
 
