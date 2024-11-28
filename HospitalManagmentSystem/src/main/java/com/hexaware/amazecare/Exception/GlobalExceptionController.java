@@ -80,8 +80,8 @@ public class GlobalExceptionController {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<errorDetails> handelallexceptions(Exception e,HttpServletRequest hr){
 		String path = hr.getRequestURI();
-		errorDetails error = new errorDetails(LocalDateTime.now(),e.getMessage(),path,"Exception");
-		return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+		errorDetails error = new errorDetails(LocalDateTime.now(),e.getClass().getName()+":"+e.getMessage(),path,"Exception");
+		return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 }

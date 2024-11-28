@@ -1,0 +1,6 @@
+.img-fluid {
+    max-width: 80%; /* Use hyphen instead of camel case */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
