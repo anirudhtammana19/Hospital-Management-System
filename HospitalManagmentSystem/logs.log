@@ -67,3 +67,7 @@
 2024-11-28T15:14:25.798+05:30  INFO 12408 --- [http-nio-8080-exec-4] c.h.amazecare.Service.AuthService        : Login Successfull!
 2024-11-28T15:25:30.471+05:30  INFO 12408 --- [http-nio-8080-exec-5] c.h.amazecare.Service.AuthService        : Request initiated to Login by User: admin
 2024-11-28T15:25:30.825+05:30  INFO 12408 --- [http-nio-8080-exec-5] c.h.amazecare.Service.AuthService        : Login Successfull!
+2024-11-28T15:28:13.813+05:30  INFO 12408 --- [RMI TCP Connection(16)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2024-11-28T15:28:13.995+05:30  INFO 12408 --- [RMI TCP Connection(16)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-28T15:28:14.058+05:30  INFO 12408 --- [RMI TCP Connection(16)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-28T15:28:14.184+05:30  INFO 12408 --- [RMI TCP Connection(16)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
