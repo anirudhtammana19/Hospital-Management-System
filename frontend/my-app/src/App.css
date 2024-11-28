@@ -1,0 +1,53 @@
+
+
+/* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f5f5f5;
+  }
+  
+  /* Container for buttons */
+  .div1 {
+    text-align: center;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Button Styling */
+  .button {
+    background: #007BFF;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .button:active {
+    background: #003f7f;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .button {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+  
