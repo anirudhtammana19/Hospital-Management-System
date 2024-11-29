@@ -1,0 +1,31 @@
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px;
+  background-color: #f5faff;
+}
+
+.hero-content {
+  max-width: 50%;
+}
+
+.hero-content h1 {
+  font-size: 36px;
+  color: #004aad;
+}
+
+.hero-content h2 {
+  font-size: 28px;
+  color: #004aad;
+}
+
+.hero-content p {
+  font-size: 18px;
+  color: #333;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 400px;
+}

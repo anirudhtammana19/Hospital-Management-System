@@ -2,20 +2,18 @@ import React, { useState } from 'react';
 import { Form, Button, Input, Dropdown, Modal } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
-const SignupForm = ({ open, handleClose }) => {
+const SignupForm = ({ open, handleClose, email, password }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     dateOfBirth: '',
     gender: '',
     contactNumber: '',
-    email: '',
     address: '',
     emergencyContact: '',
     allergies: '',
     aadharCard: '',
     bloodGroup: '',
-    password: '',
   });
 
   const handleChange = (e, { name, value }) => {
@@ -24,26 +22,9 @@ const SignupForm = ({ open, handleClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    handleClose(); // Close the modal after submitting the form
-  };
-
-  const handleCancel = () => {
-    setFormData({
-      firstName: '',
-      lastName: '',
-      dateOfBirth: '',
-      gender: '',
-      contactNumber: '',
-      email: '',
-      address: '',
-      emergencyContact: '',
-      allergies: '',
-      aadharCard: '',
-      bloodGroup: '',
-      password: '',
-    });
-    handleClose(); // Close the modal when cancel is clicked
+    const completeData = { ...formData, email, password };
+    console.log(completeData);
+    handleClose();
   };
 
   const genderOptions = [
@@ -64,8 +45,19 @@ const SignupForm = ({ open, handleClose }) => {
   ];
 
   return (
-    <Modal open={open} onClose={handleClose} size="small">
-      <Modal.Header>Signup Form</Modal.Header>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      size="small"
+      style={{
+        display: 'flex',
+       left: "500px",
+       right:"0",
+        height: '100vh',   // Ensures the modal fills the entire viewport height
+        margin: 0,         // Removes any default margins
+      }}
+    >
+      <Modal.Header>Additional Details</Modal.Header>
       <Modal.Content>
         <Form onSubmit={handleSubmit}>
           <Form.Group widths="equal">
@@ -86,7 +78,6 @@ const SignupForm = ({ open, handleClose }) => {
               required
             />
           </Form.Group>
-
           <Form.Field
             control={Input}
             label="Date of Birth"
@@ -96,7 +87,6 @@ const SignupForm = ({ open, handleClose }) => {
             onChange={handleChange}
             required
           />
-
           <Form.Field
             control={Dropdown}
             label="Gender"
@@ -107,7 +97,6 @@ const SignupForm = ({ open, handleClose }) => {
             selection
             required
           />
-
           <Form.Field
             control={Input}
             label="Contact Number"
@@ -117,17 +106,6 @@ const SignupForm = ({ open, handleClose }) => {
             onChange={handleChange}
             required
           />
-
-          <Form.Field
-            control={Input}
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-
           <Form.Field
             control={Input}
             label="Address"
@@ -136,7 +114,6 @@ const SignupForm = ({ open, handleClose }) => {
             onChange={handleChange}
             required
           />
-
           <Form.Field
             control={Input}
             label="Emergency Contact"
@@ -146,7 +123,6 @@ const SignupForm = ({ open, handleClose }) => {
             onChange={handleChange}
             required
           />
-
           <Form.Field
             control={Input}
             label="Allergies"
@@ -154,7 +130,6 @@ const SignupForm = ({ open, handleClose }) => {
             value={formData.allergies}
             onChange={handleChange}
           />
-
           <Form.Field
             control={Input}
             label="Aadhar Card"
@@ -163,7 +138,6 @@ const SignupForm = ({ open, handleClose }) => {
             onChange={handleChange}
             required
           />
-
           <Form.Field
             control={Dropdown}
             label="Blood Group"
@@ -174,21 +148,10 @@ const SignupForm = ({ open, handleClose }) => {
             selection
             required
           />
-
-          <Form.Field
-            control={Input}
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-
           <Button type="submit" primary>
             Submit
           </Button>
-          <Button type="button" onClick={handleCancel}>
+          <Button type="button" onClick={handleClose}>
             Cancel
           </Button>
         </Form>
