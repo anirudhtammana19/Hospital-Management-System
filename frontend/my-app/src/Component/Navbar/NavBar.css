@@ -1,0 +1,32 @@
+.navheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 10px 0 10px 10px black;
+  z-index: 2;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #004aad;
+}
+
+.nav-buttons .sdn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-signin {
+  background-color: transparent;
+  color: #004aad;
+}
+
+.btn-register {
+  background-color: #004aad;
+  color: #fff;
+}

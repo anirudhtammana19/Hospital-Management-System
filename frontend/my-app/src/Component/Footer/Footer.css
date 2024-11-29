@@ -1,0 +1,59 @@
+.footer {
+    background-color: #f5faff;
+    padding: 50px 100px;
+    border-top: 1px solid #ddd;
+}
+  
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-logo h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #004aad;
+}
+
+/* Add consistent left padding to sections */
+.footer-links,
+.footer-hours,
+.footer-contact {
+    flex: 1;
+    padding-left: 30px; /* Added padding here */
+}
+
+.footer-links h4,
+.footer-hours h4,
+.footer-contact h4 {
+    font-size: 18px;
+    color: #004aad;
+    margin-bottom: 10px;
+}
+
+.footer-links ul,
+.footer-hours ul,
+.footer-contact ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li,
+.footer-hours ul li,
+.footer-contact ul li {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.footer-links ul li a {
+    text-decoration: none;
+    color: #555;
+}
+
+.footer-links ul li a:hover {
+    color: #004aad;
+    text-decoration: underline;
+}
