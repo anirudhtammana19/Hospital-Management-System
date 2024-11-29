@@ -1,9 +1,10 @@
 import React from "react";
 import { Navbar, Button } from "react-bootstrap";
+import "./Header.css";
 
 const Header = ({ userName, userType }) => {
   return (
-    <Navbar bg="white" className="shadow-sm px-3">
+    <Navbar bg="white" className="shadow-sm header px-3">
       <Navbar.Brand className="text-primary fw-bold">Amaze Care</Navbar.Brand>
       <Navbar.Collapse className="justify-content-end">
         <Navbar.Text className="me-3">

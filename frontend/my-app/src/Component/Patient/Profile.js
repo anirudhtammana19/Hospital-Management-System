@@ -1,25 +1,26 @@
 import React from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
+import "./Profile.css";
 
-const ProfileInfo = (profile) => {
+const Profile = ({ profile }) => {
   return (
-    <Card className="p-4 mt-4">
+    <Card className="p-4 profile-card">
       <h5 className="mb-3">Profile Info</h5>
       <Row>
         <Col md={6}>
           <p>
-            <strong>Name:</strong> {profile.name}
+            <strong>Name:</strong> {profile.firstName} {profile.lastName}
           </p>
           <p>
-            <strong>Date of Birth:</strong> {profile.dob}
+            <strong>Date of Birth:</strong> {profile.dateOfBirth}
           </p>
           <p>
-            <strong>Phone:</strong> {profile.phone}
+            <strong>Phone:</strong> {profile.contactNumber}
           </p>
           <p>
             <strong>Gender:</strong> {profile.gender}
           </p>
-          <p>
+          <p style={{marginBottom:"10px"}}>
             <strong>Allergies:</strong> {profile.allergies || "None"}
           </p>
         </Col>
@@ -28,7 +29,7 @@ const ProfileInfo = (profile) => {
             <strong>Email:</strong> {profile.email}
           </p>
           <p>
-            <strong>Emergency Phone:</strong> {profile.emergencyPhone}
+            <strong>Emergency Phone:</strong> {profile.emergencyContact}
           </p>
           <p>
             <strong>Blood Group:</strong> {profile.bloodGroup}
@@ -48,4 +49,4 @@ const ProfileInfo = (profile) => {
   );
 };
 
-export default ProfileInfo;
+export default Profile;

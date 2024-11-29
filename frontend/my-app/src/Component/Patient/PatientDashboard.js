@@ -1,26 +1,38 @@
 
-import React from "react";
-
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 import PatientNavBar from '../Navbar/PatientNavbar'
 import Header from '../User/Header'
 import Profile from './Profile'
+import './PatientDashboard.css';
+import axios from 'axios'
 
-const PatientDashboard = (user) => {
-   
+const PatientDashboard = () => {
 
+  const [user, setuser] = useState({})
+  useEffect(() => {
+    let token=localStorage.getItem('token')
+    axios.get("http://localhost:8080/api/patient/viewProfile",{
+      headers:{
+        Authorization:`Bearer ${token}`,
+        "Content-Type":"application/json"
+      }
+    })
+    .then(res=>setuser(res.data))
+    .catch(e=>console.log)
+    
+    
+  }, [])
+  
   return (
-    <div className="d-flex">
+    <div className=" patient-dashboard">
       {/* Sidebar */}
-      <div className="col-3">
-        <PatientNavBar />
-      </div>
+      <PatientNavBar />
 
       {/* Main Content */}
-      <div className="col-9">
-        <Header userName={user.name} userType={'Patient'} />
-        <div className="container mt-3">
+      <div className="flex-grow-1 ">
+        <Header userName={`${user.firstName} ${user.lastName}`} userType="Patient" />
+        
+        <div className="container main-content mt-4">
           <Profile profile={user} />
         </div>
       </div>
