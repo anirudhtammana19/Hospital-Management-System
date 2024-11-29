@@ -1,73 +1,38 @@
-2024-11-28T15:05:55.377+05:30  INFO 25684 --- [main] c.h.a.HospitalManagmentSystemApplication : Starting HospitalManagmentSystemApplication using Java 21.0.4 with PID 25684 (C:\Users\sures\OneDrive\Desktop\Hexaware\Training\JAVA_REACT\Case_Study\Hospital-Management-System\HospitalManagmentSystem\target\classes started by sures in C:\Users\sures\OneDrive\Desktop\Hexaware\Training\JAVA_REACT\Case_Study\Hospital-Management-System\HospitalManagmentSystem)
-2024-11-28T15:05:55.390+05:30  INFO 25684 --- [main] c.h.a.HospitalManagmentSystemApplication : No active profile set, falling back to 1 default profile: "default"
-2024-11-28T15:05:56.612+05:30  INFO 25684 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-11-28T15:05:56.696+05:30  INFO 25684 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 72 ms. Found 6 JPA repository interfaces.
-2024-11-28T15:05:57.324+05:30  INFO 25684 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-11-28T15:05:57.340+05:30  INFO 25684 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-11-28T15:05:57.341+05:30  INFO 25684 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
-2024-11-28T15:05:57.419+05:30  INFO 25684 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-11-28T15:05:57.419+05:30  INFO 25684 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1975 ms
-2024-11-28T15:05:57.577+05:30  INFO 25684 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-11-28T15:05:57.660+05:30  INFO 25684 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-11-28T15:05:57.713+05:30  INFO 25684 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-11-28T15:05:58.141+05:30  INFO 25684 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-11-28T15:05:58.182+05:30  INFO 25684 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-11-28T15:05:58.395+05:30  INFO 25684 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1a67f8b4
-2024-11-28T15:05:58.397+05:30  INFO 25684 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-11-28T15:05:58.482+05:30  WARN 25684 --- [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-11-28T15:05:58.483+05:30  WARN 25684 --- [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2024-11-28T15:05:59.663+05:30  INFO 25684 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-11-28T15:06:00.181+05:30  INFO 25684 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-11-28T15:06:00.702+05:30  INFO 25684 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-11-28T15:06:01.497+05:30  WARN 25684 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-11-28T15:06:01.514+05:30  INFO 25684 --- [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-11-28T15:06:01.516+05:30  WARN 25684 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-11-28T15:06:02.159+05:30  INFO 25684 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-11-28T15:06:02.169+05:30  INFO 25684 --- [main] c.h.a.HospitalManagmentSystemApplication : Started HospitalManagmentSystemApplication in 7.279 seconds (process running for 13.466)
-2024-11-28T15:10:27.308+05:30  INFO 25684 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-11-28T15:10:27.325+05:30  INFO 25684 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-11-28T15:10:27.409+05:30  INFO 25684 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 81 ms
-2024-11-28T15:10:27.987+05:30  INFO 25684 --- [http-nio-8080-exec-1] c.h.amazecare.Service.AuthService        : Request initiated to Login by User: Suresh
-2024-11-28T15:11:59.440+05:30  INFO 25684 --- [http-nio-8080-exec-4] c.h.amazecare.Service.AuthService        : Request initiated to Login by User: admin
-2024-11-28T15:11:59.592+05:30  INFO 25684 --- [http-nio-8080-exec-4] c.h.amazecare.Service.AuthService        : Login Successfull!
-2024-11-28T15:14:09.365+05:30  INFO 25684 --- [RMI TCP Connection(10)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2024-11-28T15:14:09.434+05:30  INFO 25684 --- [RMI TCP Connection(10)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-11-28T15:14:09.466+05:30  INFO 25684 --- [RMI TCP Connection(10)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-11-28T15:14:09.499+05:30  INFO 25684 --- [RMI TCP Connection(10)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-11-28T15:14:12.714+05:30  INFO 12408 --- [main] c.h.a.HospitalManagmentSystemApplication : Starting HospitalManagmentSystemApplication using Java 21.0.4 with PID 12408 (C:\Users\sures\OneDrive\Desktop\Hexaware\Training\JAVA_REACT\Case_Study\Hospital-Management-System\HospitalManagmentSystem\target\classes started by sures in C:\Users\sures\OneDrive\Desktop\Hexaware\Training\JAVA_REACT\Case_Study\Hospital-Management-System\HospitalManagmentSystem)
-2024-11-28T15:14:12.718+05:30  INFO 12408 --- [main] c.h.a.HospitalManagmentSystemApplication : No active profile set, falling back to 1 default profile: "default"
-2024-11-28T15:14:13.931+05:30  INFO 12408 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-11-28T15:14:14.048+05:30  INFO 12408 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 103 ms. Found 6 JPA repository interfaces.
-2024-11-28T15:14:14.733+05:30  INFO 12408 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-11-28T15:14:14.750+05:30  INFO 12408 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-11-28T15:14:14.750+05:30  INFO 12408 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
-2024-11-28T15:14:14.835+05:30  INFO 12408 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-11-28T15:14:14.837+05:30  INFO 12408 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2052 ms
-2024-11-28T15:14:14.992+05:30  INFO 12408 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-11-28T15:14:15.051+05:30  INFO 12408 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-11-28T15:14:15.089+05:30  INFO 12408 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-11-28T15:14:15.489+05:30  INFO 12408 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-11-28T15:14:15.527+05:30  INFO 12408 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-11-28T15:14:15.749+05:30  INFO 12408 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@77a9ac36
-2024-11-28T15:14:15.752+05:30  INFO 12408 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-11-28T15:14:15.813+05:30  WARN 12408 --- [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-11-28T15:14:15.815+05:30  WARN 12408 --- [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2024-11-28T15:14:17.171+05:30  INFO 12408 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-11-28T15:14:17.617+05:30  INFO 12408 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-11-28T15:14:18.043+05:30  INFO 12408 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-11-28T15:14:19.084+05:30  WARN 12408 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-11-28T15:14:19.104+05:30  INFO 12408 --- [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-11-28T15:14:19.106+05:30  WARN 12408 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-11-28T15:14:19.788+05:30  INFO 12408 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-11-28T15:14:19.797+05:30  INFO 12408 --- [main] c.h.a.HospitalManagmentSystemApplication : Started HospitalManagmentSystemApplication in 7.613 seconds (process running for 8.571)
-2024-11-28T15:14:25.418+05:30  INFO 12408 --- [http-nio-8080-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-11-28T15:14:25.418+05:30  INFO 12408 --- [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-11-28T15:14:25.419+05:30  INFO 12408 --- [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-11-28T15:14:25.575+05:30  INFO 12408 --- [http-nio-8080-exec-4] c.h.amazecare.Service.AuthService        : Request initiated to Login by User: admin
-2024-11-28T15:14:25.798+05:30  INFO 12408 --- [http-nio-8080-exec-4] c.h.amazecare.Service.AuthService        : Login Successfull!
-2024-11-28T15:25:30.471+05:30  INFO 12408 --- [http-nio-8080-exec-5] c.h.amazecare.Service.AuthService        : Request initiated to Login by User: admin
-2024-11-28T15:25:30.825+05:30  INFO 12408 --- [http-nio-8080-exec-5] c.h.amazecare.Service.AuthService        : Login Successfull!
-2024-11-28T15:28:13.813+05:30  INFO 12408 --- [RMI TCP Connection(16)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2024-11-28T15:28:13.995+05:30  INFO 12408 --- [RMI TCP Connection(16)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-11-28T15:28:14.058+05:30  INFO 12408 --- [RMI TCP Connection(16)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-11-28T15:28:14.184+05:30  INFO 12408 --- [RMI TCP Connection(16)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-11-29T06:34:34.356+05:30  WARN 21740 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9h6m6s788ms187µs100ns).
+2024-11-29T06:35:45.491+05:30  INFO 21740 --- [RMI TCP Connection(219)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2024-11-29T06:35:45.811+05:30  INFO 21740 --- [RMI TCP Connection(219)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-29T06:35:45.933+05:30  INFO 21740 --- [RMI TCP Connection(219)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-29T06:35:45.981+05:30  INFO 21740 --- [RMI TCP Connection(219)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-11-29T06:39:14.420+05:30  INFO 23236 --- [main] c.h.a.HospitalManagmentSystemApplication : Starting HospitalManagmentSystemApplication using Java 21.0.4 with PID 23236 (C:\Users\sures\OneDrive\Desktop\Hexaware\Training\JAVA_REACT\Case_Study\Hospital-Management-System\HospitalManagmentSystem\target\classes started by sures in C:\Users\sures\OneDrive\Desktop\Hexaware\Training\JAVA_REACT\Case_Study\Hospital-Management-System\HospitalManagmentSystem)
+2024-11-29T06:39:14.423+05:30  INFO 23236 --- [main] c.h.a.HospitalManagmentSystemApplication : No active profile set, falling back to 1 default profile: "default"
+2024-11-29T06:39:16.019+05:30  INFO 23236 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-29T06:39:16.103+05:30  INFO 23236 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 75 ms. Found 6 JPA repository interfaces.
+2024-11-29T06:39:16.688+05:30  INFO 23236 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-11-29T06:39:16.713+05:30  INFO 23236 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-11-29T06:39:16.714+05:30  INFO 23236 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-11-29T06:39:16.782+05:30  INFO 23236 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-11-29T06:39:16.783+05:30  INFO 23236 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2307 ms
+2024-11-29T06:39:16.929+05:30  INFO 23236 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-29T06:39:17.027+05:30  INFO 23236 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-29T06:39:17.090+05:30  INFO 23236 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-29T06:39:17.477+05:30  INFO 23236 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-29T06:39:17.517+05:30  INFO 23236 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-29T06:39:17.716+05:30  INFO 23236 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@511d5e6e
+2024-11-29T06:39:17.718+05:30  INFO 23236 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-29T06:39:17.858+05:30  WARN 23236 --- [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-29T06:39:17.859+05:30  WARN 23236 --- [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-11-29T06:39:19.126+05:30  INFO 23236 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-29T06:39:19.881+05:30  INFO 23236 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-29T06:39:20.370+05:30  INFO 23236 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-11-29T06:39:21.152+05:30  WARN 23236 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-29T06:39:21.172+05:30  INFO 23236 --- [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2024-11-29T06:39:21.173+05:30  WARN 23236 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
+2024-11-29T06:39:21.771+05:30  INFO 23236 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-11-29T06:39:21.779+05:30  INFO 23236 --- [main] c.h.a.HospitalManagmentSystemApplication : Started HospitalManagmentSystemApplication in 7.89 seconds (process running for 8.881)
+2024-11-29T06:39:33.977+05:30  INFO 23236 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-29T06:39:33.978+05:30  INFO 23236 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-11-29T06:39:33.980+05:30  INFO 23236 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-11-29T06:39:34.118+05:30  INFO 23236 --- [http-nio-8080-exec-1] c.h.amazecare.Service.AuthService        : Request initiated to Login by User: admin
+2024-11-29T06:39:34.328+05:30  INFO 23236 --- [http-nio-8080-exec-1] c.h.amazecare.Service.AuthService        : Login Successfull!
+2024-11-29T06:40:45.179+05:30  INFO 23236 --- [http-nio-8080-exec-3] c.h.amazecare.Service.AuthService        : Request initiated to Login by User: lochen6@gmail.com
+2024-11-29T06:40:45.329+05:30  INFO 23236 --- [http-nio-8080-exec-3] c.h.amazecare.Service.AuthService        : Login Successfull!
