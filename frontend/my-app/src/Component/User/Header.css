@@ -1,8 +1,0 @@
-.header {
-  position: fixed;
-  top: 0;
-  margin-left: 20px; /* Sidebar width */
-  width: calc(100% - 250px); /* Full width minus sidebar */
-  z-index: 1000;
-  
-}
